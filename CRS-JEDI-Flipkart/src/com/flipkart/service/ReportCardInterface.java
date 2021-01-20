@@ -1,4 +1,4 @@
-package com.flipkart.business;
+package com.flipkart.service;
 
 import java.util.ArrayList;
 

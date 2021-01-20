@@ -1,4 +1,4 @@
-package com.flipkart.bean;
+package com.flipkart.utils;
 
 public class Notification {
     String messageId;
