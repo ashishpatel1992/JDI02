@@ -43,16 +43,17 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
 
     /**
-     * creates a new course
+     * creates a new course and add to course list and further add to database
      * @param courseId
      * @param courseName
      * @return
      */
     @Override
-    public boolean addCourse(String courseId, String courseName) {
+    public boolean addCourse(String courseId, String courseName,String professorId) {
         logger.info("Add Course");
-        Course course = new Course(courseId,courseName);
+        Course course = new Course(courseId,courseName,professorId);
         courseList.add(course);
+        //TODO: add course list to database
         // TODO: We need to create professor before assigning him a course
         // TODO: a course will be hidden if no professor is assigned
         return true;

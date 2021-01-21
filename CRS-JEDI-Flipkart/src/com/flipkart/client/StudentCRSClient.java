@@ -42,7 +42,6 @@ public class StudentCRSClient {
 
     /**
      * Add course to selection cart
-     * @param courseId
      */
     public void printAddCourseToSelectionInfo() {
 

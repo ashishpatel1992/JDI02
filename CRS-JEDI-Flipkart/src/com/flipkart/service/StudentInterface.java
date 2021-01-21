@@ -3,6 +3,7 @@ package com.flipkart.service;
 import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface StudentInterface {
     public boolean addCourseToSelection(String courseId);
@@ -12,7 +13,7 @@ public interface StudentInterface {
     public ArrayList<Course> getRegisteredCourses();
 
     public boolean isFeePaid();
-    public String getGrades();
+    public HashMap<String,String> getGrades();
     public boolean addCourse(String id);
     public boolean  registerCourses();
     public boolean dropCourse(String courseId);

@@ -5,6 +5,7 @@ import com.flipkart.bean.Student;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class StudentOperation implements StudentInterface {
@@ -75,8 +76,10 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
+
+    //TODO : review return type
     @Override
-    public String getGrades() {
+    public HashMap<String,String> getGrades() {
         logger.info("get grades");
         return null;
     }
