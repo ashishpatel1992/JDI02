@@ -1,20 +1,18 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.Course;
-import com.flipkart.bean.Student;
 import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class StudentClient {
+public class StudentCRSClient {
     /**
      * Takes student Id to initialize, handles frontend for Student
      * @param sid
      */
-    private static Logger logger = Logger.getLogger(StudentClient.class);
+    private static Logger logger = Logger.getLogger(StudentCRSClient.class);
 //    ArrayList<String> courseIdSelectionList;
     CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
     StudentInterface studentOperation;
@@ -25,7 +23,7 @@ public class StudentClient {
      * Initialize Constructor with studentId
      * @param sid
      */
-    public StudentClient(String sid) {
+    public StudentCRSClient(String sid) {
         studentId = sid;
 //        courseIdSelectionList = new ArrayList<String>();
         studentOperation = new StudentOperation(studentId);

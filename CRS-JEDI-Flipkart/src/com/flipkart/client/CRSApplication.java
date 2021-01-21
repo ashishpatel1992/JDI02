@@ -35,7 +35,7 @@ public class CRSApplication {
             userPassword = scanner.next();
 
             UserInterface userInterface = new UserOperation();
-            StudentClient studentClient = new StudentClient(userId);
+            StudentCRSClient studentCRSClient = new StudentCRSClient(userId);
 
             if (loginStatus || userInterface.verifyCredentials(userId, userPassword)) {
                 logger.info("User Authenticated");
@@ -43,7 +43,7 @@ public class CRSApplication {
                 switch (choice) {
                     case 1:
                         logger.info("Student is selected");
-                        studentClient.studentMenu();
+                        studentCRSClient.studentMenu();
                         break;
                     case 2:
                         logger.info("Professor is selected");

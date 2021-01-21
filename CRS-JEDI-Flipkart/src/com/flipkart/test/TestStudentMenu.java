@@ -1,12 +1,11 @@
 package com.flipkart.test;
 
-import com.flipkart.client.StudentClient;
-import com.flipkart.service.CourseCatalogueOperation;
+import com.flipkart.client.StudentCRSClient;
 
 public class TestStudentMenu {
     public static void main(String[] args) {
-        StudentClient studentClient = new StudentClient("1");
-        studentClient.studentMenu();
+        StudentCRSClient studentCRSClient = new StudentCRSClient("1");
+        studentCRSClient.studentMenu();
 
 //        CourseCatalogueOperation courseCatalogueOperation = new CourseCatalogueOperation();
 //
