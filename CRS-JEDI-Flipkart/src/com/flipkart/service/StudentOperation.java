@@ -1,6 +1,7 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Student;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -19,7 +20,11 @@ public class StudentOperation implements StudentInterface {
         this.studentId = studentId;
         this.registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
     }
-
+    public Student getStudent(){
+        // TODO: fetch student info from DAO
+       Student student = new Student("101","Anish","anish@gmail.com","student","CS",false);
+       return student;
+    }
     @Override
     public boolean addCourseToSelection(String courseId) {
         boolean flag = false;

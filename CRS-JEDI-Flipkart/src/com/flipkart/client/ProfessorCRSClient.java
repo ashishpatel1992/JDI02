@@ -54,7 +54,7 @@ public class ProfessorCRSClient {
 
             switch(choice){
                 case 1:
-                    viewCourses();
+                    viewCourse();
                     break;
                 case 2:
                     gradeStudents();
@@ -78,7 +78,7 @@ public class ProfessorCRSClient {
     /**
      * Perform view courses operations
      */
-    void viewCourses(){
+    void viewCourse(){
         Course course = professorInterface.getCourseDetail();
         if(course!=null) {
             logger.info("CourseId\tCourseName\tStudents Enrolled");
@@ -92,13 +92,31 @@ public class ProfessorCRSClient {
      * Perform grade student operations
      */
     void gradeStudents(){
+
+        logger.info("GradeStudentClientBefore");
         ArrayList<Student> studentsEnrolled= professorInterface.getEnrolledStudents();
-        HashMap<String,String> gradeOfStudent = new HashMap<>();
-        for (Student student:studentsEnrolled){
-            logger.info("Enter grade for Student ID - "+student.getId()+":");
-            gradeOfStudent.put(student.getId(),scanner.next());
+        /**
+         * String - studentId
+         * String - grade
+         */
+        logger.info(studentsEnrolled.size());
+        if(studentsEnrolled.size() > 0){
+            // TODO: As of now Grading all students at once
+            HashMap<String,String> gradeOfStudent = new HashMap<>();
+            for (Student student:studentsEnrolled){
+                logger.info("Enter grade for Student ID - "+student.getId()+":");
+                gradeOfStudent.put(student.getId(),scanner.next());
+            }
+            logger.info("GradeStudentClientAfter");
+            if(professorInterface.gradeStudent(gradeOfStudent)){
+                logger.info("Grades assigned to all students of course "+ professorInterface.getCourseDetail().getId());
+            }else{
+                logger.info("Unable to assign grades");
+            }
+        }else{
+            logger.info("No Students enrolled");
         }
-        professorInterface.gradeStudent(gradeOfStudent);
+
     }
 
     /**

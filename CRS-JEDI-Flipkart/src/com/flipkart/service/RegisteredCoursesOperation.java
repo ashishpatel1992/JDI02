@@ -3,6 +3,7 @@ package com.flipkart.service;
 import com.flipkart.bean.Course;
 import org.apache.log4j.Logger;
 
+import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,17 +15,39 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 
     String studentId;
     private static Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
+    // TODO: Create method to write registeredCourseIdList into database and fetch whenever object is created
     public HashMap<String, ArrayList<String>> registeredCourseIdList = new HashMap<String, ArrayList<String>>();
-    public HashMap<String,HashMap<String,String>> gradesOfStudents = new HashMap<>();
+
+    // TODO: Create method to write gradeOfStudents into database and fetch whenever object is created
+    public HashMap<String,HashMap<String,String>> studentCourseGradesMap = new HashMap<>();
 
     public RegisteredCoursesOperation() {
-        //TODO Initialise registeredCourseIdList variable
+        //TODO Initialise registeredCourseIdList variable from database
+        setStudentCourseGradesMap();
     }
     public RegisteredCoursesOperation(String studentId) {
 
         this.studentId = studentId;
     }
 
+    public HashMap<String, HashMap<String, String>> getStudentCourseGradesMap() {
+        return studentCourseGradesMap;
+    }
+
+    /**
+     * Update to database and also update local variable
+     * @param studentCourseGradesMap
+     */
+    public void updateStudentCourseGradesMap(HashMap<String,HashMap<String,String>> studentCourseGradesMap){
+        // TODO: Save to database studentCourseGradeMap variable
+//        RegisterCourseDOA.update(studentCourseGradesMap);
+        this.studentCourseGradesMap = studentCourseGradesMap;
+    }
+    public void setStudentCourseGradesMap() {
+        // TODO: Fetch Values from Database and assign
+//        studentCourseGradesMap = DatabaseMetaData();
+
+    }
 
     /**
      * Registers the student into the course by taking list of courseIds

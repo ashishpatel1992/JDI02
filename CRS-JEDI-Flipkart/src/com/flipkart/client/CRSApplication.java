@@ -39,15 +39,20 @@ public class CRSApplication {
 
                         logger.info("Please Login to proceed further");
                         String studentId = CRSApplication.authenticateUser();
+                        // TODO: Handle null userid
                         StudentCRSClient studentCRSClient = new StudentCRSClient(studentId);
                         studentCRSClient.studentMenu();
                         break;
                     case 3:
-                        CRSApplication.authenticateUser();
+                        String professorId = CRSApplication.authenticateUser();
+                        // TODO: Handle null userid
+                        ProfessorCRSClient professorCRSClient = new ProfessorCRSClient(professorId);
+                        professorCRSClient.professorMenu();
                         logger.info("Professor is selected");
                         break;
                     case 4:
                         CRSApplication.authenticateUser();
+                        // TODO: Handle null userid
                         logger.info("Admin is selected");
                         break;
                     case 5:
