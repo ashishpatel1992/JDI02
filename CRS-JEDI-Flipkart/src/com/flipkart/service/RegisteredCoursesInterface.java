@@ -3,6 +3,7 @@ package com.flipkart.service;
 import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface RegisteredCoursesInterface {
     /**
@@ -10,6 +11,7 @@ public interface RegisteredCoursesInterface {
      * @param courseIdSelectionList
      * @return
      */
+
     public boolean registerCourses(ArrayList<String> courseIdSelectionList);
 
     /**
