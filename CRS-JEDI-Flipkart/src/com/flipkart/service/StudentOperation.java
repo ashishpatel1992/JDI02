@@ -7,34 +7,61 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentOperation implements StudentInterface {
+    String studentId;
 
     private static Logger logger = Logger.getLogger(StudentOperation.class);
+    ArrayList<String> courseIdSelectionList = new ArrayList<String>();;
+    CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
+    RegisteredCoursesOperation registeredCoursesOperation;
+
+
+    public StudentOperation(String studentId){
+        this.studentId = studentId;
+        this.registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
+    }
 
     @Override
-    public int menu() {
-        Scanner scanner = new Scanner(System.in);
-        logger.info("==== Student Menu ====");
-        logger.info("1. Add Course");
-        logger.info("2. Drop Course");
-        logger.info("3. Register Course");
-        logger.info("4. Get Grades");
-        logger.info("5. Pay Fees");
-        logger.info("6. Logout");
+    public boolean addCourseToSelection(String courseId) {
+        boolean flag = false;
+        Course c = courseCatalogueOperation.getCourse(courseId);
+        if (c != null) {
+            courseIdSelectionList.add(courseId);
+            flag = true;
+        } else {
+            flag = false;
+        }
+        return flag;
+    }
 
+    @Override
+    public ArrayList<String> getCourseSelection() {
 
-        int choice = scanner.nextInt();
-        return choice;
-//        switch (choice) {
-//            case 1:
-//                if (addCourse("101")){
-//                    logger.info("Course added Successfully");
-//                }else {
-//                    logger.info("Unable to add course");
-//                }
-//                    break;
-////            case 2:
-////                if(dropCourse())
-//        }
+        return courseIdSelectionList;
+    }
+
+    @Override
+    public boolean removeCourseFromSelection(String courseId) {
+        boolean flag = false;
+        if (courseIdSelectionList.contains(courseId)) {
+            courseIdSelectionList.remove(courseId);
+            flag = true;
+
+        } else {
+            flag = false;
+            logger.info("Course not present in the Selection list");
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean registerCourses() {
+        boolean flag = false;
+        if(registeredCoursesOperation.registerCourses(courseIdSelectionList)){
+            flag = true;
+        }else{
+            flag = false;
+        }
+        return flag;
     }
 
     @Override
@@ -51,26 +78,22 @@ public class StudentOperation implements StudentInterface {
 
     @Override
     public boolean addCourse(String id) {
-
+        // TODO: Add a course at later point in time (Will see if needed)
         logger.info("Add Course");
         return false;
     }
 
-    @Override
-    public boolean registerCourses() {
-        logger.info("Register Course");
-        return false;
-    }
+
 
     @Override
     public ArrayList<Course> getRegisteredCourses() {
         logger.info("get List of Registered Courses");
-        return null;
+
+        return registeredCoursesOperation.getRegisteredCourses();
     }
 
     @Override
-    public boolean dropCourse() {
-        logger.info("Drop a Course");
-        return false;
+    public boolean dropCourse(String courseId) {
+        return registeredCoursesOperation.dropCourse(courseId);
     }
 }

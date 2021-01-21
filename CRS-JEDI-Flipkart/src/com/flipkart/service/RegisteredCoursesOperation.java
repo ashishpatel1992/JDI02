@@ -70,17 +70,21 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
      */
     @Override
     public boolean dropCourse(String courseId) {
-        logger.info("DropCourse");
-        for (String cid : registeredCourseIdList.get(studentId)) {
-            logger.info("Inside Loop: " + cid);
-            if (cid.equalsIgnoreCase(courseId)) {
-                logger.info("courseDropped");
-                ArrayList<String> studentCourseIds = registeredCourseIdList.get(studentId);
-                studentCourseIds.remove(courseId);
-                registeredCourseIdList.put(studentId, studentCourseIds);
-                return true;
+//        logger.info("DropCourse");
+        ArrayList<String> studentCourseIdList= registeredCourseIdList.get(studentId);
+        if(studentCourseIdList != null){
+            for (String cid : studentCourseIdList) {
+//            logger.info("Inside Loop: " + cid);
+                if (cid.equalsIgnoreCase(courseId)) {
+//                logger.info("courseDropped");
+                    ArrayList<String> studentCourseIds = registeredCourseIdList.get(studentId);
+                    studentCourseIds.remove(courseId);
+                    registeredCourseIdList.put(studentId, studentCourseIds);
+                    return true;
+                }
             }
         }
+
         return false;
     }
 

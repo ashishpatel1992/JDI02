@@ -1,9 +1,11 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Student;
 import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,8 +15,9 @@ public class StudentClient {
      * @param sid
      */
     private static Logger logger = Logger.getLogger(StudentClient.class);
-    ArrayList<String> courseIdSelectionList;
+//    ArrayList<String> courseIdSelectionList;
     CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
+    StudentInterface studentOperation;
     // TODO: if made static will it be shared with everyone? i guess yes! so avoiding it find better way for accessing studentId for session
     String studentId;
 
@@ -23,9 +26,9 @@ public class StudentClient {
      * @param sid
      */
     public StudentClient(String sid) {
-
         studentId = sid;
-        courseIdSelectionList = new ArrayList<String>();
+//        courseIdSelectionList = new ArrayList<String>();
+        studentOperation = new StudentOperation(studentId);
     }
 
     /**
@@ -40,10 +43,27 @@ public class StudentClient {
     }
 
     /**
+     * Add course to selection cart
+     * @param courseId
+     */
+    public void addCourseToSelection(String courseId) {
+        // TODO: Avoid same course to be added again
+
+        if(studentOperation.addCourseToSelection(courseId)){
+
+            logger.info("Course "+ courseId +" added successfully");
+        }else{
+            logger.info("Invalid CourseId entered");
+            logger.info("Please choose CourseId from following list:-");
+            viewAvailableCourses();
+        }
+    }
+    /**
      * Displays list of courses selected for registration
      * Similar to cart functionality
      */
     public void getCourseSelection() {
+        ArrayList<String> courseIdSelectionList = studentOperation.getCourseSelection();
         logger.info("You have selected following " + courseIdSelectionList.size() + " courses:");
         logger.info("CourseId\tCourseName");
         for (int i = 0; i < courseIdSelectionList.size(); i++) {
@@ -58,31 +78,15 @@ public class StudentClient {
         }
     }
 
-    /**
-     * Add course to selection cart
-     * @param courseId
-     */
-    public void addCourseToSelection(String courseId) {
-        // TODO: Avoid same course to be added again
-        Course c = courseCatalogueOperation.getCourse(courseId);
-//        Check if it is a valid course
-        if (c != null) {
-            courseIdSelectionList.add(courseId);
-        } else {
-            logger.info("Invalid CourseId entered");
-            logger.info("Please choose CourseId from following list:-");
-            viewAvailableCourses();
-        }
 
-    }
 
     /**
      * Remove a course from Selection cart
      * @param courseId
      */
     public void removeCourseFromSelection(String courseId) {
-        if (courseIdSelectionList.contains(courseId)) {
-            courseIdSelectionList.remove(courseId);
+
+        if (studentOperation.removeCourseFromSelection(courseId)) {
             logger.info("Course " + courseId + " has been removed.");
         } else {
             logger.info("Course not present in the Selection list");
@@ -95,8 +99,7 @@ public class StudentClient {
     public void studentMenu() {
         int choice;
         Scanner scanner = new Scanner(System.in);
-        RegisteredCoursesOperation registeredCoursesOperation;
-        registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
+
 
         while (true) {
             logger.info("==== Student MENU =====");
@@ -138,27 +141,21 @@ public class StudentClient {
                 case 4:
 
                     getCourseSelection();
-                    if (courseIdSelectionList.size() > 0) {
-                        // check if already registered otherwise register
-                        if (registeredCoursesOperation.registerCourses(courseIdSelectionList)) {
-                            ArrayList<Course> courseArrayList = registeredCoursesOperation.getRegisteredCourses();
+                    if(studentOperation.getCourseSelection().size() > 0){
+                        if(studentOperation.registerCourses()){
+                            ArrayList<Course> courseArrayList = studentOperation.getRegisteredCourses();
                             logger.info("You are successfully registered for following courses.");
                             logger.info("CourseId\tCourseName");
                             for (Course regCourse : courseArrayList) {
                                 logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
                             }
-                        } else {
-                            logger.info("Already Registered for Course");
                         }
-
-                    } else {
-                        logger.info("No course selected for registration.");
                     }
 
                     break;
                 case 5:
                     logger.info("You are registered for following courses:- ");
-                    ArrayList<Course> registeredCourseList = registeredCoursesOperation.getRegisteredCourses();
+                    ArrayList<Course> registeredCourseList = studentOperation.getRegisteredCourses();
                     if (registeredCourseList.size() > 0) {
                         logger.info("CourseId\tCourseName");
                         for (Course regCourse : registeredCourseList) {
@@ -172,17 +169,19 @@ public class StudentClient {
                 case 6:
                     logger.info("Enter course Id to drop");
                     courseId = scanner.next();
-                    if (registeredCoursesOperation.dropCourse(courseId)) {
+                    if (studentOperation.dropCourse(courseId)) {
                         logger.info("Course " + courseId + " successfully dropped");
                     } else {
-                        logger.info("Unable to drop the course");
+                        logger.info("Either CourseId id is invalid or student is not enrolled in the course");
                     }
                     break;
                 case 7:
                     ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
                     reportCardOperation.getGrades();
                     return;
-
+                case 8:
+                    // TODO Define login/logout enums
+                    return;
                 default:
                     logger.info("Invalid Choice");
             }

@@ -5,11 +5,15 @@ import com.flipkart.bean.Course;
 import java.util.ArrayList;
 
 public interface StudentInterface {
-    public int menu();
+    public boolean addCourseToSelection(String courseId);
+    public ArrayList<String>  getCourseSelection();
+    public boolean removeCourseFromSelection(String courseId);
+//    public boolean registerCourse();
+    public ArrayList<Course> getRegisteredCourses();
+
     public boolean isFeePaid();
     public String getGrades();
     public boolean addCourse(String id);
     public boolean  registerCourses();
-    public ArrayList<Course> getRegisteredCourses();
-    public boolean dropCourse();
+    public boolean dropCourse(String courseId);
 }
