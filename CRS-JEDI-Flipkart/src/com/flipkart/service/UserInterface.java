@@ -4,9 +4,9 @@ public interface UserInterface {
     /**
      * Verify credentials of the student
      * @param id
-     * @param hasedPassword
-     * @return
+     * @param password
+     * @return id of the user
      */
-    public boolean verifyCredentials(String id, String hasedPassword);
+    public String verifyCredentials(String id, String password);
 
 }

@@ -7,15 +7,15 @@ public class UserOperation implements UserInterface{
 
     /**
      * Verify credentials of the student
-     * @param id
-     * @param hasedPassword
+     * @param userId
+     * @param password
      * @return
      */
     @Override
-    public boolean verifyCredentials(String id, String hasedPassword) {
+    public String verifyCredentials(String userId, String password) {
 
-        logger.info("Verify Credentials");
-        // TODO User Authentication
-        return true;
+//        logger.info("Verify Credentials");
+        // TODO User Authentication from doa
+        return userId;
     }
 }

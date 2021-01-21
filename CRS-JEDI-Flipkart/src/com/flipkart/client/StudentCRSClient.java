@@ -18,7 +18,7 @@ public class StudentCRSClient {
     StudentInterface studentOperation;
     // TODO: if made static will it be shared with everyone? i guess yes! so avoiding it find better way for accessing studentId for session
     String studentId;
-
+    Scanner scanner = new Scanner(System.in);
     /**
      * Initialize Constructor with studentId
      * @param sid
@@ -44,7 +44,12 @@ public class StudentCRSClient {
      * Add course to selection cart
      * @param courseId
      */
-    public void addCourseToSelection(String courseId) {
+    public void printAddCourseToSelectionInfo() {
+
+        String courseId;
+
+        logger.info("Enter course Id");
+        courseId = scanner.next();
         // TODO: Avoid same course to be added again
 
         if(studentOperation.addCourseToSelection(courseId)){
@@ -55,12 +60,13 @@ public class StudentCRSClient {
             logger.info("Please choose CourseId from following list:-");
             viewAvailableCourses();
         }
+        printCourseSelectionInfo();
     }
     /**
      * Displays list of courses selected for registration
      * Similar to cart functionality
      */
-    public void getCourseSelection() {
+    public void printCourseSelectionInfo() {
         ArrayList<String> courseIdSelectionList = studentOperation.getCourseSelection();
         logger.info("You have selected following " + courseIdSelectionList.size() + " courses:");
         logger.info("CourseId\tCourseName");
@@ -80,23 +86,68 @@ public class StudentCRSClient {
 
     /**
      * Remove a course from Selection cart
-     * @param courseId
+     *
      */
-    public void removeCourseFromSelection(String courseId) {
-
+    public void printRemoveCourseFromSelectionInfo() {
+        logger.info("Enter course Id");
+        String courseId;
+        courseId = scanner.next();
         if (studentOperation.removeCourseFromSelection(courseId)) {
             logger.info("Course " + courseId + " has been removed.");
         } else {
             logger.info("Course not present in the Selection list");
         }
+        printCourseSelectionInfo();
     }
 
+    public void printRegisterCourseInfo(){
+        printCourseSelectionInfo();
+        if(studentOperation.getCourseSelection().size() > 0){
+            if(studentOperation.registerCourses()){
+                ArrayList<Course> courseArrayList = studentOperation.getRegisteredCourses();
+                logger.info("You are successfully registered for following courses.");
+                logger.info("CourseId\tCourseName");
+                for (Course regCourse : courseArrayList) {
+                    logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
+                }
+            }
+        }
+    }
+
+    public void printRegisteredCourseInfo(){
+        logger.info("You are registered for following courses:- ");
+        ArrayList<Course> registeredCourseList = studentOperation.getRegisteredCourses();
+        if (registeredCourseList.size() > 0) {
+            logger.info("CourseId\tCourseName");
+            for (Course regCourse : registeredCourseList) {
+                logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
+            }
+        } else {
+            logger.info("Either you dont have any course or You havent completed the registration yet.");
+        }
+    }
+
+    public void printDropCourseInfo(){
+        String courseId;
+        logger.info("Enter course Id to drop");
+        courseId = scanner.next();
+        if (studentOperation.dropCourse(courseId)) {
+            logger.info("Course " + courseId + " successfully dropped");
+        } else {
+            logger.info("Either CourseId id is invalid or student is not enrolled in the course");
+        }
+    }
+
+    public void printReportCardInfo(){
+        ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
+        reportCardOperation.getGrades();
+    }
     /**
      * Displays frontend menu for student
      */
     public void studentMenu() {
         int choice;
-        Scanner scanner = new Scanner(System.in);
+
 
 
         while (true) {
@@ -110,72 +161,22 @@ public class StudentCRSClient {
             logger.info("7. Get Grades");
             logger.info("8. Logout");
 
-
             choice = scanner.nextInt();
 
             switch (choice) {
-                case 1:
-                    viewAvailableCourses();
-
+                case 1: viewAvailableCourses();
                     break;
-                case 2:
-
-                    String courseId;
-
-                    logger.info("Enter course Id");
-                    courseId = scanner.next();
-                    addCourseToSelection(courseId);
-
-                    getCourseSelection();
-
+                case 2: printAddCourseToSelectionInfo();
                     break;
-                case 3:
-                    logger.info("Enter course Id");
-                    courseId = scanner.next();
-                    removeCourseFromSelection(courseId);
-                    getCourseSelection();
-
+                case 3: printRemoveCourseFromSelectionInfo();
                     break;
-                case 4:
-
-                    getCourseSelection();
-                    if(studentOperation.getCourseSelection().size() > 0){
-                        if(studentOperation.registerCourses()){
-                            ArrayList<Course> courseArrayList = studentOperation.getRegisteredCourses();
-                            logger.info("You are successfully registered for following courses.");
-                            logger.info("CourseId\tCourseName");
-                            for (Course regCourse : courseArrayList) {
-                                logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
-                            }
-                        }
-                    }
-
+                case 4: printRegisterCourseInfo();
                     break;
-                case 5:
-                    logger.info("You are registered for following courses:- ");
-                    ArrayList<Course> registeredCourseList = studentOperation.getRegisteredCourses();
-                    if (registeredCourseList.size() > 0) {
-                        logger.info("CourseId\tCourseName");
-                        for (Course regCourse : registeredCourseList) {
-                            logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
-                        }
-                    } else {
-                        logger.info("Either you dont have any course or You havent completed the registration yet.");
-                    }
-
+                case 5: printRegisteredCourseInfo();
                     break;
-                case 6:
-                    logger.info("Enter course Id to drop");
-                    courseId = scanner.next();
-                    if (studentOperation.dropCourse(courseId)) {
-                        logger.info("Course " + courseId + " successfully dropped");
-                    } else {
-                        logger.info("Either CourseId id is invalid or student is not enrolled in the course");
-                    }
+                case 6: printDropCourseInfo();
                     break;
-                case 7:
-                    ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
-                    reportCardOperation.getGrades();
+                case 7: printReportCardInfo();
                     return;
                 case 8:
                     // TODO Define login/logout enums

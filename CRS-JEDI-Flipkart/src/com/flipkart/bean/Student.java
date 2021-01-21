@@ -4,6 +4,7 @@ package com.flipkart.bean;
  * Student class stores basic profile information for a student
  */
 public class Student extends User{
+
     /**
      * Stores Branch in which student is pursuing his course work
      */
@@ -13,6 +14,14 @@ public class Student extends User{
      */
     boolean approved;
 
+    public Student(String id, String name, String email, String role, String branch, boolean approved){
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.branch = branch;
+        this.approved = approved;
+    }
     /**
      * Stores branch name
      * @return

@@ -11,68 +11,81 @@ public class CRSApplication {
 
     /**
      * Displays the main login menu for all users
+     *
      * @param args
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
-       try{
-           while (true) {
-               logger.info("=== Login MENU ===");
-               logger.info("Login As:-");
-               logger.info("1. Student");
-               logger.info("2. Professor");
-               logger.info("3. Admin");
-               logger.info("4. Exit");
+        try {
+            while (true) {
+                logger.info("=== Login MENU ===");
+                logger.info("Login As:-");
+                logger.info("1. Student Registration");
+                logger.info("2. Student");
+                logger.info("3. Professor");
+                logger.info("4. Admin");
+                logger.info("5. Exit");
 
-               choice = scanner.nextInt();
-               String userId;
-               String userPassword;
+                choice = scanner.nextInt();
 
-               logger.info("Enter User ID ? ");
-               userId = scanner.next();
-               logger.info("Enter User Password ? ");
-               userPassword = scanner.next();
+                switch (choice) {
+                    case 1:
+                        StudentRegistrationCRSClient studentRegistrationCRSClient = new StudentRegistrationCRSClient();
+                        studentRegistrationCRSClient.registrationMenu();
+                        break;
+                    case 2:
 
-               UserInterface userInterface = new UserOperation();
-               StudentCRSClient studentCRSClient = new StudentCRSClient(userId);
+                        logger.info("Please Login to proceed further");
+                        String studentId = CRSApplication.authenticateUser();
+                        StudentCRSClient studentCRSClient = new StudentCRSClient(studentId);
+                        studentCRSClient.studentMenu();
+                        break;
+                    case 3:
+                        CRSApplication.authenticateUser();
+                        logger.info("Professor is selected");
+                        break;
+                    case 4:
+                        CRSApplication.authenticateUser();
+                        logger.info("Admin is selected");
+                        break;
+                    case 5:
+                        logger.info("Exit is selected");
+                        System.exit(0);
+                        return;
 
-               if (loginStatus || userInterface.verifyCredentials(userId, userPassword)) {
-                   logger.info("User Authenticated");
-                   loginStatus = true;
-                   switch (choice) {
-                       case 1:
-                           logger.info("Student is selected");
-                           studentCRSClient.studentMenu();
-                           break;
-                       case 2:
-                           logger.info("Professor is selected");
-                           break;
-                       case 3:
-                           logger.info("Admin is selected");
-                           break;
-                       case 4:
-                           logger.info("Exit is selected");
-                           System.exit(0);
-                           return;
-
-                       default:
-                           logger.info("Student is selected");
+                    default:
+                        logger.info("Student is selected");
 
 
-                   }
-               } else {
-                   logger.info("Invalid userId or password");
-               }
-
-           }
-       }catch(Exception e){
-           logger.error(e.getMessage());
-       }finally {
-           scanner.close();
-       }
+                }
 
 
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        } finally {
+            scanner.close();
+        }
+
+    }
+
+    /**
+     * Prompts user to enter his credentials and verify them.
+     * @return userId of the successfully logged in user
+     */
+    public static String authenticateUser(){
+        String userId;
+        String userPassword;
+        Scanner scanner = new Scanner(System.in);
+        logger.info("Enter User ID ? ");
+        userId = scanner.next();
+        logger.info("Enter User Password ? ");
+        userPassword = scanner.next();
+        UserInterface userInterface = new UserOperation();
+
+        // TODO: try catch can be done for handling authentication error
+        return userInterface.verifyCredentials(userId, userPassword);
     }
 }
