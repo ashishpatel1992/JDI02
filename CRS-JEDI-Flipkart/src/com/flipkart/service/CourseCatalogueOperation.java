@@ -6,6 +6,9 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles the operation of CourseCatalogue
+ */
 public class CourseCatalogueOperation implements CourseCatalogueInterface {
     private static Logger logger = Logger.getLogger(CourseCatalogueOperation.class);
     ArrayList<Course> courseList = new ArrayList<Course>();
@@ -28,6 +31,10 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
         }
     }
 
+    /**
+     * returns the list of all courses
+     * @return
+     */
     @Override
     public ArrayList<Course> getCourseList() {
         logger.info("ViewCourses");
@@ -35,7 +42,12 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     }
 
 
-
+    /**
+     * creates a new course
+     * @param courseId
+     * @param courseName
+     * @return
+     */
     @Override
     public boolean addCourse(String courseId, String courseName) {
         logger.info("Add Course");
@@ -46,6 +58,11 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
         return true;
     }
 
+    /**
+     * Returns the course along with its details
+     * @param courseId
+     * @return
+     */
     @Override
     public Course getCourse(String courseId) {
         Course selection = null;
@@ -64,6 +81,11 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
         return selection;
     }
 
+    /**
+     * Delete a specific course
+     * @param courseId
+     * @return
+     */
     @Override
     public boolean deleteCourse(String courseId) {
         // fetch object of that course id
@@ -80,6 +102,11 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
         return flag;
     }
 
+    /**
+     * Assign a professor to a course
+     * @param courseId
+     * @return
+     */
     @Override
     public boolean assignProfessor(String courseId) {
         // TODO: later on call to doa

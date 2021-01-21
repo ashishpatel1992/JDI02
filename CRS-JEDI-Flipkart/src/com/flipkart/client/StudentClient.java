@@ -8,23 +8,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentClient {
-
-    public StudentClient(String sid) {
-        studentId = sid;
-        courseIdSelectionList = new ArrayList<String>();
-    }
-
-    //    private static StudentClient studentClient = new StudentClient();
+    /**
+     * Takes student Id to initialize, handles frontend for Student
+     * @param sid
+     */
     private static Logger logger = Logger.getLogger(StudentClient.class);
     ArrayList<String> courseIdSelectionList;
     CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
     // TODO: if made static will it be shared with everyone? i guess yes! so avoiding it find better way for accessing studentId for session
     String studentId;
 
-    //    public static StudentClient getInstance() {
-//        courseIdSelectionList = new ArrayList<String>();
-//        return studentClient;
-//    }
+    /**
+     * Initialize Constructor with studentId
+     * @param sid
+     */
+    public StudentClient(String sid) {
+
+        studentId = sid;
+        courseIdSelectionList = new ArrayList<String>();
+    }
+
+    /**
+     * Displays list of available courses in log
+     */
     public void viewAvailableCourses() {
         ArrayList<Course> courseArrayList = courseCatalogueOperation.getCourseList();
         for (Course course : courseArrayList) {
@@ -33,6 +39,10 @@ public class StudentClient {
         }
     }
 
+    /**
+     * Displays list of courses selected for registration
+     * Similar to cart functionality
+     */
     public void getCourseSelection() {
         logger.info("You have selected following " + courseIdSelectionList.size() + " courses:");
         logger.info("CourseId\tCourseName");
@@ -48,7 +58,10 @@ public class StudentClient {
         }
     }
 
-
+    /**
+     * Add course to selection cart
+     * @param courseId
+     */
     public void addCourseToSelection(String courseId) {
         // TODO: Avoid same course to be added again
         Course c = courseCatalogueOperation.getCourse(courseId);
@@ -63,6 +76,10 @@ public class StudentClient {
 
     }
 
+    /**
+     * Remove a course from Selection cart
+     * @param courseId
+     */
     public void removeCourseFromSelection(String courseId) {
         if (courseIdSelectionList.contains(courseId)) {
             courseIdSelectionList.remove(courseId);
@@ -72,7 +89,9 @@ public class StudentClient {
         }
     }
 
-
+    /**
+     * Displays frontend menu for student
+     */
     public void studentMenu() {
         int choice;
         Scanner scanner = new Scanner(System.in);
@@ -170,10 +189,16 @@ public class StudentClient {
         }
     }
 
+    /**
+     * Displays Professor menu
+     */
     public void professorMenu() {
 
     }
 
+    /**
+     * Displays Admin Menu
+     */
     public void adminMenu() {
 
     }

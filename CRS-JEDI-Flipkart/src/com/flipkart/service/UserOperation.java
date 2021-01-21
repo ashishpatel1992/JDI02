@@ -4,6 +4,13 @@ import org.apache.log4j.Logger;
 
 public class UserOperation implements UserInterface{
     private static Logger logger = Logger.getLogger(UserOperation.class);
+
+    /**
+     * Verify credentials of the student
+     * @param id
+     * @param hasedPassword
+     * @return
+     */
     @Override
     public boolean verifyCredentials(String id, String hasedPassword) {
 

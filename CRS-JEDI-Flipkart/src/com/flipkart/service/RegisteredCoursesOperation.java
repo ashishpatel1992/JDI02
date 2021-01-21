@@ -6,16 +6,26 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
+    /**
+     * Handles the course registration Operations for student
+     */
+
     String studentId;
+    private static Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
+    public HashMap<String, ArrayList<String>> registeredCourseIdList = new HashMap<String, ArrayList<String>>();
 
     public RegisteredCoursesOperation(String studentId) {
         this.studentId = studentId;
     }
 
-    private static Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
-    public HashMap<String, ArrayList<String>> registeredCourseIdList = new HashMap<String, ArrayList<String>>();
 
+    /**
+     * Registers the student into the course by taking list of courseIds
+     * @param courseIdSelectionList
+     * @return
+     */
     @Override
     public boolean registerCourses(ArrayList<String> courseIdSelectionList) {
         boolean flag = false;
@@ -35,6 +45,10 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
         return flag;
     }
 
+    /**
+     * Get list of all courses student is registered in.
+     * @return
+     */
     @Override
     public ArrayList<Course> getRegisteredCourses() {
         ArrayList<Course> courseArrayList = new ArrayList<Course>();
@@ -49,6 +63,11 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
         return courseArrayList;
     }
 
+    /**
+     * Drop a course in which student is already enrolled in.
+     * @param courseId
+     * @return
+     */
     @Override
     public boolean dropCourse(String courseId) {
         logger.info("DropCourse");

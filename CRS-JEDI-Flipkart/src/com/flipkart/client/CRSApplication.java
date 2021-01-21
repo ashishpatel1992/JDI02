@@ -9,6 +9,10 @@ public class CRSApplication {
     private static Logger logger = Logger.getLogger(CRSApplication.class);
     public static boolean loginStatus = false;
 
+    /**
+     * Displays the main login menu for all users
+     * @param args
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int choice;
