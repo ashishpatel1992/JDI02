@@ -15,8 +15,13 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
     String studentId;
     private static Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
     public HashMap<String, ArrayList<String>> registeredCourseIdList = new HashMap<String, ArrayList<String>>();
+    public HashMap<String,HashMap<String,String>> gradesOfStudents = new HashMap<>();
 
+    public RegisteredCoursesOperation() {
+        //TODO Initialise registeredCourseIdList variable
+    }
     public RegisteredCoursesOperation(String studentId) {
+
         this.studentId = studentId;
     }
 
