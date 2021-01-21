@@ -11,7 +11,13 @@ public class Course {
         id = courseId;
         name = courseName;
         professorId = null;
-//        studentsEnrolled = null;
+        studentsEnrolled = null;
+    }
+    public Course(String courseId, String courseName,String professorId){
+        id = courseId;
+        name = courseName;
+        this.professorId = professorId;
+        studentsEnrolled = null;
     }
     public ArrayList<Student> getStudentsEnrolled() {
         return studentsEnrolled;

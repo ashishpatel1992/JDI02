@@ -1,48 +1,85 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Professor;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+/**
+ * Handles the following admin operations
+ * 1. add new professor
+ * 2. add new course
+ * 3. approve student
+ * 4. generate report card for a student
+ */
 public class AdminOperation implements AdminInterface{
     private static Logger logger = Logger.getLogger(AdminOperation.class);
+
+//    @Override
+//    public boolean addCourse() {
+//        logger.info("Add Course");
+//        return false;
+//    }
+
+    /**
+     * Add professor to database
+     * @param professorId
+     * @param professorName
+     * @param professorEmail
+     * @param professorDepartment
+     * @return boolean
+     */
     @Override
-    public boolean addCourse() {
-        logger.info("Add Course");
-        return false;
+    public boolean addProfessor(String professorId,String professorName,String professorEmail,String professorDepartment) {
+        //logger.info("Add Professor");
+        Professor newProfessor = new Professor(professorId,professorName,professorEmail,"professor",professorDepartment);
+        //TODO : add newProfessor to database
+        try {
+            //AdminDao.addProfessor(newProfessor);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
     }
 
+//    @Override
+//    public void viewCourses() {
+//        logger.info("View Courses");
+//
+//    }
+
+    /**
+     * Approve student
+     * @param studentId
+     * @return boolean
+     */
     @Override
-    public boolean addProfessor() {
-        logger.info("Add Professor");
-        return false;
+    public boolean approveStudent(String studentId) {
+        try{
+            //TODO: dao - update approve bit of student
+            //temp print
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
+    /**
+     * Generate report card for a student
+     * @param studentId
+     * @return HashMap<String,String>
+     */
     @Override
-    public boolean addStudent() {
-        logger.info("Add Student");
+    public HashMap<String,String> generateReportCard(String studentId) {
+        try {
+            StudentOperation studentOperation = new StudentOperation(studentId);
+            HashMap<String, String> studentGrades = studentOperation.getGrades();
 
-        return false;
-    }
-
-    @Override
-    public ArrayList<Course> getAllCourses() {
-        logger.info("getAllCourses");
-        return null;
-    }
-
-    @Override
-    public boolean approveStudent() {
-
-        logger.info("Approve Student");
-        return false;
-    }
-
-    @Override
-    public boolean generateReportCard() {
-
-        logger.info("Generate Report");
-        return false;
+            return studentGrades;
+        }catch (Exception e){
+            return null;
+        }
     }
 }

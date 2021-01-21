@@ -51,9 +51,11 @@ public class CRSApplication {
                         logger.info("Professor is selected");
                         break;
                     case 4:
-                        CRSApplication.authenticateUser();
                         // TODO: Handle null userid
                         logger.info("Admin is selected");
+                        String adminId = CRSApplication.authenticateUser();
+                        AdminCRSClient adminCRSClient = new AdminCRSClient(adminId);
+                        adminCRSClient.adminMenu();
                         break;
                     case 5:
                         logger.info("Exit is selected");
