@@ -16,10 +16,7 @@ import java.util.List;
 public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
 
-
-
     private static volatile CourseCatalogueOperation instance = null;
-
 
     public static CourseCatalogueOperation getInstance() {
         if (instance == null) {
@@ -35,7 +32,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     ArrayList<Course> courseList = new ArrayList<Course>();
 
-    public CourseCatalogueOperation(){
+    public CourseCatalogueOperation() {
 //        CourseCatalogueDaoInterface courseCatalogueDaoInterface = new CourseCatalogueDaoImp();
         CourseCatalogueDaoInterface courseCatalogueDaoInterface = CourseCatalogueDaoImp.getInstance();
         courseList = courseCatalogueDaoInterface.getAllCourses();
@@ -59,6 +56,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * returns the list of all courses
+     *
      * @return
      */
     @Override
@@ -70,14 +68,15 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * creates a new course and add to course list and further add to database
+     *
      * @param courseId
      * @param courseName
      * @return
      */
     @Override
-    public boolean addCourse(String courseId, String courseName,String professorId) {
+    public boolean addCourse(String courseId, String courseName, String professorId) {
         logger.info("Add Course");
-        Course course = new Course(courseId,courseName,professorId);
+        Course course = new Course(courseId, courseName, professorId);
         courseList.add(course);
         AdminDaoInterface adminDaoInterface = new AdminDaoImp();
         return adminDaoInterface.addCourse(course);
@@ -89,20 +88,21 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Returns the course along with its details
+     *
      * @param courseId
      * @return
      */
     @Override
     public Course getCourse(String courseId) {
         Course selection = null;
-        for(Course course : courseList){
+        for (Course course : courseList) {
 //            System.out.println(course.getId()+" == "+courseId);
 //            System.out.println(course.getName());
 
 //            System.out.println(course.getId().getClass()+" "+courseId.getClass());
             // TODO : Why Only working with equalsIgnoreCase
 //            System.out.println(courseId.equalsIgnoreCase(course.getId()));
-            if(course.getId().equalsIgnoreCase(courseId)){
+            if (course.getId().equalsIgnoreCase(courseId)) {
 //                System.out.println(course.getName());
                 selection = course;
             }
@@ -112,6 +112,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Delete a specific course
+     *
      * @param courseId
      * @return
      */
@@ -119,8 +120,8 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     public boolean deleteCourse(String courseId) {
         // fetch object of that course id
         boolean flag = false;
-        for(int i=0;i<courseList.size();i++){
-            if(courseList.get(i).getId() == courseId){
+        for (int i = 0; i < courseList.size(); i++) {
+            if (courseList.get(i).getId() == courseId) {
                 courseList.remove(i);
                 flag = true;
                 break;
@@ -133,6 +134,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Assign a professor to a course
+     *
      * @param courseId
      * @return
      */

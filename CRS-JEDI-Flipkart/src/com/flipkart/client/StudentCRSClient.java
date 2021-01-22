@@ -25,8 +25,8 @@ public class StudentCRSClient {
      */
     public StudentCRSClient(String sid) {
         studentId = sid;
-//        courseIdSelectionList = new ArrayList<String>();
-        studentOperation = new StudentOperation(studentId);
+//        studentOperation = new StudentOperation(studentId);
+        studentOperation = StudentOperation.getInstance(studentId);
     }
 
     /**

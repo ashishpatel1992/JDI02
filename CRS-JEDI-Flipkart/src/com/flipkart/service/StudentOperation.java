@@ -9,27 +9,45 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class StudentOperation implements StudentInterface {
+
+    private static volatile StudentOperation instance = null;
+
+    public static StudentOperation getInstance(String studentId) {
+        logger.info("studentId" + studentId);
+        if (instance == null) {
+            // This is a synchronized block, when multiple threads will access this instance
+            synchronized (StudentOperation.class) {
+                instance = new StudentOperation(studentId);
+            }
+        }
+        return instance;
+    }
+
     String studentId;
 
     private static Logger logger = Logger.getLogger(StudentOperation.class);
-    ArrayList<String> courseIdSelectionList = new ArrayList<String>();;
+    ArrayList<String> courseIdSelectionList = new ArrayList<String>();
+    ;
     CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
     RegisteredCoursesOperation registeredCoursesOperation;
 
 
-    public StudentOperation(String studentId){
+    public StudentOperation(String studentId) {
         this.studentId = studentId;
         this.registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
     }
-    public Student getStudent(){
+
+    public Student getStudent() {
         // TODO: fetch student info from DAO
-       Student student = new Student("101","Anish","anish@gmail.com","student","CS",false);
-       return student;
+        Student student = new Student("101", "Anish", "anish@gmail.com", "student", "CS", false);
+        return student;
     }
+
     @Override
     public boolean addCourseToSelection(String courseId) {
         boolean flag = false;
         Course c = courseCatalogueOperation.getCourse(courseId);
+        logger.info("addCourseTOSelection " + c.getId());
         if (c != null) {
             courseIdSelectionList.add(courseId);
             flag = true;
@@ -62,9 +80,9 @@ public class StudentOperation implements StudentInterface {
     @Override
     public boolean registerCourses() {
         boolean flag = false;
-        if(registeredCoursesOperation.registerCourses(courseIdSelectionList)){
+        if (registeredCoursesOperation.registerCourses(courseIdSelectionList)) {
             flag = true;
-        }else{
+        } else {
             flag = false;
         }
         return flag;
@@ -79,7 +97,7 @@ public class StudentOperation implements StudentInterface {
 
     //TODO : review return type
     @Override
-    public HashMap<String,String> getGrades() {
+    public HashMap<String, String> getGrades() {
         logger.info("get grades");
         return null;
     }
@@ -90,7 +108,6 @@ public class StudentOperation implements StudentInterface {
         logger.info("Add Course");
         return false;
     }
-
 
 
     @Override
