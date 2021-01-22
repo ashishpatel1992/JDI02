@@ -10,12 +10,21 @@ import java.util.Properties;
 
 //import org.apache.log4j.Logger;
 
+/**
+ * Database utility class performs the following operations
+ * 1. Get a connection to database
+ * 2. Close a connection to database
+ */
 public class DBUtil {
 
     private static Connection connection = null;
 
 //    private static Logger logger = Logger.getLogger(DBUtil.class);
 
+    /**
+     * Returns a Connection object connected to database
+     * @return Connection
+     */
     public static Connection getConnection() {
 
         if (connection == null){
@@ -46,6 +55,9 @@ public class DBUtil {
 
     }
 
+    /**
+     * Closes the established connection to database
+     */
     public static boolean closeConnection() {
         try {
             if(connection != null) {
