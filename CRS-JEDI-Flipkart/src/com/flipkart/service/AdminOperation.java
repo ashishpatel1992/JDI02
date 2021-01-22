@@ -2,6 +2,8 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
+import com.flipkart.dao.LoginDaoImp;
+import com.flipkart.dao.LoginDaoInterface;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -32,16 +34,12 @@ public class AdminOperation implements AdminInterface{
      * @return boolean
      */
     @Override
-    public boolean addProfessor(String professorId,String professorName,String professorEmail,String professorDepartment) {
+    public String addProfessor(String professorId,String professorName,String professorEmail,String professorDepartment) {
         //logger.info("Add Professor");
         Professor newProfessor = new Professor(professorId,professorName,professorEmail,"professor",professorDepartment);
-        //TODO : add newProfessor to database
-        try {
-            //AdminDao.addProfessor(newProfessor);
-            return true;
-        }catch(Exception e){
-            return false;
-        }
+        LoginDaoInterface loginDaoInterface = new LoginDaoImp();
+        String password = loginDaoInterface.addProfessor(newProfessor);
+        return password;
     }
 
 //    @Override

@@ -50,11 +50,7 @@ public class AdminCRSClient {
                         logger.info("Unable to add course");
                     break;
                 case 2:
-                    if(addProfessor())
-                        logger.info("Professor added successfully");
-                    else
-                        logger.info("Unable to add Professor");
-                    break;
+                    addProfessor();
                 case 3:
                     if(approveStudent())
                         logger.info("Student Approved");
@@ -102,7 +98,7 @@ public class AdminCRSClient {
     /**
      * Perform add professor operations
      */
-    public boolean addProfessor() {
+    public void addProfessor() {
         logger.info("Enter professor id:");
         String professorId =scanner.nextLine();
         logger.info("Enter professor name:");
@@ -111,7 +107,10 @@ public class AdminCRSClient {
         String professorEmail = scanner.next();
         logger.info("Enter professor department:");
         String professorDepartment = scanner.next();
-        return adminInterface.addProfessor(professorId,professorName,professorEmail,professorDepartment);
+        String password = adminInterface.addProfessor(professorId,professorName,professorEmail,professorDepartment);
+        if(password!=null){
+            logger.info("Professor: "+professorName+" Successfully Added\nProfessor ID : "+ professorId+"\nPassword : "+password);
+        }
     }
     /**
      * To approve the student
