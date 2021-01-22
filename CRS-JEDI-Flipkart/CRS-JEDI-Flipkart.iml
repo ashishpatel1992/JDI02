@@ -16,6 +16,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+<<<<<<< HEAD
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -29,5 +30,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+=======
+>>>>>>> parent of 3125ccb... Revert "Revert "Updated DBUtils""
   </component>
 </module>
