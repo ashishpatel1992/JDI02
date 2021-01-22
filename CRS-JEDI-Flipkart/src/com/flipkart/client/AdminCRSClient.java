@@ -35,7 +35,7 @@ public class AdminCRSClient {
             logger.info("==== Admin Menu =====");
             logger.info("1. Add Course");
             logger.info("2. Add Professor");
-            logger.info("3. Approve Students");
+            logger.info("3. Approve Student");
             logger.info("4. View Courses");
             logger.info("5. Generate Report Card");
             logger.info("6. Logout");
@@ -52,10 +52,7 @@ public class AdminCRSClient {
                 case 2:
                     addProfessor();
                 case 3:
-                    if(approveStudent())
-                        logger.info("Student Approved");
-                    else
-                        logger.info("Unable to approve the student");
+                    approveStudent();
                     break;
                 case 4 :
                     viewCourses();
@@ -115,10 +112,14 @@ public class AdminCRSClient {
     /**
      * To approve the student
      */
-    public boolean approveStudent(){
+    public void approveStudent(){
         logger.info("Enter Student Id to approve:");
         String studentId = scanner.next();
-        return adminInterface.approveStudent(studentId);
+        if(adminInterface.approveStudent(studentId)){
+            logger.info("Student ID : "+studentId+" Approved Successfully");
+        }else{
+            logger.info("Invalid student id provided");
+        }
     }
     /**
      * To generate the report card
