@@ -7,9 +7,9 @@ public interface LoginDaoInterface {
 
     String login(String userId,String password);
 
-    boolean addStudent(Student student,String password);
+    String addStudent(Student student);
 
-    boolean addProfessor(Professor professor,String password);
+    boolean addProfessor(Professor professor);
 
     boolean approveStudent(Student student);
 

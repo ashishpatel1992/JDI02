@@ -19,8 +19,6 @@ public class DBUtils {
 
     private static Connection connection = null;
 
-//    private static Logger logger = Logger.getLogger(DBUtil.class);
-
     /**
      * Returns a Connection object connected to database
      * @return Connection
@@ -29,6 +27,7 @@ public class DBUtils {
 
         if (connection == null){
             try {
+<<<<<<< Updated upstream:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtils.java
                 Properties properties = new Properties();
                 InputStream inputStream = DBUtils.class.getClassLoader().getResourceAsStream("./config.properties");
                 properties.load(inputStream);
@@ -46,10 +45,22 @@ public class DBUtils {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+=======
+                String DB_URL = "jdbc:mysql://localhost/test";
+                //  Database credentials
+                String USER = "root";
+                String PASS = "root";
+
+                Properties prop = new Properties();
+                prop.put("user",USER);
+                prop.put("password",PASS);
+                connection = DriverManager.getConnection(DB_URL,prop);
+            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+>>>>>>> Stashed changes:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtil.java
             }
         }
         return connection;
-
     }
 
     /**
@@ -65,6 +76,5 @@ public class DBUtils {
         }
         return true;
     }
-
 
 }
