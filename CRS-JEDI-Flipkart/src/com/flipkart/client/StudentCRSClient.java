@@ -14,7 +14,7 @@ public class StudentCRSClient {
      */
     private static Logger logger = Logger.getLogger(StudentCRSClient.class);
 //    ArrayList<String> courseIdSelectionList;
-    CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
+    CourseCatalogueInterface courseCatalogueOperation = CourseCatalogueOperation.getInstance();
     StudentInterface studentOperation;
     // TODO: if made static will it be shared with everyone? i guess yes! so avoiding it find better way for accessing studentId for session
     String studentId;
@@ -34,10 +34,15 @@ public class StudentCRSClient {
      */
     public void viewAvailableCourses() {
         ArrayList<Course> courseArrayList = courseCatalogueOperation.getCourseList();
-        for (Course course : courseArrayList) {
-            // TODO: Fetch Professor Name and print when Professor is implemented
-            logger.info(course.getId() + " " + course.getName() + " " + course.getProfessorId());
+        if(!courseArrayList.isEmpty()){
+            for (Course course : courseArrayList) {
+                // TODO: Fetch Professor Name and print when Professor is implemented
+                logger.info(course.getId() + " " + course.getName() + " " + course.getProfessorId());
+            }
+        }else{
+            logger.info("No Courses available to display.");
         }
+
     }
 
     /**

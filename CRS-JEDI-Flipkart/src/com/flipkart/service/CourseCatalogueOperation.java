@@ -1,6 +1,8 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Course;
+import com.flipkart.dao.CourseCatalogueDaoImp;
+import com.flipkart.dao.CourseCatalogueDaoInterface;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -10,25 +12,47 @@ import java.util.List;
  * Handles the operation of CourseCatalogue
  */
 public class CourseCatalogueOperation implements CourseCatalogueInterface {
+
+
+
+
+    private static volatile CourseCatalogueOperation instance = null;
+
+
+    public static CourseCatalogueOperation getInstance() {
+        if (instance == null) {
+            // This is a synchronized block, when multiple threads will access this instance
+            synchronized (CourseCatalogueOperation.class) {
+                instance = new CourseCatalogueOperation();
+            }
+        }
+        return instance;
+    }
+
     private static Logger logger = Logger.getLogger(CourseCatalogueOperation.class);
+
     ArrayList<Course> courseList = new ArrayList<Course>();
 
     public CourseCatalogueOperation(){
+//        CourseCatalogueDaoInterface courseCatalogueDaoInterface = new CourseCatalogueDaoImp();
+        CourseCatalogueDaoInterface courseCatalogueDaoInterface = CourseCatalogueDaoImp.getInstance();
+        courseList = courseCatalogueDaoInterface.getAllCourses();
+
         // TODO: Remove Dummy Data once connected to DB
 
-        ArrayList<String> courseName = new ArrayList<String>(){
-            {
-                add("OS");
-                add("DBMS");
-                add("ML");
-                add("AI");
-            }
-        };
-        for(int i=0;i<courseName.size();i++){
-            Course course = new Course(String.valueOf(200+i+1), courseName.get(i));
-            courseList.add(course);
-
-        }
+//        ArrayList<String> courseName = new ArrayList<String>(){
+//            {
+//                add("OS");
+//                add("DBMS");
+//                add("ML");
+//                add("AI");
+//            }
+//        };
+//        for(int i=0;i<courseName.size();i++){
+//            Course course = new Course(String.valueOf(200+i+1), courseName.get(i));
+//            courseList.add(course);
+//
+//        }
     }
 
     /**
