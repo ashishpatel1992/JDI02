@@ -64,7 +64,7 @@ public class StudentOperation implements StudentInterface {
     }
 
     @Override
-    public boolean removeCourseFromSelection(String courseId) {
+    public boolean dropCourseFromSelection(String courseId) {
         boolean flag = false;
         if (courseIdSelectionList.contains(courseId)) {
             courseIdSelectionList.remove(courseId);
@@ -115,10 +115,5 @@ public class StudentOperation implements StudentInterface {
         logger.info("get List of Registered Courses");
 
         return registeredCoursesOperation.getRegisteredCourses();
-    }
-
-    @Override
-    public boolean dropCourse(String courseId) {
-        return registeredCoursesOperation.dropCourse(courseId);
     }
 }
