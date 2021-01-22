@@ -43,6 +43,7 @@ public class Student extends User{
      * @return
      */
     public boolean isApproved() {
+
         return approved;
     }
 

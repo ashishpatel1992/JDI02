@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class StudentRegistrationCRSClient {
     private static Logger logger = Logger.getLogger(StudentRegistrationCRSClient.class);
     String studentId;
-    String studentPassword;
     String studentName;
     String studentEmail;
     String studentRole;
@@ -31,9 +30,6 @@ public class StudentRegistrationCRSClient {
         logger.info("=== Student Registration MENU ===");
         logger.info("Enter your RollNumber (this will also be your userID): ");
         studentId = scanner.next();
-        logger.info("Enter your password ");
-        studentPassword = scanner.next();
-        // TODO: input password two times and compare later on to check if both passwords are same
         logger.info("Enter your Name");
         studentName = scanner.next();
         logger.info("Enter your email");
@@ -41,10 +37,14 @@ public class StudentRegistrationCRSClient {
         logger.info("Enter your Branch");
         studentBranch = scanner.next();
         Student student = new Student(studentId,studentName,studentEmail,studentRole,studentBranch,studentApproved);
-        if(studentRegistrationOperation.isRegistrationDataValid(student)){
+        String password = studentRegistrationOperation.isRegistrationDataValid(student);
+        if(password!=null){
             logger.info("Successfully registered, pending for admin approval");
+            logger.info("Student Id : "+studentId+"\n"+"Student password : "+password);
+
         }else{
-            logger.info("Student ID "+studentId+" already exist");
+//            logger.info("Student ID "+studentId+" already exist");
+            logger.info("Student Registration Unsuccessfull");
         }
 
     }

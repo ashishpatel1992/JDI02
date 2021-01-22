@@ -23,11 +23,12 @@ public class DBUtils {
 
     /**
      * Returns a Connection object connected to database
+     *
      * @return Connection
      */
     public static Connection getConnection() {
 
-        if (connection == null){
+        if (connection == null) {
             try {
                 Properties properties = new Properties();
                 InputStream inputStream = DBUtils.class.getClassLoader().getResourceAsStream("./config.properties");
@@ -57,14 +58,12 @@ public class DBUtils {
      */
     public static boolean closeConnection() {
         try {
-            if(connection != null) {
+            if (connection != null) {
                 connection.close();
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             return false;
         }
         return true;
     }
-
-
 }
