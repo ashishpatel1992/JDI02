@@ -133,16 +133,6 @@ public class StudentCRSClient {
         }
     }
 
-    public void printDropCourseInfo() {
-        String courseId;
-        logger.info("Enter course Id to drop");
-        courseId = scanner.next();
-        if (studentOperation.dropCourse(courseId)) {
-            logger.info("Course " + courseId + " successfully dropped");
-        } else {
-            logger.info("Either CourseId id is invalid or student is not enrolled in the course");
-        }
-    }
 
     public void printReportCardInfo() {
         ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
