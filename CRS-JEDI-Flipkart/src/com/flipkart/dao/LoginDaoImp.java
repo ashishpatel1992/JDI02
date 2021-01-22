@@ -3,7 +3,7 @@ package com.flipkart.dao;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 import com.flipkart.constants.SQlQueriesConstants;
-import com.flipkart.utils.DBUtil;
+import com.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -21,7 +21,7 @@ import java.util.Random;
 public class LoginDaoImp implements LoginDaoInterface{
 
     private static Logger logger = Logger.getLogger(LoginDaoImp.class);
-    Connection connection = DBUtil.getConnection();
+    Connection connection = DBUtils.getConnection();
 
     @Override
     public String login(String userId, String password) {
