@@ -11,6 +11,6 @@ public interface LoginDaoInterface {
 
     String addProfessor(Professor professor);
 
-    boolean approveStudent(Student student);
+    boolean approveStudent(String studentid);
 
 }

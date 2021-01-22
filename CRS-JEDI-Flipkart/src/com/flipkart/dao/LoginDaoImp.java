@@ -73,7 +73,26 @@ public class LoginDaoImp implements LoginDaoInterface{
     }
 
     @Override
-    public boolean approveStudent(Student student) {
+    public boolean approveStudent(String studentid) {
+        PreparedStatement stmt=null;
+        try{
+            stmt = connection.prepareStatement(SQlQueriesConstants.APPROVE_STUDENT_QUERY);
+            stmt.setString(1,studentid);
+            int updatedValues  = stmt.executeUpdate();
+            if(updatedValues>0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            try {
+                stmt.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         return false;
     }
 

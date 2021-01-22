@@ -1,6 +1,8 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Course;
+import com.flipkart.dao.AdminDaoImp;
+import com.flipkart.dao.AdminDaoInterface;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -53,10 +55,12 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
         logger.info("Add Course");
         Course course = new Course(courseId,courseName,professorId);
         courseList.add(course);
+        AdminDaoInterface adminDaoInterface = new AdminDaoImp();
+        return adminDaoInterface.addCourse(course);
         //TODO: add course list to database
         // TODO: We need to create professor before assigning him a course
         // TODO: a course will be hidden if no professor is assigned
-        return true;
+        //return true;
     }
 
     /**
