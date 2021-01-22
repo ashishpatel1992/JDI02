@@ -2,6 +2,8 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
+import com.flipkart.dao.AdminDaoImp;
+import com.flipkart.dao.AdminDaoInterface;
 import com.flipkart.dao.LoginDaoImp;
 import com.flipkart.dao.LoginDaoInterface;
 import org.apache.log4j.Logger;
@@ -56,9 +58,8 @@ public class AdminOperation implements AdminInterface{
     @Override
     public boolean approveStudent(String studentId) {
         try{
-            //TODO: dao - update approve bit of student
-            //temp print
-            return true;
+            AdminDaoInterface adminDaoInterface = new AdminDaoImp();
+            return adminDaoInterface.approveStudent(studentId);
         }catch (Exception e){
             return false;
         }
