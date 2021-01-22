@@ -2,6 +2,14 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
+import com.flipkart.constants.SQlQueriesConstants;
+import com.flipkart.utils.DBUtil;
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Random;
 
 /**
  * Database access object class for login operations, performs the following operations
@@ -12,18 +20,41 @@ import com.flipkart.bean.Student;
  */
 public class LoginDaoImp implements LoginDaoInterface{
 
+    private static Logger logger = Logger.getLogger(LoginDaoImp.class);
+    Connection connection = DBUtil.getConnection();
+
     @Override
     public String login(String userId, String password) {
+
         return null;
     }
 
     @Override
-    public boolean addStudent(Student student, String password) {
-        return false;
+    public String addStudent(Student student) {
+        String password = addUser(student.getId(),student.getName(),student.getEmail(),"student");
+        PreparedStatement stmt = null;
+        try{
+            stmt = connection.prepareStatement(SQlQueriesConstants.ADD_STUDENT_QUERY);
+            stmt.setString(1,student.getId());
+            stmt.setString(2,student.getBranch());
+            int studentApproved = (student.isApproved()) ? 1 : 0;
+            stmt.setInt(3,studentApproved);
+            int updatedValues  = stmt.executeUpdate();
+            if(updatedValues>0){
+                return password;
+            }else{
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return password;
     }
 
     @Override
-    public boolean addProfessor(Professor professor, String password) {
+    public boolean addProfessor(Professor professor) {
+
         return false;
     }
 
@@ -32,8 +63,43 @@ public class LoginDaoImp implements LoginDaoInterface{
         return false;
     }
 
-    String generateUserIdWithRole(String role){
-        return "";
+    public String addUser(String userid,String name,String email,String role){
+        String generatedPassword = generatePassword();
+        PreparedStatement stmt = null;
+        try{
+            stmt = connection.prepareStatement(SQlQueriesConstants.ADD_USER_QUERY);
+            stmt.setString(1,userid);
+            stmt.setString(2, name);
+            stmt.setString(3,email);
+            stmt.setString(4,generatedPassword);
+            stmt.setString(5,role);
+            int updatedValues  = stmt.executeUpdate();
+            if(updatedValues>0){
+                return generatedPassword;
+            }else{
+                return null;
+            }
+        }catch (SQLException e){
+            logger.info(e.getMessage());
+            return null;
+        }finally{
+            try {
+                stmt.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    public String generatePassword(){
+
+        String numbers = "0123456789";
+        Random rndm_method = new Random();
+        String otp = new String();
+        for (int i = 0; i < 5; i++) {
+            otp += numbers.charAt(rndm_method.nextInt(numbers.length()));
+        }
+        return otp;
     }
 
 }
