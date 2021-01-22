@@ -27,6 +27,7 @@ public class DBUtil {
 
         if (connection == null){
             try {
+<<<<<<< HEAD:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtil.java
 <<<<<<< HEAD:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtils.java
 <<<<<<< Updated upstream:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtils.java
                 Properties properties = new Properties();
@@ -49,13 +50,18 @@ public class DBUtil {
 =======
 =======
 >>>>>>> parent of 3125ccb... Revert "Revert "Updated DBUtils"":CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtil.java
+=======
+>>>>>>> parent of 3125ccb... Revert "Revert "Updated DBUtils"":CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtils.java
                 String DB_URL = "jdbc:mysql://localhost/test";
                 //  Database credentials
                 String USER = "root";
                 String PASS = "root";
 
+<<<<<<< HEAD:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtil.java
 <<<<<<< HEAD:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtils.java
 =======
+=======
+>>>>>>> parent of 3125ccb... Revert "Revert "Updated DBUtils"":CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtils.java
 //                InputStream inputStream = DBUtil.class.getClassLoader().getResourceAsStream("config.properties");
 //                prop.load(inputStream);
 //                String driver = prop.getProperty("driver");
@@ -65,18 +71,25 @@ public class DBUtil {
 //                Class.forName(driver);
 //                connection = DriverManager.getConnection(url, user, password);
 
+<<<<<<< HEAD:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtil.java
 >>>>>>> parent of 3125ccb... Revert "Revert "Updated DBUtils"":CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtil.java
+=======
+>>>>>>> parent of 3125ccb... Revert "Revert "Updated DBUtils"":CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtils.java
                 Properties prop = new Properties();
                 prop.put("user",USER);
                 prop.put("password",PASS);
                 connection = DriverManager.getConnection(DB_URL,prop);
             } catch (Exception e) {
+<<<<<<< HEAD:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtil.java
 <<<<<<< HEAD:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtils.java
 //                System.out.println(e.getMessage());
 >>>>>>> Stashed changes:CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtil.java
 =======
 //                logger.error(e.getMessage());
 >>>>>>> parent of 3125ccb... Revert "Revert "Updated DBUtils"":CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtil.java
+=======
+//                logger.error(e.getMessage());
+>>>>>>> parent of 3125ccb... Revert "Revert "Updated DBUtils"":CRS-JEDI-Flipkart/src/com/flipkart/utils/DBUtils.java
             }
         }
         return connection;
