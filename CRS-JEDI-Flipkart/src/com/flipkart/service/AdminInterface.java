@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public interface AdminInterface {
 //    public boolean addCourse();
-    public boolean addProfessor(String professorId,String professorName,String professorEmail,String professorDepartment);
+    public String addProfessor(String professorId,String professorName,String professorEmail,String professorDepartment);
 //    public void viewCourses();
     public boolean approveStudent(String studentId);
     public HashMap<String,String> generateReportCard(String studentId);

@@ -9,7 +9,7 @@ public interface LoginDaoInterface {
 
     String addStudent(Student student);
 
-    boolean addProfessor(Professor professor);
+    String addProfessor(Professor professor);
 
     boolean approveStudent(Student student);
 

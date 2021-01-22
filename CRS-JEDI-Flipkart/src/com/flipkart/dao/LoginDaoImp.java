@@ -53,9 +53,23 @@ public class LoginDaoImp implements LoginDaoInterface{
     }
 
     @Override
-    public boolean addProfessor(Professor professor) {
+    public String addProfessor(Professor professor) {
+        String password = addUser(professor.getId(),professor.getName(),professor.getEmail(),"professor");
+        PreparedStatement stmt = null;
+        try{
+            stmt = connection.prepareStatement(SQlQueriesConstants.ADD_PROFESSOR_QUERY);
+            stmt.setString(1,professor.getId());
+            stmt.setString(2, professor.getDepartment());
+            int updatedValues  = stmt.executeUpdate();
+            if(updatedValues>0){
+                return password;
+            }else{
+                return null;
+            }
+        }catch (SQLException e){
 
-        return false;
+        }
+        return null;
     }
 
     @Override
