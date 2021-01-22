@@ -10,30 +10,18 @@ import java.util.Scanner;
 
 public class StudentOperation implements StudentInterface {
 
-    private static volatile StudentOperation instance = null;
-
-    public static StudentOperation getInstance(String studentId) {
-        logger.info("studentId" + studentId);
-        if (instance == null) {
-            // This is a synchronized block, when multiple threads will access this instance
-            synchronized (StudentOperation.class) {
-                instance = new StudentOperation(studentId);
-            }
-        }
-        return instance;
-    }
-
     String studentId;
 
     private static Logger logger = Logger.getLogger(StudentOperation.class);
     ArrayList<String> courseIdSelectionList = new ArrayList<String>();
-    ;
+
     CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
     RegisteredCoursesOperation registeredCoursesOperation;
 
 
     public StudentOperation(String studentId) {
         this.studentId = studentId;
+//        this.registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
         this.registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
     }
 
@@ -78,14 +66,16 @@ public class StudentOperation implements StudentInterface {
     }
 
     @Override
-    public boolean registerCourses() {
-        boolean flag = false;
-        if (registeredCoursesOperation.registerCourses(courseIdSelectionList)) {
-            flag = true;
-        } else {
-            flag = false;
-        }
-        return flag;
+    public ArrayList<String> registerCourses() {
+        logger.info("REGISTER COURSES");
+        return registeredCoursesOperation.registerCourses(courseIdSelectionList);
+//        boolean flag = false;
+//        if (registeredCoursesOperation.registerCourses(courseIdSelectionList)) {
+//            flag = true;
+//        } else {
+//            flag = false;
+//        }
+//        return flag;
     }
 
     @Override
@@ -112,7 +102,7 @@ public class StudentOperation implements StudentInterface {
 
     @Override
     public ArrayList<Course> getRegisteredCourses() {
-        logger.info("get List of Registered Courses");
+//        logger.info("get List of Registered Courses");
 
         return registeredCoursesOperation.getRegisteredCourses();
     }

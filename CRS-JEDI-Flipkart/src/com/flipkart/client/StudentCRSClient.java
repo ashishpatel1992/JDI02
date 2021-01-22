@@ -15,7 +15,7 @@ public class StudentCRSClient {
      */
     private static Logger logger = Logger.getLogger(StudentCRSClient.class);
     //    ArrayList<String> courseIdSelectionList;
-    CourseCatalogueInterface courseCatalogueOperation = CourseCatalogueOperation.getInstance();
+    CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
     StudentInterface studentOperation;
     // TODO: if made static will it be shared with everyone? i guess yes! so avoiding it find better way for accessing studentId for session
     String studentId;
@@ -24,18 +24,19 @@ public class StudentCRSClient {
     /**
      * Initialize Constructor with studentId
      *
-     * @param sid
+     * @param studentId
      */
-    public StudentCRSClient(String sid) {
-        studentId = sid;
+    public StudentCRSClient(String studentId) {
+        this.studentId = studentId;
 //        studentOperation = new StudentOperation(studentId);
-        studentOperation = StudentOperation.getInstance(studentId);
+        studentOperation = new StudentOperation(studentId);
     }
 
     /**
      * Displays list of available courses in log
      */
     public void viewAvailableCourses() {
+//        ArrayList<Course> courseArrayList = courseCatalogueOperation.getCourseList();
         ArrayList<Course> courseArrayList = courseCatalogueOperation.getCourseList();
         if (!courseArrayList.isEmpty()) {
             for (Course course : courseArrayList) {
@@ -106,10 +107,10 @@ public class StudentCRSClient {
         printCourseSelectionInfo();
     }
 
-    public void printRegisterCourseInfo() {
+    public void printDoRegisterCourseInfo() {
         printCourseSelectionInfo();
         if (studentOperation.getCourseSelection().size() > 0) {
-            if (studentOperation.registerCourses()) {
+            if (studentOperation.registerCourses() != null) {
                 ArrayList<Course> courseArrayList = studentOperation.getRegisteredCourses();
                 logger.info("You are successfully registered for following courses.");
                 logger.info("CourseId\tCourseName");
@@ -122,7 +123,9 @@ public class StudentCRSClient {
 
     public void printRegisteredCourseInfo() {
         logger.info("You are registered for following courses:- ");
+
         ArrayList<Course> registeredCourseList = studentOperation.getRegisteredCourses();
+        logger.info(registeredCourseList.size());
         if (registeredCourseList.size() > 0) {
             logger.info("CourseId\tCourseName");
             for (Course regCourse : registeredCourseList) {
@@ -169,7 +172,7 @@ public class StudentCRSClient {
                     printDropCourseFromSelectionInfo();
                     break;
                 case 4:
-                    printRegisterCourseInfo();
+                    printDoRegisterCourseInfo();
                     break;
                 case 5:
                     printRegisteredCourseInfo();
@@ -179,6 +182,7 @@ public class StudentCRSClient {
                     return;
                 case 7:
                     // TODO Define login/logout enums
+                    studentId = null;
                     return;
                 default:
                     logger.info("Invalid Choice");

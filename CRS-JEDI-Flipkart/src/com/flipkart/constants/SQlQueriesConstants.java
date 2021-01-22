@@ -17,4 +17,9 @@ public class SQlQueriesConstants {
 
     //Student Queries
     public static String GET_ALL_COURSES_QUERY = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid` FROM `course`";
+    public static String GET_ALL_COURSE_ID_FOR_REG_STUDENT_QUERY = "SELECT `studentid`, `courseid`, `grade` FROM `registeredcourse` WHERE `studentid` = ?";
+    public static String ADD_STUDENT_COURSE_REGISTRATION = "INSERT INTO `registeredcourse`(`studentid`, `courseid`) VALUES (?,?);";
+
+    //Course Queries
+    public static  String GET_COURSE_DETAIL = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid` FROM `course` WHERE `courseid` = ?";
 }

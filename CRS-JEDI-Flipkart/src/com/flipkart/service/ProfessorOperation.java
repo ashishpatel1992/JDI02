@@ -64,7 +64,9 @@ public class ProfessorOperation implements ProfessorInterface {
             String courseId = getCourseDetail().getId();
             RegisteredCoursesOperation registeredCoursesOperation = new RegisteredCoursesOperation();
             // TODO: getter setter for registeredCourseIdList
-            HashMap<String, ArrayList<String>> registeredCourseIdList = registeredCoursesOperation.registeredCourseIdList;
+//            HashMap<String, ArrayList<String>> registeredCourseIdList = registeredCoursesOperation.registeredCourseIdList;
+            // TODO: Professor will break here
+            HashMap<String, ArrayList<String>> registeredCourseIdList = null;
 
 
             for (Map.Entry<String, ArrayList<String>> studentHashCourseList : registeredCourseIdList.entrySet()) {

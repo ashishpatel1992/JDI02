@@ -12,7 +12,7 @@ public interface RegisteredCoursesInterface {
      * @return
      */
 
-    public boolean registerCourses(ArrayList<String> courseIdSelectionList);
+    public ArrayList<String> registerCourses(ArrayList<String> courseIdSelectionList);
 
     /**
      * Get list of all courses student is registered in.
@@ -25,6 +25,6 @@ public interface RegisteredCoursesInterface {
      * @param courseId
      * @return
      */
-    public boolean dropCourse(String courseId);
+//    public boolean dropCourse(String courseId);
 
 }

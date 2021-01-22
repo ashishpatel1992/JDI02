@@ -21,5 +21,5 @@ public interface StudentInterface {
 
     public boolean addCourse(String id);
 
-    public boolean registerCourses();
+    public ArrayList<String> registerCourses();
 }

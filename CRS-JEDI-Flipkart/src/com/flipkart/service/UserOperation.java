@@ -14,7 +14,8 @@ public class UserOperation implements UserInterface{
     @Override
     public String verifyCredentials(String userId, String password) {
 
-//        logger.info("Verify Credentials");
+        logger.info("Verify Credentials");
+        logger.info(userId);
         // TODO User Authentication from doa
         return userId;
     }

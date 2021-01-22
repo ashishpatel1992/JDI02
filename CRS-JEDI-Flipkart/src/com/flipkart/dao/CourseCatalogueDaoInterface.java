@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface CourseCatalogueDaoInterface {
     public ArrayList<Course> getAllCourses();
+    public Course getCourseDetail(String courseId);
 }

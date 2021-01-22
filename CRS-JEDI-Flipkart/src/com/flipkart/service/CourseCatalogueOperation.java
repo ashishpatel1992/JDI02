@@ -16,26 +16,14 @@ import java.util.List;
 public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
 
-    private static volatile CourseCatalogueOperation instance = null;
-
-    public static CourseCatalogueOperation getInstance() {
-        if (instance == null) {
-            // This is a synchronized block, when multiple threads will access this instance
-            synchronized (CourseCatalogueOperation.class) {
-                instance = new CourseCatalogueOperation();
-            }
-        }
-        return instance;
-    }
-
     private static Logger logger = Logger.getLogger(CourseCatalogueOperation.class);
 
-    ArrayList<Course> courseList = new ArrayList<Course>();
+//    ArrayList<Course> courseList = new ArrayList<Course>();
 
     public CourseCatalogueOperation() {
 //        CourseCatalogueDaoInterface courseCatalogueDaoInterface = new CourseCatalogueDaoImp();
-        CourseCatalogueDaoInterface courseCatalogueDaoInterface = CourseCatalogueDaoImp.getInstance();
-        courseList = courseCatalogueDaoInterface.getAllCourses();
+//        CourseCatalogueDaoInterface courseCatalogueDaoInterface = CourseCatalogueDaoImp.getInstance().getAllCourses();
+//        courseList = courseCatalogueDaoInterface.getAllCourses();
 
         // TODO: Remove Dummy Data once connected to DB
 
@@ -62,7 +50,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     @Override
     public ArrayList<Course> getCourseList() {
         logger.info("ViewCourses");
-        return courseList;
+        return CourseCatalogueDaoImp.getInstance().getAllCourses();
     }
 
 
@@ -77,7 +65,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     public boolean addCourse(String courseId, String courseName, String professorId) {
         logger.info("Add Course");
         Course course = new Course(courseId, courseName, professorId);
-        courseList.add(course);
+//        courseList.add(course);
         AdminDaoInterface adminDaoInterface = new AdminDaoImp();
         return adminDaoInterface.addCourse(course);
         //TODO: add course list to database
@@ -94,20 +82,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
      */
     @Override
     public Course getCourse(String courseId) {
-        Course selection = null;
-        for (Course course : courseList) {
-//            System.out.println(course.getId()+" == "+courseId);
-//            System.out.println(course.getName());
-
-//            System.out.println(course.getId().getClass()+" "+courseId.getClass());
-            // TODO : Why Only working with equalsIgnoreCase
-//            System.out.println(courseId.equalsIgnoreCase(course.getId()));
-            if (course.getId().equalsIgnoreCase(courseId)) {
-//                System.out.println(course.getName());
-                selection = course;
-            }
-        }
-        return selection;
+        return CourseCatalogueDaoImp.getInstance().getCourseDetail(courseId);
     }
 
     /**
@@ -120,13 +95,14 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     public boolean deleteCourse(String courseId) {
         // fetch object of that course id
         boolean flag = false;
-        for (int i = 0; i < courseList.size(); i++) {
-            if (courseList.get(i).getId() == courseId) {
-                courseList.remove(i);
-                flag = true;
-                break;
-            }
-        }
+        // TODO: Implement deleteCourse
+//        for (int i = 0; i < courseList.size(); i++) {
+//            if (courseList.get(i).getId() == courseId) {
+//                courseList.remove(i);
+//                flag = true;
+//                break;
+//            }
+//        }
 
         logger.info("Delete Course");
         return flag;
@@ -140,7 +116,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
      */
     @Override
     public boolean assignProfessor(String courseId) {
-        // TODO: later on call to doa
+        // TODO: do Assign Professor to course
 //        Course course = null;
 //        for(int i=0;i<courseList.size();i++){
 //            if(courseList.get(i).getId() == courseId){
