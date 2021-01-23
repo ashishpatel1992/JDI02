@@ -66,7 +66,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
         logger.info("Add Course");
         Course course = new Course(courseId, courseName, professorId);
 //        courseList.add(course);
-        AdminDaoInterface adminDaoInterface = new AdminDaoImp();
+        AdminDaoInterface adminDaoInterface = AdminDaoImp.getInstance();
         return adminDaoInterface.addCourse(course);
         //TODO: add course list to database
         // TODO: We need to create professor before assigning him a course

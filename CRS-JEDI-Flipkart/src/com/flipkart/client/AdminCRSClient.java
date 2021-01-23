@@ -3,6 +3,7 @@ package com.flipkart.client;
 import org.apache.log4j.Logger;
 import com.flipkart.bean.*;
 import com.flipkart.service.*;
+
 import java.util.*;
 
 /**
@@ -11,7 +12,7 @@ import java.util.*;
 public class AdminCRSClient {
 
     private static Logger logger = Logger.getLogger(AdminCRSClient.class);
-    AdminInterface adminInterface=new AdminOperation();
+    AdminInterface adminInterface = new AdminOperation();
     CourseCatalogueInterface courseCatalogueInterface = new CourseCatalogueOperation();
     Scanner scanner;
     String adminId;
@@ -39,26 +40,27 @@ public class AdminCRSClient {
             logger.info("4. View Courses");
             logger.info("5. Generate Report Card");
             logger.info("6. Logout");
-            Scanner scanner=new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in);
             choice = scanner.nextInt();
 
-            switch(choice){
+            switch (choice) {
                 case 1:
-                    if(addCourse())
+                    if (addCourse())
                         logger.info("Course added successfully");
                     else
                         logger.info("Unable to add course");
                     break;
                 case 2:
                     addProfessor();
+                    break;
                 case 3:
                     approveStudent();
                     break;
-                case 4 :
+                case 4:
                     viewCourses();
                     break;
-                case 5 :
-                    if(generateReportCard())
+                case 5:
+                    if (generateReportCard())
                         logger.info("Report Card Generated");
                     else
                         logger.info("Unable to generate report card");
@@ -79,62 +81,86 @@ public class AdminCRSClient {
             logger.info(course.getId() + " " + course.getName() + " " + course.getProfessorId());
         }
     }
+
     /**
      * Perform add course operations
      */
-    public boolean addCourse(){
+    public boolean addCourse() {
         logger.info("Enter the course ID you want to add");
-        String courseID= scanner.next();
+        String courseID = scanner.next();
         logger.info("Enter the course name you want to add");
-        String courseName= scanner.next();
-        logger.info("Enter the Professor Id for course "+courseName);
+        String courseName = scanner.next();
+        logger.info("Enter the Professor Id for course " + courseName);
         String professorId = scanner.next();
-        return courseCatalogueInterface.addCourse(courseID, courseName,professorId);
+        return courseCatalogueInterface.addCourse(courseID, courseName, professorId);
 
     }
+
     /**
      * Perform add professor operations
      */
     public void addProfessor() {
         logger.info("Enter professor id:");
-        String professorId =scanner.nextLine();
+        String professorId = scanner.nextLine();
         logger.info("Enter professor name:");
         String professorName = scanner.next();
         logger.info("Enter professor email:");
         String professorEmail = scanner.next();
         logger.info("Enter professor department:");
         String professorDepartment = scanner.next();
-        String password = adminInterface.addProfessor(professorId,professorName,professorEmail,professorDepartment);
-        if(password!=null){
-            logger.info("Professor: "+professorName+" Successfully Added\nProfessor ID : "+ professorId+"\nPassword : "+password);
+        String password = adminInterface.addProfessor(professorId, professorName, professorEmail, professorDepartment);
+        logger.info(password);
+        if (password != null) {
+            logger.info("Professor: " + professorName + " Successfully Added\nProfessor ID : " + professorId + "\nPassword : " + password);
         }
     }
+
+    public int displayUnApprovedStudent() {
+        ArrayList<Student> unApprovedStudents = adminInterface.getUnApprovedStudents();
+        if (unApprovedStudents.size() > 0) {
+            logger.info("StudentId\tStudentName");
+            for (Student unApprovedStudent : unApprovedStudents) {
+                logger.info(unApprovedStudent.getId() + "\t\t" + unApprovedStudent.getName());
+            }
+
+        } else {
+            logger.info("No students pending for approval");
+
+        }
+        return unApprovedStudents.size();
+    }
+
     /**
      * To approve the student
      */
-    public void approveStudent(){
-        logger.info("Enter Student Id to approve:");
-        String studentId = scanner.next();
-        if(adminInterface.approveStudent(studentId)){
-            logger.info("Student ID : "+studentId+" Approved Successfully");
-        }else{
-            logger.info("Invalid student id provided");
+    public void approveStudent() {
+        if (displayUnApprovedStudent() > 0) {
+            logger.info("Enter Student Id to approve:");
+            String studentId = scanner.next();
+            // TODO: Exception Handling to return StudentAlready approved, Student Id invalid
+            if (adminInterface.approveStudent(studentId)) {
+                logger.info("Student ID : " + studentId + " Approved Successfully");
+            } else {
+                logger.info("Invalid student id provided or Student Id already approved");
+            }
         }
+
     }
+
     /**
      * To generate the report card
      */
     public boolean generateReportCard() {
         logger.info("Enter student id to generate report card:");
         String studentId = scanner.next();
-        HashMap<String,String> studentGrades =  adminInterface.generateReportCard(studentId);
-        if(studentGrades!=null){
+        HashMap<String, String> studentGrades = adminInterface.generateReportCard(studentId);
+        if (studentGrades != null) {
             logger.info("Course ID\tGrade");
-            for(Map.Entry<String,String> courseGradeMap:studentGrades.entrySet()){
-                logger.info(courseGradeMap.getKey()+"\t"+courseGradeMap.getValue());
+            for (Map.Entry<String, String> courseGradeMap : studentGrades.entrySet()) {
+                logger.info(courseGradeMap.getKey() + "\t" + courseGradeMap.getValue());
             }
             return true;
-        }else{
+        } else {
             return false;
         }
     }

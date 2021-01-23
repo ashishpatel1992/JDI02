@@ -2,6 +2,8 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
+import com.flipkart.dao.StudentDaoImp;
+import com.flipkart.dao.StudentDaoInterface;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -26,9 +28,7 @@ public class StudentOperation implements StudentInterface {
     }
 
     public Student getStudent() {
-        // TODO: fetch student info from DAO
-        Student student = new Student("101", "Anish", "anish@gmail.com", "student", "CS", false);
-        return student;
+        return StudentDaoImp.getInstance().getStudent(studentId);
     }
 
     @Override

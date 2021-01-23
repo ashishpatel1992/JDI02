@@ -1,12 +1,10 @@
 package com.flipkart.dao;
 
-import com.flipkart.bean.Student;
-import com.flipkart.constants.SQlQueriesConstants;
+import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +19,7 @@ public class ProfessorDaoImp implements ProfessorDaoInterface{
         ResultSet rs = null;
         HashMap<String,String> enrolledStudentsMap = new HashMap<>();
         try{
-            stmt = connection.prepareStatement(SQlQueriesConstants.GET_ENROLLED_STUDENTS_FOR_COURSE);
+            stmt = connection.prepareStatement(SQLQueriesConstants.GET_ENROLLED_STUDENTS_FOR_COURSE);
             stmt.setString(1,courseid);
             rs = stmt.executeQuery();
             while(rs.next()){
@@ -40,7 +38,7 @@ public class ProfessorDaoImp implements ProfessorDaoInterface{
     public boolean enterGradesOfStudents(HashMap<String, String> gradesOfStudents, String courseId) {
         PreparedStatement stmt = null;
         try{
-            stmt = connection.prepareStatement(SQlQueriesConstants.ADD_GRADE_QUERY);
+            stmt = connection.prepareStatement(SQLQueriesConstants.ADD_GRADE_QUERY);
             for(Map.Entry<String,String> student:gradesOfStudents.entrySet()){
                     String studentId = student.getKey();
                     String studentGrade = student.getValue();

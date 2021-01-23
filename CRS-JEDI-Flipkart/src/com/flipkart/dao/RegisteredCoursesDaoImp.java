@@ -1,7 +1,6 @@
 package com.flipkart.dao;
 
-import com.flipkart.bean.Course;
-import com.flipkart.constants.SQlQueriesConstants;
+import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.service.RegisteredCoursesOperation;
 import com.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
@@ -37,7 +36,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
         ResultSet resultSet = null;
         // TODO: Check if courseId list is null
         try {
-            preparedStatement = connection.prepareStatement(SQlQueriesConstants.GET_ALL_COURSE_ID_FOR_REG_STUDENT_QUERY);
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_ALL_COURSE_ID_FOR_REG_STUDENT_QUERY);
             preparedStatement.setString(1, studentId);
             resultSet = preparedStatement.executeQuery();
 
@@ -76,7 +75,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
         PreparedStatement stmt = null;
         try {
             for (String courseIdSelection : courseIdSelectionList) {
-                stmt = connection.prepareStatement(SQlQueriesConstants.ADD_STUDENT_COURSE_REGISTRATION);
+                stmt = connection.prepareStatement(SQLQueriesConstants.ADD_STUDENT_COURSE_REGISTRATION);
                 stmt.setString(1, studentId);
                 stmt.setString(2, courseIdSelection);
 

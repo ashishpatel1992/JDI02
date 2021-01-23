@@ -1,11 +1,11 @@
 package com.flipkart.service;
 
-import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
+import com.flipkart.bean.Student;
 import com.flipkart.dao.AdminDaoImp;
-import com.flipkart.dao.AdminDaoInterface;
 import com.flipkart.dao.LoginDaoImp;
 import com.flipkart.dao.LoginDaoInterface;
+import com.flipkart.dao.StudentDaoImp;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.HashMap;
  * 3. approve student
  * 4. generate report card for a student
  */
-public class AdminOperation implements AdminInterface{
+public class AdminOperation implements AdminInterface {
     private static Logger logger = Logger.getLogger(AdminOperation.class);
 
 //    @Override
@@ -29,6 +29,7 @@ public class AdminOperation implements AdminInterface{
 
     /**
      * Add professor to database
+     *
      * @param professorId
      * @param professorName
      * @param professorEmail
@@ -36,10 +37,10 @@ public class AdminOperation implements AdminInterface{
      * @return boolean
      */
     @Override
-    public String addProfessor(String professorId,String professorName,String professorEmail,String professorDepartment) {
+    public String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment) {
         //logger.info("Add Professor");
-        Professor newProfessor = new Professor(professorId,professorName,professorEmail,"professor",professorDepartment);
-        LoginDaoInterface loginDaoInterface = new LoginDaoImp();
+        Professor newProfessor = new Professor(professorId, professorName, professorEmail, "professor", professorDepartment);
+        LoginDaoInterface loginDaoInterface = LoginDaoImp.getInstance();
         String password = loginDaoInterface.addProfessor(newProfessor);
         return password;
     }
@@ -50,34 +51,45 @@ public class AdminOperation implements AdminInterface{
 //
 //    }
 
+    public ArrayList<Student> getUnApprovedStudents() {
+        // TODO: Get unapproved student list displayed
+
+        ArrayList<Student> unApprovedStudentList = new ArrayList<>();
+        ArrayList<String> unapprovedStudentIds = AdminDaoImp.getInstance().getUnApprovedStudentsIds();
+
+        for (String unApprovedStudentId : unapprovedStudentIds) {
+            logger.info("Inside getUnApprovedStudents()");
+            Student student = StudentDaoImp.getInstance().getStudent(unApprovedStudentId);
+            unApprovedStudentList.add(student);
+        }
+        return unApprovedStudentList;
+    }
+
     /**
      * Approve student
+     *
      * @param studentId
      * @return boolean
      */
     @Override
     public boolean approveStudent(String studentId) {
-        try{
-            AdminDaoInterface adminDaoInterface = new AdminDaoImp();
-            return adminDaoInterface.approveStudent(studentId);
-        }catch (Exception e){
-            return false;
-        }
+        return AdminDaoImp.getInstance().approveStudent(studentId);
     }
 
     /**
      * Generate report card for a student
+     *
      * @param studentId
-     * @return HashMap<String,String>
+     * @return HashMap<String, String>
      */
     @Override
-    public HashMap<String,String> generateReportCard(String studentId) {
+    public HashMap<String, String> generateReportCard(String studentId) {
         try {
             StudentOperation studentOperation = new StudentOperation(studentId);
             HashMap<String, String> studentGrades = studentOperation.getGrades();
 
             return studentGrades;
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

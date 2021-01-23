@@ -1,12 +1,10 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Course;
-import com.flipkart.constants.SQlQueriesConstants;
-import com.flipkart.service.CourseCatalogueOperation;
+import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -41,7 +39,7 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
         ResultSet resultSet = null;
         try {
             stmt = connection.createStatement();
-            resultSet = stmt.executeQuery(SQlQueriesConstants.GET_ALL_COURSES_QUERY);
+            resultSet = stmt.executeQuery(SQLQueriesConstants.GET_ALL_COURSES_QUERY);
 
             while (resultSet.next()) {
                 String courseId;
@@ -89,7 +87,7 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
         ResultSet resultSet = null;
         Course course = null;
         try {
-            preparedStatement = connection.prepareStatement(SQlQueriesConstants.GET_COURSE_DETAIL);
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_COURSE_DETAIL);
             preparedStatement.setString(1, courseId);
             resultSet = preparedStatement.executeQuery();
 
