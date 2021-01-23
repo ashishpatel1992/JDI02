@@ -8,6 +8,6 @@ import java.util.HashMap;
 
 public interface ProfessorInterface {
     public Course getCourseDetail();
-    public ArrayList<Student>getEnrolledStudents();
+    public HashMap<String,String> getEnrolledStudents();
     public boolean gradeStudent(HashMap<String,String> gradesOfStudents);
 }

@@ -2,6 +2,8 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
+import com.flipkart.dao.ProfessorDaoImp;
+import com.flipkart.dao.ProfessorDaoInterface;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.Map;
 public class ProfessorOperation implements ProfessorInterface {
     private static Logger logger = Logger.getLogger(ProfessorOperation.class);
     String professorId;
-
+    ProfessorDaoInterface professorDaoInterface;
     /**
      * Constructor to set professor id
      *
@@ -25,7 +27,7 @@ public class ProfessorOperation implements ProfessorInterface {
      */
     public ProfessorOperation(String professorId) {
         this.professorId = professorId;
-
+        professorDaoInterface = new ProfessorDaoImp();
     }
 
 
@@ -39,9 +41,11 @@ public class ProfessorOperation implements ProfessorInterface {
         //logger.info("Get Course Detail");
         try {
             ArrayList<Course> courseArrayList = new CourseCatalogueOperation().getCourseList();
+
             boolean success = false;
             for (Course course : courseArrayList) {
                 if (course.getProfessorId().equals(professorId)) {
+
                     return course;
                 }
             }
@@ -57,12 +61,12 @@ public class ProfessorOperation implements ProfessorInterface {
      * @return ArrayList<Student>
      */
     @Override
-    public ArrayList<Student> getEnrolledStudents() {
+    public HashMap<String,String> getEnrolledStudents() {
         //logger.info("Get list of Enrolled Students");
-        ArrayList<Student> studentsEnrolled = new ArrayList<>();
+        /*ArrayList<Student> studentsEnrolled = new ArrayList<>();
         try {
             String courseId = getCourseDetail().getId();
-            RegisteredCoursesOperation registeredCoursesOperation = new RegisteredCoursesOperation();
+//            RegisteredCoursesOperation registeredCoursesOperation = new RegisteredCoursesOperation();
             // TODO: getter setter for registeredCourseIdList
 //            HashMap<String, ArrayList<String>> registeredCourseIdList = registeredCoursesOperation.registeredCourseIdList;
             // TODO: Professor will break here
@@ -79,7 +83,10 @@ public class ProfessorOperation implements ProfessorInterface {
         } catch (Exception e) {
             logger.info(e.getMessage());
         }
-        return studentsEnrolled;
+        return studentsEnrolled;*/
+        String courseId = getCourseDetail().getId();
+        HashMap<String,String> studentsEnrolledList = professorDaoInterface.getEnrolledStudentsForCourse(courseId);
+        return studentsEnrolledList;
     }
 
     /**
@@ -90,7 +97,7 @@ public class ProfessorOperation implements ProfessorInterface {
      */
     @Override
     public boolean gradeStudent(HashMap<String, String> gradesOfStudents) {
-        logger.info("Grade a student");
+        /*logger.info("Grade a student");
         try {
             RegisteredCoursesOperation registeredCoursesOperation = new RegisteredCoursesOperation();
 
@@ -107,6 +114,8 @@ public class ProfessorOperation implements ProfessorInterface {
         } catch (Exception e) {
             logger.error(e.getMessage());
             return false;
-        }
+        }*/
+        String courseId = getCourseDetail().getId();
+        return professorDaoInterface.enterGradesOfStudents(gradesOfStudents,courseId);
     }
 }

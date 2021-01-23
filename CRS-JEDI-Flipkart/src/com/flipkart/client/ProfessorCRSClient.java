@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ProfessorCRSClient {
@@ -50,25 +51,26 @@ public class ProfessorCRSClient {
             logger.info("3. View Enrolled Students");
             logger.info("4. Logout");
 
-            choice = scanner.nextInt();
+                choice = scanner.nextInt();
 
-            switch(choice){
-                case 1:
-                    viewCourse();
-                    break;
-                case 2:
-                    gradeStudents();
-                    break;
-                case 3:
-                    viewEnrolledStudents();
-                    break;
-                case 4:
-                    logger.info("Successfully logged out");
-                    loggedIn = false;
-                    break;
-                default:
-                    logger.info("Invalid Choice");
-            }
+                switch (choice) {
+                    case 1:
+                        viewCourse();
+                        break;
+                    case 2:
+                        gradeStudents();
+                        break;
+                    case 3:
+                        viewEnrolledStudents();
+                        break;
+                    case 4:
+                        logger.info("Successfully logged out");
+                        loggedIn = false;
+                        break;
+                    default:
+                        logger.info("Invalid Choice");
+                }
+
             if(!loggedIn){
                 break;
             }
@@ -80,9 +82,14 @@ public class ProfessorCRSClient {
      */
     void viewCourse(){
         Course course = professorInterface.getCourseDetail();
+        logger.info(course.getStudentsEnrolled());
         if(course!=null) {
-            logger.info("CourseId\tCourseName\tStudents Enrolled");
-            logger.info(course.getId() + "\t" + course.getName() + "\t" + course.getStudentsEnrolled().size());
+            try {
+                logger.info("CourseId\tCourseName");
+                logger.info(course.getId() + "\t\t" + course.getName());
+            }catch (Exception e){
+                logger.info(e.getMessage());
+            }
         }else{
             logger.info("No course assigned!");
         }
@@ -92,9 +99,7 @@ public class ProfessorCRSClient {
      * Perform grade student operations
      */
     void gradeStudents(){
-
-        logger.info("GradeStudentClientBefore");
-        ArrayList<Student> studentsEnrolled= professorInterface.getEnrolledStudents();
+        HashMap<String,String> studentsEnrolled = professorInterface.getEnrolledStudents();
         /**
          * String - studentId
          * String - grade
@@ -103,11 +108,11 @@ public class ProfessorCRSClient {
         if(studentsEnrolled.size() > 0){
             // TODO: As of now Grading all students at once
             HashMap<String,String> gradeOfStudent = new HashMap<>();
-            for (Student student:studentsEnrolled){
-                logger.info("Enter grade for Student ID - "+student.getId()+":");
-                gradeOfStudent.put(student.getId(),scanner.next());
+            for (Map.Entry<String,String> student:studentsEnrolled.entrySet()){
+                logger.info("Enter grade for Student ID - "+student.getKey()+"\t"+student.getValue()+":");
+                String gradeEntered=scanner.next();
+                gradeOfStudent.put(student.getKey(),gradeEntered);
             }
-            logger.info("GradeStudentClientAfter");
             if(professorInterface.gradeStudent(gradeOfStudent)){
                 logger.info("Grades assigned to all students of course "+ professorInterface.getCourseDetail().getId());
             }else{
@@ -117,17 +122,18 @@ public class ProfessorCRSClient {
             logger.info("No Students enrolled");
         }
 
+
     }
 
     /**
      * Perform view enrolled students operations
      */
     void viewEnrolledStudents(){
-        ArrayList<Student> enrolledStudents= professorInterface.getEnrolledStudents();
-        if(enrolledStudents.size()>0){
-            logger.info("Student ID\tName\tBranch");
-            for(Student student:enrolledStudents){
-                logger.info(student.getId()+"\t"+student.getName()+"\t"+student.getBranch());
+        HashMap<String,String> enrolledStudentsMap= professorInterface.getEnrolledStudents();
+        if(enrolledStudentsMap.size()>0){
+            logger.info("Student ID\tName");
+            for(Map.Entry<String,String> student:enrolledStudentsMap.entrySet()){
+                logger.info(student.getKey()+"\t\t"+student.getValue());
             }
         }else{
             logger.info("No student registered!");

@@ -8,6 +8,10 @@ public class SQlQueriesConstants {
     public static String LOGIN_USER_QUERY = "SELECT * FROM USERS WHERE USERID = ? AND ROLE=?";
 
 
+    //Professor Queries
+    public static  String ADD_GRADE_QUERY = "UPDATE REGISTEREDCOURSE SET GRADE = ? WHERE STUDENTID = ? AND COURSEID = ?";
+    public static String GET_ENROLLED_STUDENTS_FOR_COURSE = "SELECT user.userid,user.name FROM  USER JOIN REGISTEREDCOURSE ON USER.USERID = REGISTEREDCOURSE.STUDENTID WHERE COURSEID=?";
+
     //Admin Queries
     public static String ADD_USER_QUERY = "INSERT INTO USER(userid,name,email,password,role) VALUES(?,?,?,?,?)";
     public static String ADD_STUDENT_QUERY = "INSERT INTO STUDENT(userid,branch,approved) VALUES(?,?,?)";
