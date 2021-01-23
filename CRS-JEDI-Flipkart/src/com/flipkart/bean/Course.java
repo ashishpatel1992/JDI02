@@ -20,6 +20,7 @@ public class Course {
         studentsEnrolled = null;
     }
     public ArrayList<Student> getStudentsEnrolled() {
+
         return studentsEnrolled;
     }
 
