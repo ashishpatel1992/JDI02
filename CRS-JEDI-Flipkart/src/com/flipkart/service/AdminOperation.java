@@ -1,11 +1,10 @@
 package com.flipkart.service;
 
+import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
-import com.flipkart.dao.AdminDaoImp;
-import com.flipkart.dao.LoginDaoImp;
-import com.flipkart.dao.LoginDaoInterface;
-import com.flipkart.dao.StudentDaoImp;
+import com.flipkart.dao.*;
+import com.flipkart.exception.CourseNotFoundException;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -92,5 +91,23 @@ public class AdminOperation implements AdminInterface {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public boolean assignProfessorToCourse(String professorId, String courseId) {
+
+
+        Course course = CourseCatalogueDaoImp.getInstance().getCourseDetail(courseId);
+
+        if (course != null && course.getProfessorId() == null && ProfessorDaoImp.getInstance().getProfessor(professorId) != null) {
+            // TODO: Another if condition to check if professor is already assigned to a course
+            AdminDaoImp.getInstance().assignProfessorToCourse(professorId, courseId);
+            return true;
+        } else {
+            // TODO: Cannot assign professor to Course Exception
+            return false;
+        }
+
+
     }
 }

@@ -9,5 +9,6 @@ public interface AdminDaoInterface {
     boolean addCourse(Course course);
     ArrayList<String> getUnApprovedStudentsIds();
     boolean approveStudent(String studentid);
+    boolean assignProfessorToCourse(String professorId, String courseId);
 
 }

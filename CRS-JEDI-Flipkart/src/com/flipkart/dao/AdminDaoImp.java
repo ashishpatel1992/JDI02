@@ -95,4 +95,10 @@ public class AdminDaoImp implements AdminDaoInterface {
         StudentDaoInterface studentDaoInterface = StudentDaoImp.getInstance();
         return studentDaoInterface.approveStudent(studentId);
     }
+
+    @Override
+    public boolean assignProfessorToCourse(String professorId, String courseId) {
+
+        return CourseCatalogueDaoImp.getInstance().assignProfessorToCourse(professorId, courseId);
+    }
 }

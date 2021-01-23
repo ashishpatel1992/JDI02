@@ -1,6 +1,7 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 import com.flipkart.dao.ProfessorDaoImp;
 import com.flipkart.dao.ProfessorDaoInterface;
@@ -19,7 +20,7 @@ import java.util.Map;
 public class ProfessorOperation implements ProfessorInterface {
     private static Logger logger = Logger.getLogger(ProfessorOperation.class);
     String professorId;
-    ProfessorDaoInterface professorDaoInterface;
+
     /**
      * Constructor to set professor id
      *
@@ -27,9 +28,11 @@ public class ProfessorOperation implements ProfessorInterface {
      */
     public ProfessorOperation(String professorId) {
         this.professorId = professorId;
-        professorDaoInterface = new ProfessorDaoImp();
     }
 
+    public Professor getProfessor() {
+        return ProfessorDaoImp.getInstance().getProfessor(professorId);
+    }
 
     /**
      * Returns the course details
@@ -61,7 +64,7 @@ public class ProfessorOperation implements ProfessorInterface {
      * @return ArrayList<Student>
      */
     @Override
-    public HashMap<String,String> getEnrolledStudents() {
+    public HashMap<String, String> getEnrolledStudents() {
         //logger.info("Get list of Enrolled Students");
         /*ArrayList<Student> studentsEnrolled = new ArrayList<>();
         try {
@@ -85,7 +88,7 @@ public class ProfessorOperation implements ProfessorInterface {
         }
         return studentsEnrolled;*/
         String courseId = getCourseDetail().getId();
-        HashMap<String,String> studentsEnrolledList = professorDaoInterface.getEnrolledStudentsForCourse(courseId);
+        HashMap<String, String> studentsEnrolledList = ProfessorDaoImp.getInstance().getEnrolledStudentsForCourse(courseId);
         return studentsEnrolledList;
     }
 
@@ -116,6 +119,6 @@ public class ProfessorOperation implements ProfessorInterface {
             return false;
         }*/
         String courseId = getCourseDetail().getId();
-        return professorDaoInterface.enterGradesOfStudents(gradesOfStudents,courseId);
+        return ProfessorDaoImp.getInstance().enterGradesOfStudents(gradesOfStudents, courseId);
     }
 }

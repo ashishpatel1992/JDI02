@@ -5,6 +5,7 @@ import com.flipkart.dao.CourseCatalogueDaoImp;
 import com.flipkart.dao.CourseCatalogueDaoInterface;
 import com.flipkart.dao.AdminDaoImp;
 import com.flipkart.dao.AdminDaoInterface;
+import com.flipkart.exception.CourseNotFoundException;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
      */
     @Override
     public Course getCourse(String courseId) {
+
         return CourseCatalogueDaoImp.getInstance().getCourseDetail(courseId);
     }
 

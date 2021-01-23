@@ -13,6 +13,7 @@ public class SQLQueriesConstants {
     // Professor Queries
     public static String ADD_GRADE_QUERY = "UPDATE REGISTEREDCOURSE SET GRADE = ? WHERE STUDENTID = ? AND COURSEID = ?";
     public static String GET_ENROLLED_STUDENTS_FOR_COURSE = "SELECT user.userid,user.name FROM  USER JOIN REGISTEREDCOURSE ON USER.USERID = REGISTEREDCOURSE.STUDENTID WHERE COURSEID=?";
+    public static String GET_PROFESSOR_PROFILE_QUERY = "SELECT professor.`userid`, USER.`name`,  USER.`email`,  USER.`role`,  `professor`.`department` FROM  professor,  USER WHERE  professor.userid = USER.userid AND professor.userid = ?";
 
     // Admin Queries
     public static String ADD_USER_QUERY = "INSERT INTO USER(userid,name,email,password,role) VALUES(?,?,?,?,?)";
@@ -24,11 +25,13 @@ public class SQLQueriesConstants {
 
     // Student Queries
     public static String GET_STUDENT_PROFILE_QUERY = "SELECT stud.`userid`, USER.`name`,  USER.`email`,  USER.`role`,  stud.`branch`,  stud.`approved` FROM  student AS stud,  USER WHERE  stud.userid = USER.userid AND stud.userid = ?";
-    public static String GET_ALL_COURSES_QUERY = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid` FROM `course`";
     public static String GET_ALL_COURSE_ID_FOR_REG_STUDENT_QUERY = "SELECT `studentid`, `courseid`, `grade` FROM `registeredcourse` WHERE `studentid` = ?";
     public static String ADD_STUDENT_COURSE_REGISTRATION = "INSERT INTO `registeredcourse`(`studentid`, `courseid`) VALUES (?,?);";
     public static String GET_APPROVAL_STATUS_QUERY = "SELECT `userid`, `branch`, `approved` FROM `student` WHERE `userid` = ?";
 
     //Course Queries
     public static String GET_COURSE_DETAIL = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid` FROM `course` WHERE `courseid` = ?";
+    public static String GET_ALL_COURSES_QUERY = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid` FROM `course`";
+    public static String ADD_PROFESSOR_TO_COURSE_ID = "UPDATE `course` SET `professorid`=? WHERE `courseid` = ?";
+
 }

@@ -15,4 +15,6 @@ public interface AdminInterface {
     public boolean approveStudent(String studentId);
 
     public HashMap<String, String> generateReportCard(String studentId);
+
+    public boolean assignProfessorToCourse(String professorId, String courseId);
 }

@@ -2,6 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Course;
 import com.flipkart.constants.SQLQueriesConstants;
+import com.flipkart.exception.CourseNotFoundException;
 import com.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
@@ -35,11 +36,11 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
     public ArrayList<Course> getAllCourses() {
         Connection connection = DBUtils.getConnection();
         ArrayList<Course> courseArrayList = new ArrayList<Course>();
-        Statement stmt = null;
+        Statement statement = null;
         ResultSet resultSet = null;
         try {
-            stmt = connection.createStatement();
-            resultSet = stmt.executeQuery(SQLQueriesConstants.GET_ALL_COURSES_QUERY);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQLQueriesConstants.GET_ALL_COURSES_QUERY);
 
             while (resultSet.next()) {
                 String courseId;
@@ -60,21 +61,15 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
         } finally {
             try {
                 resultSet.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e);
             }
             try {
-                stmt.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                statement.close();
+            } catch (SQLException e) {
+                logger.error(e);
             }
-
-//            DBUtils.closeConnection();
-//            try {
-//                connection.close();
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
+            
 
         }
         return courseArrayList;
@@ -91,34 +86,57 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
             preparedStatement.setString(1, courseId);
             resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                String rsCourseId;
-                String rsCourseName;
-                String rsProfessorId;
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    String rsCourseId;
+                    String rsCourseName;
+                    String rsProfessorId;
 
-                rsCourseId = resultSet.getString("courseid");
-                rsCourseName = resultSet.getString("coursename");
-                // TODO: if professor is not null then fetch professor Name and return
-                rsProfessorId = resultSet.getString("professorid");
-                course = new Course(rsCourseId, rsCourseName, rsProfessorId);
-                break;
+                    rsCourseId = resultSet.getString("courseid");
+                    rsCourseName = resultSet.getString("coursename");
+                    // TODO: if professor is not null then fetch professor Name and return
+                    rsProfessorId = resultSet.getString("professorid");
+                    course = new Course(rsCourseId, rsCourseName, rsProfessorId);
+                    break;
+                }
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             try {
                 resultSet.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e);
             }
             try {
                 preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e);
             }
 
             return course;
         }
+    }
+
+    @Override
+    public boolean assignProfessorToCourse(String professorId, String courseId) {
+        Connection connection = DBUtils.getConnection();
+        PreparedStatement stmt = null;
+        try {
+
+            stmt = connection.prepareStatement(SQLQueriesConstants.ADD_PROFESSOR_TO_COURSE_ID);
+            stmt.setString(1, professorId);
+            stmt.setString(2, courseId);
+            int updatedValues = stmt.executeUpdate();
+            if (updatedValues > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return false;
     }
 }

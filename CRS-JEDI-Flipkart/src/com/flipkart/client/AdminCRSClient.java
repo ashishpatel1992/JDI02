@@ -1,5 +1,6 @@
 package com.flipkart.client;
 
+import com.flipkart.dao.ProfessorDaoImp;
 import org.apache.log4j.Logger;
 import com.flipkart.bean.*;
 import com.flipkart.service.*;
@@ -36,10 +37,11 @@ public class AdminCRSClient {
             logger.info("==== Admin Menu =====");
             logger.info("1. Add Course");
             logger.info("2. Add Professor");
-            logger.info("3. Approve Student");
-            logger.info("4. View Courses");
-            logger.info("5. Generate Report Card");
-            logger.info("6. Logout");
+            logger.info("3. Assign Professor to Course");
+            logger.info("4. Approve Student");
+            logger.info("5. View Courses");
+            logger.info("6. Generate Report Card");
+            logger.info("7. Logout");
             Scanner scanner = new Scanner(System.in);
             choice = scanner.nextInt();
 
@@ -54,18 +56,21 @@ public class AdminCRSClient {
                     addProfessor();
                     break;
                 case 3:
-                    approveStudent();
+                    assignProfessorToCourse();
                     break;
                 case 4:
-                    viewCourses();
+                    approveStudent();
                     break;
                 case 5:
+                    viewCourses();
+                    break;
+                case 6:
                     if (generateReportCard())
                         logger.info("Report Card Generated");
                     else
                         logger.info("Unable to generate report card");
                     break;
-                case 6:
+                case 7:
                     logger.info("Successfully logged out");
                     return;
                 default:
@@ -74,11 +79,42 @@ public class AdminCRSClient {
         }
     }
 
+    private void displayUnAssignedProfessors(){
+    // TODO: Display Unassigned Professors
+    }
+
+    private void displayUnAssignedCourses(){
+    // TODO: Display UnAssignedCourses
+    }
+    private void assignProfessorToCourse() {
+        displayUnAssignedProfessors();
+        displayUnAssignedCourses();
+
+        logger.info("Enter course ID to assign");
+        String courseId = scanner.next();
+        logger.info("Enter professor ID to assign");
+        String professorId = scanner.next();
+
+        if(adminInterface.assignProfessorToCourse(professorId,courseId)){
+            logger.info(professorId+" assigned to course "+courseId);
+        }else{
+            logger.info("Unable to assign professor to course.");
+        }
+
+        logger.info("");
+    }
+
     public void viewCourses() {
         ArrayList<Course> courseArrayList = courseCatalogueInterface.getCourseList();
+        logger.info("CourseID\tCourseName\tProfessorID\tProfessorName");
         for (Course course : courseArrayList) {
             // TODO: Fetch Professor Name and print when Professor is implemented
-            logger.info(course.getId() + " " + course.getName() + " " + course.getProfessorId());
+            if(course.getProfessorId() == null){
+                logger.info(course.getId() + " " + course.getName() + " N/A");
+            }else{
+                logger.info(course.getId() + " " + course.getName() + " " + course.getProfessorId()+" "+ ProfessorDaoImp.getInstance().getProfessor(course.getProfessorId()).getName());
+            }
+
         }
     }
 
