@@ -7,6 +7,9 @@ import java.io.Console;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Main Course Registration System class containing the Menu
+ */
 public class CRSApplication {
     private static Logger logger = Logger.getLogger(CRSApplication.class);
     public static boolean loginStatus = false;

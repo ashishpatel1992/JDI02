@@ -6,6 +6,9 @@ import org.apache.log4j.Logger;
 
 import java.util.Scanner;
 
+/**
+ * Class to handle Student Registration frontend operations
+ */
 public class StudentRegistrationCRSClient {
     private static Logger logger = Logger.getLogger(StudentRegistrationCRSClient.class);
     String studentId;
@@ -17,14 +20,24 @@ public class StudentRegistrationCRSClient {
     String studentBranch;
 
     StudentRegistrationOperation studentRegistrationOperation;
+
+    /**
+     * Constructor of the class
+     */
     StudentRegistrationCRSClient(){
         studentRole = "student";
         studentApproved = false;
         studentRegistrationOperation = new StudentRegistrationOperation();
     }
+
+
     public boolean isAlreadyExist(){
         return true;
     }
+
+    /**
+     * Registration Menu of student
+     */
     public void registrationMenu(){
         Scanner scanner = new Scanner(System.in);
 
