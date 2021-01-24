@@ -9,11 +9,10 @@ import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * Class to handle Registered Courses Operations
+ */
 public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
-    /**
-     * Handles the course registration Operations for student
-     */
 
     String studentId;
 
@@ -44,9 +43,8 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
     }
 
     /**
-     * Update to database and also update local variable
-     *
-     * @param studentCourseGradesMap
+     * Updates to database and also update local variable
+     * @param studentCourseGradesMap Map containing student's courses and grades
      */
     public void updateStudentCourseGradesMap(HashMap<String, HashMap<String, String>> studentCourseGradesMap) {
         // TODO: Save to database studentCourseGradeMap variable
@@ -57,9 +55,8 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 
     /**
      * Registers the student into the course by taking list of courseIds
-     *
-     * @param courseIdSelectionList
-     * @return
+     * @param courseIdSelectionList List of selected courses
+     * @return array list of registered courses
      */
     @Override
     public ArrayList<String> registerCourses(ArrayList<String> courseIdSelectionList) {
@@ -92,8 +89,7 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 
     /**
      * Get list of all courses student is registered in.
-     *
-     * @return
+     * @return array list of courses
      */
     @Override
     public ArrayList<Course> getRegisteredCourses() {
@@ -124,10 +120,9 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
     }
 
     /**
-     * Drop a course in which student is already enrolled in.
-     *
-     * @param courseId
-     * @return
+     * Drops a course in which student is already enrolled in.
+     * @param courseId course ID
+     * @return true if dropped successfully
      */
 //    @Override
 //    public boolean dropCourse(String courseId) {

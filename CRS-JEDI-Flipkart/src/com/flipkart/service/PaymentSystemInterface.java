@@ -4,7 +4,15 @@ import com.flipkart.bean.Course;
 
 import java.util.ArrayList;
 
+/**
+ * Interface for Payment System
+ */
 public interface PaymentSystemInterface {
+
+    /**
+     * Calculates the fee
+     * @return the fee
+     */
     public double calculateFee();
 
 

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Perform following professor operations
+ * Class to perform the following professor operations
  * 1. get course details
  * 2. get list of enrolled students
  * 3. grade enrolled students
@@ -23,20 +23,22 @@ public class ProfessorOperation implements ProfessorInterface {
 
     /**
      * Constructor to set professor id
-     *
-     * @param professorId
+     * @param professorId professor ID
      */
     public ProfessorOperation(String professorId) {
         this.professorId = professorId;
     }
 
+    /**
+     * Get Professor details
+     * @return Professor details
+     */
     public Professor getProfessor() {
         return ProfessorDaoImp.getInstance().getProfessor(professorId);
     }
 
     /**
      * Returns the course details
-     *
      * @return Course
      */
     @Override
@@ -60,8 +62,7 @@ public class ProfessorOperation implements ProfessorInterface {
 
     /**
      * Gets list of enrolled students
-     *
-     * @return ArrayList<Student>
+     * @return Array List of Students
      */
     @Override
     public HashMap<String, String> getEnrolledStudents() {
@@ -94,9 +95,8 @@ public class ProfessorOperation implements ProfessorInterface {
 
     /**
      * Grade students
-     *
-     * @param gradesOfStudents
-     * @return boolean
+     * @param gradesOfStudents Hashmap containing Student Id and grades.
+     * @return true if graded successfully
      */
     @Override
     public boolean gradeStudent(HashMap<String, String> gradesOfStudents) {
