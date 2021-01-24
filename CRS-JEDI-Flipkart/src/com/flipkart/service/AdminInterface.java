@@ -12,7 +12,7 @@ public interface AdminInterface {
     public Admin getAdminProfile();
     public ArrayList<Student> getUnApprovedStudents();
 
-    public String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment);
+    public String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment,String password);
 
     public boolean approveStudent(String studentId);
 

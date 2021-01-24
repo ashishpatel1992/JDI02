@@ -8,6 +8,9 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Class that implements all methods of RegisteredCoursesDaoInterface
+ */
 public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
 
     private static volatile RegisteredCoursesDaoImp instance = null;
@@ -18,6 +21,10 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
     private RegisteredCoursesDaoImp() {
     }
 
+    /**
+     * Returns static instance of RegisteredCoursesDaoImp class
+     * @return instance of RegisteredCoursesDaoImp class
+     */
     public static RegisteredCoursesDaoImp getInstance() {
         if (instance == null) {
             // This is a synchronized block, when multiple threads will access this instance
@@ -28,6 +35,11 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
         return instance;
     }
 
+    /**
+     * Returns list of course ids a student is enrolled in
+     * @param studentId id of student for which the list of courses is required
+     * @return arraylist of courseids the student is enrolled in
+     */
     @Override
     public ArrayList<String> getCourseIdsForStudent(String studentId) {
         Connection connection = DBUtils.getConnection();
@@ -68,6 +80,12 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
         }
     }
 
+    /**
+     * Enrolls student in selected courses
+     * @param studentId id of the student for which the courses have to be enrolled
+     * @param courseIdSelectionList list of courseids which have to be enrolled for student
+     * @return arraylist of courseids in which the student was enrolled
+     */
     @Override
     public ArrayList<String> doStudentRegistration(String studentId, ArrayList<String> courseIdSelectionList) {
         // ADD_STUDENT_COURSE_REGISTRATION

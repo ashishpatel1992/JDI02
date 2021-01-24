@@ -12,6 +12,7 @@ public class StudentRegistrationCRSClient {
     String studentName;
     String studentEmail;
     String studentRole;
+    String studentPassword;
     boolean studentApproved;
     String studentBranch;
 
@@ -36,11 +37,13 @@ public class StudentRegistrationCRSClient {
         studentEmail = scanner.next();
         logger.info("Enter your Branch");
         studentBranch = scanner.next();
+        logger.info("Enter your password");
+        studentPassword = scanner.next();
         Student student = new Student(studentId,studentName,studentEmail,studentRole,studentBranch,studentApproved);
-        String password = studentRegistrationOperation.isRegistrationDataValid(student);
-        if(password!=null){
-            logger.info("Successfully registered, pending for admin approval");
-            logger.info("Student Id : "+studentId+"\n"+"Student password : "+password);
+        String userId = studentRegistrationOperation.isRegistrationDataValid(student,studentPassword);
+        if(userId!=null){
+            logger.info(studentName+" Successfully registered, pending for admin approval");
+            logger.info("Student Id : "+studentId);
 
         }else{
 //            logger.info("Student ID "+studentId+" already exist");

@@ -43,10 +43,8 @@ public class AdminCRSClient {
             logger.info("3. Assign Professor to Course");
             logger.info("4. Approve Student");
             logger.info("5. View Courses");
-            logger.info("6. Remove Course");
-            logger.info("7. Remove Professor");
-            logger.info("8. Generate Report Card");
-            logger.info("9. Logout");
+            logger.info("6. Generate Report Card");
+            logger.info("7. Logout");
             Scanner scanner = new Scanner(System.in);
             choice = scanner.nextInt();
 
@@ -70,22 +68,12 @@ public class AdminCRSClient {
                     viewCourses();
                     break;
                 case 6:
-                    if (removeCourse()) {
-                        logger.info("Course successfully removed");
-                    } else {
-                        logger.info("Cannot remove course.");
-                    }
-                    break;
-                case 7:
-                    logger.info("remove professor");
-                    break;
-                case 8:
                     if (generateReportCard())
                         logger.info("Report Card Generated");
                     else
                         logger.info("Unable to generate report card");
                     break;
-                case 9:
+                case 7:
                     logger.info("Successfully logged out");
                     return;
                 // TODO: Remove course  and remove Professor if course is assigned to students so it cant be removed, if professor assigned to course, professor cannot be removed.
@@ -182,10 +170,11 @@ public class AdminCRSClient {
         String professorEmail = scanner.next();
         logger.info("Enter professor department:");
         String professorDepartment = scanner.next();
-        String password = adminInterface.addProfessor(professorId, professorName, professorEmail, professorDepartment);
-        logger.info(password);
-        if (password != null) {
-            logger.info("Professor: " + professorName + " Successfully Added\nProfessor ID : " + professorId + "\nPassword : " + password);
+        logger.info("Enter professor password:");
+        String password = scanner.next();
+        String userId = adminInterface.addProfessor(professorId, professorName, professorEmail, professorDepartment,password);
+        if (userId != null) {
+            logger.info("Professor: " + professorName + " Successfully Added\nProfessor ID : " + userId);
         }
     }
 
@@ -237,11 +226,6 @@ public class AdminCRSClient {
         } else {
             return false;
         }
-    }
-
-    public boolean removeCourse() {
-
-        return false;
     }
 
 }
