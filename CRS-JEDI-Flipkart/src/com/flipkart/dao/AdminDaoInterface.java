@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 
+import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
 
@@ -36,5 +37,7 @@ public interface AdminDaoInterface {
      * @return true if professor was successfully assigned the course
      */
     boolean assignProfessorToCourse(String professorId, String courseId);
+
+    Admin getAdminProfile(String adminId);
 
 }

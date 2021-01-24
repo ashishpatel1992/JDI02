@@ -1,6 +1,7 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 import com.flipkart.service.CourseCatalogueInterface;
 import com.flipkart.service.CourseCatalogueOperation;
@@ -41,9 +42,10 @@ public class ProfessorCRSClient {
      */
     public void professorMenu() {
         int choice;
-
-
         boolean loggedIn = true;
+        Professor professor = professorInterface.getProfessor();
+        logger.info("Welcome "+ professor.getName()+". You are logged in as "+professor.getRole()+".");
+
         while (true) {
             logger.info("==== Professor Menu =====");
             logger.info("1. View Course");

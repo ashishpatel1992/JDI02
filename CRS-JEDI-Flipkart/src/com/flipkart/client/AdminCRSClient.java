@@ -13,7 +13,7 @@ import java.util.*;
 public class AdminCRSClient {
 
     private static Logger logger = Logger.getLogger(AdminCRSClient.class);
-    AdminInterface adminInterface = new AdminOperation();
+    AdminInterface adminInterface;
     CourseCatalogueInterface courseCatalogueInterface = new CourseCatalogueOperation();
     Scanner scanner;
     String adminId;
@@ -21,9 +21,10 @@ public class AdminCRSClient {
     /**
      * Initialize Constructor with studentId
      */
-    public AdminCRSClient(String aid) {
+    public AdminCRSClient(String adminId) {
+        adminInterface = new AdminOperation(adminId);
         scanner = new Scanner(System.in);
-        adminId = aid;
+        this.adminId = adminId;
     }
 
     /**
@@ -32,6 +33,8 @@ public class AdminCRSClient {
     public void adminMenu() {
         int choice;
         boolean loggedIn = true;
+        Admin admin = adminInterface.getAdminProfile();
+        logger.info("Welcome " + admin.getName() + ". You are logged in as " + admin.getRole() + ".");
         while (true) {
 
             logger.info("==== Admin Menu =====");
@@ -67,9 +70,9 @@ public class AdminCRSClient {
                     viewCourses();
                     break;
                 case 6:
-                    if(removeCourse()){
+                    if (removeCourse()) {
                         logger.info("Course successfully removed");
-                    }else{
+                    } else {
                         logger.info("Cannot remove course.");
                     }
                     break;
@@ -85,7 +88,7 @@ public class AdminCRSClient {
                 case 9:
                     logger.info("Successfully logged out");
                     return;
-                    // TODO: Remove course  and remove Professor if course is assigned to students so it cant be removed, if professor assigned to course, professor cannot be removed.
+                // TODO: Remove course  and remove Professor if course is assigned to students so it cant be removed, if professor assigned to course, professor cannot be removed.
 
                 default:
                     logger.info("Invalid Choice");
@@ -235,7 +238,8 @@ public class AdminCRSClient {
             return false;
         }
     }
-    public boolean removeCourse(){
+
+    public boolean removeCourse() {
 
         return false;
     }

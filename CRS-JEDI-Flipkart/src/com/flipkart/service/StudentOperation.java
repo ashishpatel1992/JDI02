@@ -23,11 +23,10 @@ public class StudentOperation implements StudentInterface {
 
     public StudentOperation(String studentId) {
         this.studentId = studentId;
-//        this.registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
         this.registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
     }
 
-    public Student getStudent() {
+    public Student getStudentProfile() {
         return StudentDaoImp.getInstance().getStudent(studentId);
     }
 

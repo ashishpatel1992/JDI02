@@ -1,5 +1,6 @@
 package com.flipkart.service;
 
+import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
@@ -20,11 +21,11 @@ import java.util.HashMap;
 public class AdminOperation implements AdminInterface {
     private static Logger logger = Logger.getLogger(AdminOperation.class);
 
-//    @Override
-//    public boolean addCourse() {
-//        logger.info("Add Course");
-//        return false;
-//    }
+    String adminId;
+
+    public AdminOperation(String adminId) {
+        this.adminId = adminId;
+    }
 
     /**
      * Add professor to database
@@ -44,11 +45,11 @@ public class AdminOperation implements AdminInterface {
         return password;
     }
 
-//    @Override
-//    public void viewCourses() {
-//        logger.info("View Courses");
-//
-//    }
+
+    @Override
+    public Admin getAdminProfile() {
+        return AdminDaoImp.getInstance().getAdminProfile(adminId);
+    }
 
     public ArrayList<Student> getUnApprovedStudents() {
         // TODO: Get unapproved student list displayed

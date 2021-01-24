@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 
+import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.utils.DBUtils;
@@ -20,6 +21,7 @@ public class AdminDaoImp implements AdminDaoInterface {
 
     /**
      * Returns static instance of AdminDaoImp class
+     *
      * @return instance of AdminDaoImp class
      */
     public static AdminDaoImp getInstance() {
@@ -37,6 +39,7 @@ public class AdminDaoImp implements AdminDaoInterface {
 
     /**
      * Adds new course to catalogue
+     *
      * @param course course to add
      * @return true if course is added successfully
      */
@@ -70,6 +73,7 @@ public class AdminDaoImp implements AdminDaoInterface {
 
     /**
      * Returns list of unapproved students
+     *
      * @return array list of un approved students
      */
     @Override
@@ -107,6 +111,7 @@ public class AdminDaoImp implements AdminDaoInterface {
 
     /**
      * Approves a student for registration
+     *
      * @param studentId Id of student to be approved
      * @return true if the student was successfully approved
      */
@@ -119,13 +124,55 @@ public class AdminDaoImp implements AdminDaoInterface {
 
     /**
      * Assigns a course to professor
+     *
      * @param professorId id of professor to assign
-     * @param courseId id of course to assign
+     * @param courseId    id of course to assign
      * @return true if professor was successfully assigned the course
      */
     @Override
     public boolean assignProfessorToCourse(String professorId, String courseId) {
 
         return CourseCatalogueDaoImp.getInstance().assignProfessorToCourse(professorId, courseId);
+    }
+
+    @Override
+    public Admin getAdminProfile(String adminId) {
+        Admin admin = null;
+        Statement stmt = null;
+        ResultSet resultSet = null;
+        try {
+            stmt = connection.createStatement();
+            resultSet = stmt.executeQuery(SQLQueriesConstants.GET_ADMIN_PROFILE_QUERY);
+            logger.info(resultSet.getFetchSize());
+            while (resultSet.next()) {
+                String rsUserId;
+                String rsName;
+                String rsEmail;
+                String rsRole;
+
+                rsUserId = resultSet.getString("userid");
+                rsName = resultSet.getString("name");
+                rsEmail = resultSet.getString("email");
+                rsRole = resultSet.getString("role");
+                admin = new Admin(rsUserId, rsName, rsEmail, rsRole);
+                return admin;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                resultSet.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            try {
+                stmt.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        }
+        return admin;
     }
 }

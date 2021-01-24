@@ -1,6 +1,8 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Professor;
+import com.flipkart.bean.Student;
 import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
@@ -16,7 +18,7 @@ public class StudentCRSClient {
     private static Logger logger = Logger.getLogger(StudentCRSClient.class);
     //    ArrayList<String> courseIdSelectionList;
     CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
-    StudentInterface studentOperation;
+    StudentInterface studentInterface;
     // TODO: if made static will it be shared with everyone? i guess yes! so avoiding it find better way for accessing studentId for session
     String studentId;
     Scanner scanner = new Scanner(System.in);
@@ -28,8 +30,7 @@ public class StudentCRSClient {
      */
     public StudentCRSClient(String studentId) {
         this.studentId = studentId;
-//        studentOperation = new StudentOperation(studentId);
-        studentOperation = new StudentOperation(studentId);
+        studentInterface = new StudentOperation(studentId);
     }
 
     /**
@@ -41,7 +42,13 @@ public class StudentCRSClient {
         if (!courseArrayList.isEmpty()) {
             for (Course course : courseArrayList) {
                 // TODO: Fetch Professor Name and print when Professor is implemented
-                logger.info(course.getId() + " " + course.getName() + " " + course.getProfessorId());
+                if(course.getProfessorId() == null){
+                    logger.info(course.getId() + " " + course.getName() + " N/A \t N/A");
+                }else{
+                    Professor professor = new ProfessorOperation(course.getProfessorId()).getProfessor();
+                    logger.info(course.getId() + " " + course.getName() + " " + professor.getName() + " " + professor.getDepartment());
+                }
+
             }
         } else {
             logger.info("No Courses available to display.");
@@ -60,7 +67,7 @@ public class StudentCRSClient {
         courseId = scanner.next();
         // TODO: Avoid same course to be added again
 
-        if (studentOperation.addCourseToSelection(courseId)) {
+        if (studentInterface.addCourseToSelection(courseId)) {
 
             logger.info("Course " + courseId + " added successfully");
         } else {
@@ -76,7 +83,7 @@ public class StudentCRSClient {
      * Similar to cart functionality
      */
     public void printCourseSelectionInfo() {
-        ArrayList<String> courseIdSelectionList = studentOperation.getCourseSelection();
+        ArrayList<String> courseIdSelectionList = studentInterface.getCourseSelection();
         logger.info("You have selected following " + courseIdSelectionList.size() + " courses:");
         logger.info("CourseId\tCourseName");
         for (int i = 0; i < courseIdSelectionList.size(); i++) {
@@ -99,7 +106,7 @@ public class StudentCRSClient {
         logger.info("Enter course Id");
         String courseId;
         courseId = scanner.next();
-        if (studentOperation.dropCourseFromSelection(courseId)) {
+        if (studentInterface.dropCourseFromSelection(courseId)) {
             logger.info("Course " + courseId + " has been removed.");
         } else {
             logger.info("Course not present in the Selection list");
@@ -109,9 +116,9 @@ public class StudentCRSClient {
 
     public void printDoRegisterCourseInfo() {
         printCourseSelectionInfo();
-        if (studentOperation.getCourseSelection().size() > 0) {
-            if (studentOperation.registerCourses() != null) {
-                ArrayList<Course> courseArrayList = studentOperation.getRegisteredCourses();
+        if (studentInterface.getCourseSelection().size() > 0) {
+            if (studentInterface.registerCourses() != null) {
+                ArrayList<Course> courseArrayList = studentInterface.getRegisteredCourses();
                 logger.info("You are successfully registered for following courses.");
                 logger.info("CourseId\tCourseName");
                 for (Course regCourse : courseArrayList) {
@@ -124,7 +131,7 @@ public class StudentCRSClient {
     public void printRegisteredCourseInfo() {
         logger.info("You are registered for following courses:- ");
 
-        ArrayList<Course> registeredCourseList = studentOperation.getRegisteredCourses();
+        ArrayList<Course> registeredCourseList = studentInterface.getRegisteredCourses();
         logger.info(registeredCourseList.size());
         if (registeredCourseList.size() > 0) {
             logger.info("CourseId\tCourseName");
@@ -148,6 +155,8 @@ public class StudentCRSClient {
     public void studentMenu() {
         int choice;
 
+        Student student = studentInterface.getStudentProfile();
+        logger.info("Welcome " + student.getName() + ". You are logged in as " + student.getRole() + ".");
 
         while (true) {
             logger.info("==== Student MENU =====");
