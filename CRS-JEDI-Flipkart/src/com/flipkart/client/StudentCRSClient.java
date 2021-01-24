@@ -9,12 +9,11 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class to handle Student frontend operations
+ */
 public class StudentCRSClient {
-    /**
-     * Takes student Id to initialize, handles frontend for Student
-     *
-     * @param sid
-     */
+
     private static Logger logger = Logger.getLogger(StudentCRSClient.class);
     //    ArrayList<String> courseIdSelectionList;
     CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
@@ -26,7 +25,7 @@ public class StudentCRSClient {
     /**
      * Initialize Constructor with studentId
      *
-     * @param studentId
+     * @param studentId student ID
      */
     public StudentCRSClient(String studentId) {
         this.studentId = studentId;
@@ -57,7 +56,7 @@ public class StudentCRSClient {
     }
 
     /**
-     * Add course to selection cart
+     * Adds course to selection cart
      */
     public void printAddCourseToSelectionInfo() {
 
@@ -100,7 +99,7 @@ public class StudentCRSClient {
 
 
     /**
-     * Remove a course from Selection cart
+     * Removes a course from Selection cart
      */
     public void printDropCourseFromSelectionInfo() {
         logger.info("Enter course Id");
@@ -114,6 +113,9 @@ public class StudentCRSClient {
         printCourseSelectionInfo();
     }
 
+    /**
+     * Displays registered courses information
+     */
     public void printDoRegisterCourseInfo() {
         printCourseSelectionInfo();
         if (studentInterface.getCourseSelection().size() > 0) {
@@ -128,6 +130,9 @@ public class StudentCRSClient {
         }
     }
 
+    /**
+     * Displays registered courses information
+     */
     public void printRegisteredCourseInfo() {
         logger.info("You are registered for following courses:- ");
 
@@ -143,7 +148,9 @@ public class StudentCRSClient {
         }
     }
 
-
+    /**
+     * Displays report card information
+     */
     public void printReportCardInfo() {
         ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
         reportCardOperation.getGrades();

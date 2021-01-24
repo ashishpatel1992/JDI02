@@ -14,12 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Class to handle Professor frontend operations
+ */
 public class ProfessorCRSClient {
-    /**
-     * Takes professor id to initialize, handles frontend for Professor operations
-     *
-     * @param professorId
-     */
+
     private static Logger logger = Logger.getLogger(ProfessorCRSClient.class);
 
     String professorId;
@@ -80,7 +79,7 @@ public class ProfessorCRSClient {
     }
 
     /**
-     * Perform view courses operations
+     * View all the courses
      */
     void viewCourse(){
         Course course = professorInterface.getCourseDetail();
@@ -98,7 +97,7 @@ public class ProfessorCRSClient {
     }
 
     /**
-     * Perform grade student operations
+     * Grade students
      */
     void gradeStudents(){
         HashMap<String,String> studentsEnrolled = professorInterface.getEnrolledStudents();
