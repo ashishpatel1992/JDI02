@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles the operation of CourseCatalogue
+ * Class to handle the operations of CourseCatalogue
  */
 public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
@@ -44,8 +44,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * returns the list of all courses
-     *
-     * @return
+     * @return array list of Courses
      */
     @Override
     public ArrayList<Course> getCourseList() {
@@ -56,10 +55,9 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * creates a new course and add to course list and further add to database
-     *
-     * @param courseId
-     * @param courseName
-     * @return
+     * @param courseId course ID
+     * @param courseName name of the course
+     * @return true if course added successfully
      */
     @Override
     public boolean addCourse(String courseId, String courseName, String professorId) {
@@ -76,9 +74,8 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Returns the course along with its details
-     *
-     * @param courseId
-     * @return
+     * @param courseId course ID
+     * @return course
      */
     @Override
     public Course getCourse(String courseId) {
@@ -86,10 +83,9 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     }
 
     /**
-     * Delete a specific course
-     *
-     * @param courseId
-     * @return
+     * Deletes a specific course
+     * @param courseId course ID
+     * @return true if course deleted successfully
      */
     @Override
     public boolean deleteCourse(String courseId) {
@@ -109,10 +105,9 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     }
 
     /**
-     * Assign a professor to a course
-     *
-     * @param courseId
-     * @return
+     * Assigns a professor to a course
+     * @param courseId course ID
+     * @return true if professor assigned
      */
     @Override
     public boolean assignProfessor(String courseId) {

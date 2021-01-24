@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Handles the following admin operations
+ * Class to handle the following admin operations
  * 1. add new professor
  * 2. add new course
  * 3. approve student
@@ -28,12 +28,12 @@ public class AdminOperation implements AdminInterface{
 //    }
 
     /**
-     * Add professor to database
-     * @param professorId
-     * @param professorName
-     * @param professorEmail
-     * @param professorDepartment
-     * @return boolean
+     * Adds professor to database
+     * @param professorId professor ID
+     * @param professorName professor Name
+     * @param professorEmail professor Email
+     * @param professorDepartment professor Department
+     * @return true if professor added successfully
      */
     @Override
     public String addProfessor(String professorId,String professorName,String professorEmail,String professorDepartment) {
@@ -51,9 +51,9 @@ public class AdminOperation implements AdminInterface{
 //    }
 
     /**
-     * Approve student
-     * @param studentId
-     * @return boolean
+     * Approves student
+     * @param studentId student ID
+     * @return true if student approved
      */
     @Override
     public boolean approveStudent(String studentId) {
@@ -66,9 +66,9 @@ public class AdminOperation implements AdminInterface{
     }
 
     /**
-     * Generate report card for a student
-     * @param studentId
-     * @return HashMap<String,String>
+     * Generates report card for a student
+     * @param studentId student ID
+     * @return HashMap<String,String> Student and their grades
      */
     @Override
     public HashMap<String,String> generateReportCard(String studentId) {
