@@ -8,7 +8,7 @@ import com.flipkart.service.*;
 import java.util.*;
 
 /**
- * Handles admin frontend
+ * Class to Handle admin frontend operations
  */
 public class AdminCRSClient {
 
@@ -84,6 +84,10 @@ public class AdminCRSClient {
         }
     }
 
+    /**
+     * Displays list of unassigned professors
+     * @return true if there is any unassigned professor
+     */
     private boolean displayUnAssignedProfessors() {
         boolean isProfessorUnAssigned = false;
         ArrayList<Professor> unAssignedProfessors = courseCatalogueInterface.getUnAssignedProfessors();
@@ -97,6 +101,10 @@ public class AdminCRSClient {
         return isProfessorUnAssigned;
     }
 
+    /**
+     * Display list of unassigned courses
+     * @return true if there is any unassigned course
+     */
     private boolean displayUnAssignedCourses() {
         boolean isCourseUnAssigned = false;
 
@@ -111,6 +119,9 @@ public class AdminCRSClient {
         return isCourseUnAssigned;
     }
 
+    /**
+     * Assigns Professor to a course
+     */
     private void assignProfessorToCourse() {
         // TODO: If any of the below is unassigned then only procced for course assignment
         displayUnAssignedProfessors();
@@ -130,6 +141,9 @@ public class AdminCRSClient {
         logger.info("");
     }
 
+    /**
+     * View all the courses
+     */
     public void viewCourses() {
         ArrayList<Course> courseArrayList = courseCatalogueInterface.getCourseList();
         logger.info("CourseID\tCourseName\tProfessorID\tProfessorName");
@@ -178,6 +192,10 @@ public class AdminCRSClient {
         }
     }
 
+    /**
+     * Display list of unapproved students
+     * @return number of unapproved students
+     */
     public int displayUnApprovedStudent() {
         ArrayList<Student> unApprovedStudents = adminInterface.getUnApprovedStudents();
         if (unApprovedStudents.size() > 0) {
@@ -194,7 +212,7 @@ public class AdminCRSClient {
     }
 
     /**
-     * To approve the student
+     * Approves a student
      */
     public void approveStudent() {
         if (displayUnApprovedStudent() > 0) {
@@ -211,7 +229,7 @@ public class AdminCRSClient {
     }
 
     /**
-     * To generate the report card
+     * Generates the report card
      */
     public boolean generateReportCard() {
         logger.info("Enter student id to generate report card:");
