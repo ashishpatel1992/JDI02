@@ -5,10 +5,10 @@ import com.flipkart.dao.LoginDaoImp;
 import com.flipkart.dao.LoginDaoInterface;
 
 public class StudentRegistrationOperation implements StudentRegistrationInterface {
-    public String isRegistrationDataValid(Student newStudent){
+    public String isRegistrationDataValid(Student newStudent,String password){
         // TODO: Call DOA to check if student Enrollment number and Email exist
         LoginDaoInterface loginDaoInterface = LoginDaoImp.getInstance();
-        String password = loginDaoInterface.addStudent(newStudent);
-        return password;
+        String userId = loginDaoInterface.addStudent(newStudent,password);
+        return userId;
     }
 }

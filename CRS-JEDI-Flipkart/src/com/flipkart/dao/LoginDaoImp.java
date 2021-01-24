@@ -11,11 +11,7 @@ import java.sql.*;
 import java.util.Random;
 
 /**
- * Database access object class for login operations, performs the following operations
- * 1. Verify login credentials for a user
- * 2. Adds a student to database
- * 3. Adds a professor to database
- * 4. Approve a registered student
+ * Class that implements all methods of LoginDaoInterface
  */
 public class LoginDaoImp implements LoginDaoInterface {
 
@@ -23,7 +19,10 @@ public class LoginDaoImp implements LoginDaoInterface {
 
     private LoginDaoImp() {
     }
-
+    /**
+     * Returns static instance of LoginDaoImp class
+     * @return instance of LoginDaoImp class
+     */
     public static LoginDaoImp getInstance() {
         if (instance == null) {
             // This is a synchronized block, when multiple threads will access this instance
@@ -37,6 +36,12 @@ public class LoginDaoImp implements LoginDaoInterface {
     private static Logger logger = Logger.getLogger(LoginDaoImp.class);
     Connection connection = DBUtils.getConnection();
 
+    /**
+     *  Verify credentials and returns login status
+     * @param userId id of user to login
+     * @param password password of user
+     * @return true if provided userid and password are correct
+     */
     @Override
     public boolean login(String userId, String password) {
         PreparedStatement stmt = null;
@@ -64,12 +69,19 @@ public class LoginDaoImp implements LoginDaoInterface {
         return false;
     }
 
+    /**
+     * Adds a new student to database
+     * @param student details of student in Student object
+     * @param password password of student
+     * @return userId if student was successfully added
+     * @return null if adding student failed
+     */
     @Override
-    public String addStudent(Student student) {
-        String password = null;
+    public String addStudent(Student student,String password) {
+        String userId = null;
         PreparedStatement stmt = null;
         try {
-            password = addUser(student.getId(), student.getName(), student.getEmail(), "student");
+            userId = addUser(student.getId(), student.getName(), student.getEmail(), "student",password);
             stmt = connection.prepareStatement(SQLQueriesConstants.ADD_STUDENT_QUERY);
             stmt.setString(1, student.getId());
             stmt.setString(2, student.getBranch());
@@ -77,7 +89,7 @@ public class LoginDaoImp implements LoginDaoInterface {
             stmt.setInt(3, studentApproved);
             int updatedValues = stmt.executeUpdate();
             if (updatedValues > 0) {
-                return password;
+                return userId;
             } else {
                 return null;
             }
@@ -91,18 +103,25 @@ public class LoginDaoImp implements LoginDaoInterface {
         return password;
     }
 
+    /**
+     * Adds a new professor to database
+     * @param professor details of professor in Professor object
+     * @param password password of professor
+     * @return userId if professor was successfully added
+     * @return null if adding professor failed
+     */
     @Override
-    public String addProfessor(Professor professor) {
-        String password = null;
+    public String addProfessor(Professor professor,String password) {
+        String userId = null;
         PreparedStatement stmt = null;
         try {
-            password = addUser(professor.getId(), professor.getName(), professor.getEmail(), "professor");
+            userId = addUser(professor.getId(), professor.getName(), professor.getEmail(), "professor",password);
             stmt = connection.prepareStatement(SQLQueriesConstants.ADD_PROFESSOR_QUERY);
             stmt.setString(1, professor.getId());
             stmt.setString(2, professor.getDepartment());
             int updatedValues = stmt.executeUpdate();
             if (updatedValues > 0) {
-                return password;
+                return userId;
             } else {
                 return null;
             }
@@ -114,8 +133,12 @@ public class LoginDaoImp implements LoginDaoInterface {
         return null;
     }
 
-
-
+    /**
+     * Check if a user already exists in database
+     * @param userId id of user to check
+     * @return true if user already exists
+     */
+    @Override
     public boolean checkIfUserAlreadyExist(String userId){
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -145,20 +168,30 @@ public class LoginDaoImp implements LoginDaoInterface {
         }
         return false;
     }
-    public String addUser(String userid, String name, String email, String role) throws UserAlreadyExistException {
-        String generatedPassword = null;
+
+    /**
+     * Adds a new user to database
+     * @param userid if of new user
+     * @param name name of new user
+     * @param email email of new user
+     * @param role role of new user
+     * @param password password of new user
+     * @return user id if user was added successfully
+     * @return null if adding user failed
+     * @throws UserAlreadyExistException Exception is thrown when new user already exists in database
+     */
+    public String addUser(String userid, String name, String email, String role,String password) throws UserAlreadyExistException {
         PreparedStatement preparedStatement = null;
         try {
-            generatedPassword = generatePassword();
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_USER_QUERY);
             preparedStatement.setString(1, userid);
             preparedStatement.setString(2, name);
             preparedStatement.setString(3, email);
-            preparedStatement.setString(4, generatedPassword);
+            preparedStatement.setString(4, password);
             preparedStatement.setString(5, role);
             int updatedValues = preparedStatement.executeUpdate();
             if (updatedValues > 0) {
-                return generatedPassword;
+                return password;
             } else {
                 return null;
             }
@@ -173,18 +206,7 @@ public class LoginDaoImp implements LoginDaoInterface {
                 logger.error(e.getMessage());
             }
         }
-        return generatedPassword;
-    }
-
-    public String generatePassword() {
-
-        String numbers = "0123456789";
-        Random rndm_method = new Random();
-        String otp = new String();
-        for (int i = 0; i < 5; i++) {
-            otp += numbers.charAt(rndm_method.nextInt(numbers.length()));
-        }
-        return otp;
+        return password;
     }
 
 }
