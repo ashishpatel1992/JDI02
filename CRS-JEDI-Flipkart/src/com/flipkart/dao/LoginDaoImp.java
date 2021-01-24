@@ -38,9 +38,30 @@ public class LoginDaoImp implements LoginDaoInterface {
     Connection connection = DBUtils.getConnection();
 
     @Override
-    public String login(String userId, String password) {
+    public boolean login(String userId, String password) {
+        PreparedStatement stmt = null;
+        ResultSet rs= null;
+        try{
+            stmt = connection.prepareStatement(SQLQueriesConstants.VERIFY_CREDENTIALS_QUERY);
+            stmt.setString(1,userId);
+            stmt.setString(2,password);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                return true;
+            }
+            return false;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            try {
+                stmt.close();
+                rs.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
 
-        return null;
+        return false;
     }
 
     @Override

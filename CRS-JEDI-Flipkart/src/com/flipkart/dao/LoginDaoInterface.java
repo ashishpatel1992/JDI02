@@ -5,12 +5,13 @@ import com.flipkart.bean.Student;
 
 public interface LoginDaoInterface {
 
-    String login(String userId, String password);
+    boolean login(String userId, String password);
 
     String addStudent(Student student);
 
     String addProfessor(Professor professor);
 
     boolean checkIfUserAlreadyExist(String userId);
+
 
 }

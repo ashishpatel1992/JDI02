@@ -40,8 +40,10 @@ public class AdminCRSClient {
             logger.info("3. Assign Professor to Course");
             logger.info("4. Approve Student");
             logger.info("5. View Courses");
-            logger.info("6. Generate Report Card");
-            logger.info("7. Logout");
+            logger.info("6. Remove Course");
+            logger.info("7. Remove Professor");
+            logger.info("8. Generate Report Card");
+            logger.info("9. Logout");
             Scanner scanner = new Scanner(System.in);
             choice = scanner.nextInt();
 
@@ -65,12 +67,22 @@ public class AdminCRSClient {
                     viewCourses();
                     break;
                 case 6:
+                    if(removeCourse()){
+                        logger.info("Course successfully removed");
+                    }else{
+                        logger.info("Cannot remove course.");
+                    }
+                    break;
+                case 7:
+                    logger.info("remove professor");
+                    break;
+                case 8:
                     if (generateReportCard())
                         logger.info("Report Card Generated");
                     else
                         logger.info("Unable to generate report card");
                     break;
-                case 7:
+                case 9:
                     logger.info("Successfully logged out");
                     return;
                 default:
@@ -200,6 +212,9 @@ public class AdminCRSClient {
             return false;
         }
     }
+    public boolean removeCourse(){
 
+        return false;
+    }
 
 }

@@ -1,7 +1,7 @@
 package com.flipkart.bean;
 
 /**
- * Student class stores basic profile information for a student
+ * Student - bean class for student
  */
 public class Student extends User{
 
@@ -14,6 +14,15 @@ public class Student extends User{
      */
     boolean approved;
 
+    /**
+     * Constructor for student class, initialises id, name, email, role, branch, approved properties of Student class
+     * @param id id(role number) of student
+     * @param name name of student
+     * @param email email of student
+     * @param role role of student
+     * @param branch branch of student
+     * @param approved flag, stores status of whether student is approved by admin
+     */
     public Student(String id, String name, String email, String role, String branch, boolean approved){
         this.id = id;
         this.name = name;
@@ -22,34 +31,35 @@ public class Student extends User{
         this.branch = branch;
         this.approved = approved;
     }
+
     /**
-     * Stores branch name
-     * @return
+     * Returns branch name
+     * @return branch
      */
     public String getBranch() {
         return branch;
     }
 
     /**
-     * Assign a new branch to student
-     * @param branch
+     * Sets branch of student
+     * @param branch branch of student
      */
     public void setBranch(String branch) {
         this.branch = branch;
     }
 
     /**
-     * check if student is approved by admin
-     * @return
+     * Returns if student is approved by admin
+     * @return true if student is approved by admin
+     * @return false if student is not approved by admin
      */
     public boolean isApproved() {
-
         return approved;
     }
 
     /**
-     * set approval status for student
-     * @param approved
+     * Sets approved flag for student
+     * @param approved true if student is approved by admin
      */
     public void setApproved(boolean approved) {
         this.approved = approved;

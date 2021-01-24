@@ -1,5 +1,7 @@
 package com.flipkart.service;
 
+import com.flipkart.dao.LoginDaoImp;
+import com.flipkart.dao.LoginDaoInterface;
 import org.apache.log4j.Logger;
 
 public class UserOperation implements UserInterface{
@@ -13,10 +15,16 @@ public class UserOperation implements UserInterface{
      */
     @Override
     public String verifyCredentials(String userId, String password) {
-
-        logger.info("Verify Credentials");
-        logger.info(userId);
-        // TODO User Authentication from doa
-        return userId;
+        if(userId==null || password ==null){
+            return null;
+        }
+        //logger.info("Verify Credentials");
+        //logger.info(userId);
+        LoginDaoInterface loginDaoInterface = LoginDaoImp.getInstance();
+        boolean loginSuccess = loginDaoInterface.login(userId,password);
+        if(loginSuccess){
+            return userId;
+        }
+        return null;
     }
 }
