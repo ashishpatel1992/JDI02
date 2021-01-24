@@ -8,6 +8,9 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Class that implements all methods of AdminDaoInterface
+ */
 public class AdminDaoImp implements AdminDaoInterface {
 
     private static volatile AdminDaoImp instance = null;
@@ -15,6 +18,10 @@ public class AdminDaoImp implements AdminDaoInterface {
     private AdminDaoImp() {
     }
 
+    /**
+     * Returns static instance of AdminDaoImp class
+     * @return instance of AdminDaoImp class
+     */
     public static AdminDaoImp getInstance() {
         if (instance == null) {
             // This is a synchronized block, when multiple threads will access this instance
@@ -28,6 +35,11 @@ public class AdminDaoImp implements AdminDaoInterface {
     private static Logger logger = Logger.getLogger(AdminDaoImp.class);
     Connection connection = DBUtils.getConnection();
 
+    /**
+     * Adds new course to catalogue
+     * @param course course to add
+     * @return true if course is added successfully
+     */
     @Override
     public boolean addCourse(Course course) {
         PreparedStatement stmt = null;
@@ -56,6 +68,10 @@ public class AdminDaoImp implements AdminDaoInterface {
         return false;
     }
 
+    /**
+     * Returns list of unapproved students
+     * @return array list of un approved students
+     */
     @Override
     public ArrayList<String> getUnApprovedStudentsIds() {
         ArrayList<String> unApprovedStudentIds = new ArrayList<String>();
@@ -89,6 +105,11 @@ public class AdminDaoImp implements AdminDaoInterface {
         return unApprovedStudentIds;
     }
 
+    /**
+     * Approves a student for registration
+     * @param studentId Id of student to be approved
+     * @return true if the student was successfully approved
+     */
     @Override
     public boolean approveStudent(String studentId) {
 
@@ -96,6 +117,12 @@ public class AdminDaoImp implements AdminDaoInterface {
         return studentDaoInterface.approveStudent(studentId);
     }
 
+    /**
+     * Assigns a course to professor
+     * @param professorId id of professor to assign
+     * @param courseId id of course to assign
+     * @return true if professor was successfully assigned the course
+     */
     @Override
     public boolean assignProfessorToCourse(String professorId, String courseId) {
 

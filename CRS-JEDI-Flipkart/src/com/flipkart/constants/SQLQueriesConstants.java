@@ -1,7 +1,7 @@
 package com.flipkart.constants;
 
 /**
- * Contains SQl Queries for CRS
+ * Contains SQl Queries for CRS Application
  */
 public class SQLQueriesConstants {
 
@@ -9,6 +9,7 @@ public class SQLQueriesConstants {
 
     // User Queries
     public static String GET_USER_PROFILE_QUERY = "SELECT `userid`, `name`, `email`, `role` FROM `user` WHERE `userid` = ?";
+    public static String VERIFY_CREDENTIALS_QUERY ="SELECT * FROM USER WHERE USERID = ? AND PASSWORD = ?";
 
     // Professor Queries
     public static String ADD_GRADE_QUERY = "UPDATE REGISTEREDCOURSE SET GRADE = ? WHERE STUDENTID = ? AND COURSEID = ?";

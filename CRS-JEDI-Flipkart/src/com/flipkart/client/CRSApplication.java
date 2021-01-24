@@ -3,6 +3,8 @@ package com.flipkart.client;
 import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
+import java.io.Console;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class CRSApplication {
@@ -39,23 +41,33 @@ public class CRSApplication {
 
                         logger.info("Please Login to proceed further");
                         String studentId = CRSApplication.authenticateUser();
-                        // TODO: Handle null userid
-                        StudentCRSClient studentCRSClient = new StudentCRSClient(studentId);
-                        studentCRSClient.studentMenu();
+                        if(studentId!=null) {
+                            logger.info("Login Successful");
+                            StudentCRSClient studentCRSClient = new StudentCRSClient(studentId);
+                            studentCRSClient.studentMenu();
+                        }else{
+                            logger.info("Invalid User Id or Password!");
+                        }
                         break;
                     case 3:
                         String professorId = CRSApplication.authenticateUser();
-                        // TODO: Handle null userid
-                        ProfessorCRSClient professorCRSClient = new ProfessorCRSClient(professorId);
-                        professorCRSClient.professorMenu();
-                        logger.info("Professor is selected");
+                        if(professorId!=null) {
+                            logger.info("Login Successful");
+                            ProfessorCRSClient professorCRSClient = new ProfessorCRSClient(professorId);
+                            professorCRSClient.professorMenu();
+                        }else{
+                            logger.info("Invalid User Id or Password!");
+                         }
                         break;
                     case 4:
-                        // TODO: Handle null userid
-                        logger.info("Admin is selected");
                         String adminId = CRSApplication.authenticateUser();
-                        AdminCRSClient adminCRSClient = new AdminCRSClient(adminId);
-                        adminCRSClient.adminMenu();
+                        if(adminId!=null){
+                            logger.info("Login Successful");
+                            AdminCRSClient adminCRSClient = new AdminCRSClient(adminId);
+                            adminCRSClient.adminMenu();
+                        }else{
+                            logger.info("Invalid User Id or Password!");
+                        }
                         break;
                     case 5:
                         logger.info("Exit is selected");
@@ -84,14 +96,13 @@ public class CRSApplication {
      */
     public static String authenticateUser(){
         String userId;
-        String userPassword;
+        String userPassword=null;
         Scanner scanner = new Scanner(System.in);
         logger.info("Enter User ID ? ");
         userId = scanner.next();
         logger.info("Enter User Password ? ");
         userPassword = scanner.next();
         UserInterface userInterface = new UserOperation();
-
         // TODO: try catch can be done for handling authentication error
         return userInterface.verifyCredentials(userId, userPassword);
     }

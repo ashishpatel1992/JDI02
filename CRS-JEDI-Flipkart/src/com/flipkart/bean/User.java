@@ -1,5 +1,8 @@
 package com.flipkart.bean;
 
+/**
+ * User - bean class for user
+ */
 public class User {
     String id;
     String name;
@@ -8,46 +11,46 @@ public class User {
 
     /**
      * Returns the student id
-     * @return
+     * @return id of student
      */
     public String getId() {
         return id;
     }
 
     /**
-     * assign a user id
-     * @param id
+     * Sets id property for User class
+     * @param id id of user
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     * Get the name of the user
-     * @return
+     * Returns the name property of User class
+     * @return name of user
      */
     public String getName() {
         return name;
     }
 
     /**
-     * sets the name of user
-     * @param name
+     * Sets the name property of User class
+     * @param name name of user
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * returns the email of user
-     * @return
+     * Returns the email property of User class
+     * @return email of user
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     * set the email of user
+     * Sets the email property of User class
      * @param email
      */
     public void setEmail(String email) {
@@ -55,16 +58,16 @@ public class User {
     }
 
     /**
-     * returns the role of student
-     * @return
+     * Returns the role property of User class
+     * @return role of user
      */
     public String getRole() {
         return role;
     }
 
     /**
-     * set the role of student
-     * @param role
+     * Sets the role property of User
+     * @param role role of user
      */
     public void setRole(String role) {
         this.role = role;
