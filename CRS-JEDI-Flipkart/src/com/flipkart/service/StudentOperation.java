@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * Class to handle student operations
+ */
 public class StudentOperation implements StudentInterface {
 
     String studentId;
@@ -18,19 +21,31 @@ public class StudentOperation implements StudentInterface {
     CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
     RegisteredCoursesOperation registeredCoursesOperation;
 
-
+    /**
+     * Constructor of class which sets the student ID
+     * @param studentId Student ID
+     */
     public StudentOperation(String studentId) {
         this.studentId = studentId;
 //        this.registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
         this.registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
     }
 
+    /**
+     * Gets student details
+     * @return Student details
+     */
     public Student getStudent() {
         // TODO: fetch student info from DAO
         Student student = new Student("101", "Anish", "anish@gmail.com", "student", "CS", false);
         return student;
     }
 
+    /**
+     * Adds course to selection list
+     * @param courseId course ID
+     * @return true if added successfully
+     */
     @Override
     public boolean addCourseToSelection(String courseId) {
         boolean flag = false;
@@ -45,12 +60,21 @@ public class StudentOperation implements StudentInterface {
         return flag;
     }
 
+    /**
+     * Gets course selection list
+     * @return array list of courses selected
+     */
     @Override
     public ArrayList<String> getCourseSelection() {
 
         return courseIdSelectionList;
     }
 
+    /**
+     * Drops course from selection
+     * @param courseId course ID
+     * @return true if course dropped successfully
+     */
     @Override
     public boolean dropCourseFromSelection(String courseId) {
         boolean flag = false;
@@ -65,6 +89,10 @@ public class StudentOperation implements StudentInterface {
         return flag;
     }
 
+    /**
+     * Registers the courses selected
+     * @return array list of courses registered
+     */
     @Override
     public ArrayList<String> registerCourses() {
         logger.info("REGISTER COURSES");
@@ -78,6 +106,10 @@ public class StudentOperation implements StudentInterface {
 //        return flag;
     }
 
+    /**
+     * Checks if fee is paid
+     * @return true if paid
+     */
     @Override
     public boolean isFeePaid() {
         logger.debug("check if isFeePaid");
@@ -86,12 +118,22 @@ public class StudentOperation implements StudentInterface {
 
 
     //TODO : review return type
+
+    /**
+     * Gets student grades
+     * @return hashmap of grades
+     */
     @Override
     public HashMap<String, String> getGrades() {
         logger.info("get grades");
         return null;
     }
 
+    /**
+     * Adds course
+     * @param id course ID
+     * @return true if added successfully
+     */
     @Override
     public boolean addCourse(String id) {
         // TODO: Add a course at later point in time (Will see if needed)
@@ -99,7 +141,10 @@ public class StudentOperation implements StudentInterface {
         return false;
     }
 
-
+    /**
+     * Gets list of registered courses
+     * @return array list of courses
+     */
     @Override
     public ArrayList<Course> getRegisteredCourses() {
 //        logger.info("get List of Registered Courses");

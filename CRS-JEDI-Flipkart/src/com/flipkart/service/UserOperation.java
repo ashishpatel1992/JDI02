@@ -2,14 +2,17 @@ package com.flipkart.service;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Class to handle user operations
+ */
 public class UserOperation implements UserInterface{
     private static Logger logger = Logger.getLogger(UserOperation.class);
 
     /**
-     * Verify credentials of the student
-     * @param userId
-     * @param password
-     * @return
+     * Verifies credentials of the student
+     * @param userId user ID
+     * @param password password of user
+     * @return user ID
      */
     @Override
     public String verifyCredentials(String userId, String password) {

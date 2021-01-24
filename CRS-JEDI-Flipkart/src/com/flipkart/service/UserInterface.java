@@ -2,10 +2,10 @@ package com.flipkart.service;
 
 public interface UserInterface {
     /**
-     * Verify credentials of the student
-     * @param id
-     * @param password
-     * @return id of the user
+     * Verifies credentials of the student
+     * @param id user ID
+     * @param password password of user
+     * @return user ID
      */
     public String verifyCredentials(String id, String password);
 
