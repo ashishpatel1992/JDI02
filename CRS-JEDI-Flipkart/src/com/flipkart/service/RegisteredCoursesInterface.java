@@ -16,14 +16,14 @@ public interface RegisteredCoursesInterface {
 
     /**
      * Get list of all courses student is registered in.
-     * @return
+     * @return array list of courses
      */
     public ArrayList<Course> getRegisteredCourses();
 
     /**
-     * Drop a course in which student is already enrolled in.
-     * @param courseId
-     * @return
+            * Drops a course in which student is already enrolled in.
+            * @param courseId course ID
+     * @return true if dropped successfully
      */
 //    public boolean dropCourse(String courseId);
 

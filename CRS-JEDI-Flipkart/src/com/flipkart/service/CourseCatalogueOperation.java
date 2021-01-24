@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles the operation of CourseCatalogue
+ * Class to Handle the operation of CourseCatalogue
  */
 public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
@@ -45,9 +45,8 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     }
 
     /**
-     * returns the list of all courses
-     *
-     * @return
+     * Returns the list of all courses
+     * @return array list containing courses
      */
     @Override
     public ArrayList<Course> getCourseList() {
@@ -58,10 +57,9 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * creates a new course and add to course list and further add to database
-     *
-     * @param courseId
-     * @param courseName
-     * @return
+     * @param courseId course ID
+     * @param courseName name of the course
+     * @return true if course added
      */
     @Override
     public boolean addCourse(String courseId, String courseName, String professorId) {
@@ -78,9 +76,8 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Returns the course along with its details
-     *
-     * @param courseId
-     * @return
+     * @param courseId course ID
+     * @return Course
      */
     @Override
     public Course getCourse(String courseId) {
@@ -90,9 +87,8 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Delete a specific course
-     *
-     * @param courseId
-     * @return
+     * @param courseId course ID
+     * @return true if course deleted
      */
     @Override
     public boolean deleteCourse(String courseId) {
@@ -112,10 +108,9 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     }
 
     /**
-     * Assign a professor to a course
-     *
-     * @param courseId
-     * @return
+     * Assigns professor to a course
+     * @param courseId course ID
+     * @return true if professor assigned
      */
     @Override
     public boolean assignProfessor(String courseId) {
@@ -133,11 +128,19 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
         return true;
     }
 
+    /**
+     * Get list of unassigned Courses
+     * @return array list of unassigned courses
+     */
     @Override
     public ArrayList<Course> getUnAssignedCourses() {
         return CourseCatalogueDaoImp.getInstance().getUnAssignedCourses();
     }
 
+    /**
+     * Get list of unassigned Professors
+     * @return array list of unassigned professors
+     */
     @Override
     public ArrayList<Professor> getUnAssignedProfessors() {
         return CourseCatalogueDaoImp.getInstance().getUnAssignedProfessors();

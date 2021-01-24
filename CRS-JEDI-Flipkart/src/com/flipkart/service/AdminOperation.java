@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Handles the following admin operations
+ * Class to handle the following admin operations
  * 1. add new professor
  * 2. add new course
  * 3. approve student
@@ -23,18 +23,21 @@ public class AdminOperation implements AdminInterface {
 
     String adminId;
 
+    /**
+     * Constructor of the class which sets admin ID
+     * @param adminId admin ID
+     */
     public AdminOperation(String adminId) {
         this.adminId = adminId;
     }
 
     /**
-     * Add professor to database
-     *
-     * @param professorId
-     * @param professorName
-     * @param professorEmail
-     * @param professorDepartment
-     * @return boolean
+     * Adds professor to database
+     * @param professorId professor ID
+     * @param professorName name of professor
+     * @param professorEmail email of professor
+     * @param professorDepartment department of professor
+     * @return user ID
      */
     @Override
     public String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment,String password) {
@@ -45,12 +48,19 @@ public class AdminOperation implements AdminInterface {
         return userID;
     }
 
-
+    /**
+     * Get admin profile
+     * @return profile of Admin
+     */
     @Override
     public Admin getAdminProfile() {
         return AdminDaoImp.getInstance().getAdminProfile(adminId);
     }
 
+    /**
+     * Get list of unapproved students
+     * @return array list of unapproved students
+     */
     public ArrayList<Student> getUnApprovedStudents() {
         // TODO: Get unapproved student list displayed
 
@@ -66,10 +76,9 @@ public class AdminOperation implements AdminInterface {
     }
 
     /**
-     * Approve student
-     *
-     * @param studentId
-     * @return boolean
+     * Approves student
+     * @param studentId student ID
+     * @return true if student is approved
      */
     @Override
     public boolean approveStudent(String studentId) {
@@ -77,10 +86,9 @@ public class AdminOperation implements AdminInterface {
     }
 
     /**
-     * Generate report card for a student
-     *
-     * @param studentId
-     * @return HashMap<String, String>
+     * Generates report card for a student
+     * @param studentId student ID
+     * @return HashMap<String, String> containing student id and grades
      */
     @Override
     public HashMap<String, String> generateReportCard(String studentId) {
@@ -94,6 +102,12 @@ public class AdminOperation implements AdminInterface {
         }
     }
 
+    /**
+     * Assigns professor to a course
+     * @param professorId professor ID
+     * @param courseId course ID
+     * @return true if professor assigned
+     */
     @Override
     public boolean assignProfessorToCourse(String professorId, String courseId) {
 
