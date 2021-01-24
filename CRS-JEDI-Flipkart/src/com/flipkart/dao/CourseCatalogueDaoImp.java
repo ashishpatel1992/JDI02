@@ -1,6 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Professor;
 import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.exception.CourseNotFoundException;
 import com.flipkart.utils.DBUtils;
@@ -34,13 +35,14 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
     }
 
     private static Logger logger = Logger.getLogger(CourseCatalogueDaoImp.class);
-
+    Connection connection = DBUtils.getConnection();
+    
     /**
      * Returns list of all courses from catalogue
      * @return arraylist of courses
      */
     public ArrayList<Course> getAllCourses() {
-        Connection connection = DBUtils.getConnection();
+
         ArrayList<Course> courseArrayList = new ArrayList<Course>();
         Statement statement = null;
         ResultSet resultSet = null;
@@ -75,7 +77,7 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
             } catch (SQLException e) {
                 logger.error(e);
             }
-            
+
 
         }
         return courseArrayList;
@@ -89,7 +91,7 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
      */
     @Override
     public Course getCourseDetail(String courseId) {
-        Connection connection = DBUtils.getConnection();
+
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Course course = null;
@@ -139,14 +141,14 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
      */
     @Override
     public boolean assignProfessorToCourse(String professorId, String courseId) {
-        Connection connection = DBUtils.getConnection();
-        PreparedStatement stmt = null;
+        //Connection connection = DBUtils.getConnection();
+        PreparedStatement preparedStatement = null;
         try {
 
-            stmt = connection.prepareStatement(SQLQueriesConstants.ADD_PROFESSOR_TO_COURSE_ID);
-            stmt.setString(1, professorId);
-            stmt.setString(2, courseId);
-            int updatedValues = stmt.executeUpdate();
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_PROFESSOR_TO_COURSE_ID);
+            preparedStatement.setString(1, professorId);
+            preparedStatement.setString(2, courseId);
+            int updatedValues = preparedStatement.executeUpdate();
             if (updatedValues > 0) {
                 return true;
             } else {
@@ -156,5 +158,87 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
             logger.error(e.getMessage());
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<Course> getUnAssignedCourses() {
+        ArrayList<Course> unAssignedCourses = new ArrayList<Course>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Course course = null;
+        try {
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_UNASSIGNED_COURSES_QUERY);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    String rsCourseId;
+                    String rsCourseName;
+                    String rsProfessorId;
+
+                    rsCourseId = resultSet.getString("courseid");
+                    rsCourseName = resultSet.getString("coursename");
+                    rsProfessorId = resultSet.getString("professorid");
+                    course = new Course(rsCourseId, rsCourseName, rsProfessorId);
+                    unAssignedCourses.add(course);
+                }
+                return unAssignedCourses;
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+
+        }
+        return unAssignedCourses;
+    }
+
+    @Override
+    public ArrayList<Professor> getUnAssignedProfessors() {
+        ArrayList<Professor> unAssignedProfessors = new ArrayList<Professor>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_UNASSIGNED_PROFESSORS_QUERY);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    String rsProfessorId;
+
+                    rsProfessorId = resultSet.getString("userid");
+                    Professor professor = ProfessorDaoImp.getInstance().getProfessor(rsProfessorId);
+                    unAssignedProfessors.add(professor);
+                }
+                return unAssignedProfessors;
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+
+        }
+        return unAssignedProfessors;
     }
 }

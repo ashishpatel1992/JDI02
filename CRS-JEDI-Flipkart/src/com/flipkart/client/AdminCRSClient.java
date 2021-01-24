@@ -73,20 +73,43 @@ public class AdminCRSClient {
                 case 7:
                     logger.info("Successfully logged out");
                     return;
+                    // TODO: Remove course  and remove Professor if course is assigned to students so it cant be removed, if professor assigned to course, professor cannot be removed.
+
                 default:
                     logger.info("Invalid Choice");
             }
         }
     }
 
-    private void displayUnAssignedProfessors(){
-    // TODO: Display Unassigned Professors
+    private boolean displayUnAssignedProfessors() {
+        boolean isProfessorUnAssigned = false;
+        ArrayList<Professor> unAssignedProfessors = courseCatalogueInterface.getUnAssignedProfessors();
+        logger.info("List of Unassigned Professors:-");
+        if (unAssignedProfessors.size() > 0) {
+            isProfessorUnAssigned = true;
+            for (Professor professor : unAssignedProfessors) {
+                logger.info(professor.getId() + " " + professor.getName());
+            }
+        }
+        return isProfessorUnAssigned;
     }
 
-    private void displayUnAssignedCourses(){
-    // TODO: Display UnAssignedCourses
+    private boolean displayUnAssignedCourses() {
+        boolean isCourseUnAssigned = false;
+
+        logger.info("List of Unassigned Courses:-");
+        ArrayList<Course> unAssignedCourses = courseCatalogueInterface.getUnAssignedCourses();
+        if (unAssignedCourses.size() > 0) {
+            isCourseUnAssigned = true;
+            for (Course course : unAssignedCourses) {
+                logger.info(course.getId() + " " + course.getName());
+            }
+        }
+        return isCourseUnAssigned;
     }
+
     private void assignProfessorToCourse() {
+        // TODO: If any of the below is unassigned then only procced for course assignment
         displayUnAssignedProfessors();
         displayUnAssignedCourses();
 
@@ -95,9 +118,9 @@ public class AdminCRSClient {
         logger.info("Enter professor ID to assign");
         String professorId = scanner.next();
 
-        if(adminInterface.assignProfessorToCourse(professorId,courseId)){
-            logger.info(professorId+" assigned to course "+courseId);
-        }else{
+        if (adminInterface.assignProfessorToCourse(professorId, courseId)) {
+            logger.info(professorId + " assigned to course " + courseId);
+        } else {
             logger.info("Unable to assign professor to course.");
         }
 
@@ -109,10 +132,10 @@ public class AdminCRSClient {
         logger.info("CourseID\tCourseName\tProfessorID\tProfessorName");
         for (Course course : courseArrayList) {
             // TODO: Fetch Professor Name and print when Professor is implemented
-            if(course.getProfessorId() == null){
+            if (course.getProfessorId() == null) {
                 logger.info(course.getId() + " " + course.getName() + " N/A");
-            }else{
-                logger.info(course.getId() + " " + course.getName() + " " + course.getProfessorId()+" "+ ProfessorDaoImp.getInstance().getProfessor(course.getProfessorId()).getName());
+            } else {
+                logger.info(course.getId() + " " + course.getName() + " " + course.getProfessorId() + " " + ProfessorDaoImp.getInstance().getProfessor(course.getProfessorId()).getName());
             }
 
         }

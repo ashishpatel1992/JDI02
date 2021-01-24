@@ -1,6 +1,7 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Professor;
 import com.flipkart.dao.CourseCatalogueDaoImp;
 import com.flipkart.dao.CourseCatalogueDaoInterface;
 import com.flipkart.dao.AdminDaoImp;
@@ -130,5 +131,15 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 //        logger.info("Assign Professor");
 //        return course;
         return true;
+    }
+
+    @Override
+    public ArrayList<Course> getUnAssignedCourses() {
+        return CourseCatalogueDaoImp.getInstance().getUnAssignedCourses();
+    }
+
+    @Override
+    public ArrayList<Professor> getUnAssignedProfessors() {
+        return CourseCatalogueDaoImp.getInstance().getUnAssignedProfessors();
     }
 }

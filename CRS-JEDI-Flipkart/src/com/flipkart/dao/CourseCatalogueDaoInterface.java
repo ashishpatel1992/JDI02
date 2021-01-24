@@ -1,6 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Professor;
 import com.flipkart.exception.CourseNotFoundException;
 
 import java.util.ArrayList;
@@ -31,4 +32,6 @@ public interface CourseCatalogueDaoInterface {
      * @return true if professor was successfully assigned to the course
      */
     public boolean assignProfessorToCourse(String professorId, String courseId);
+    public ArrayList<Course> getUnAssignedCourses();
+    public ArrayList<Professor> getUnAssignedProfessors();
 }
