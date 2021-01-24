@@ -5,6 +5,7 @@ import com.flipkart.client.ProfessorCRSClient;
 import com.flipkart.client.StudentCRSClient;
 import com.flipkart.dao.*;
 import com.flipkart.service.AdminOperation;
+import com.flipkart.utils.DBUtils;
 
 public class TestStudentMenu {
     public static void main(String[] args) {
@@ -19,10 +20,11 @@ public class TestStudentMenu {
 //
 //        AdminCRSClient adminCRSClient = new AdminCRSClient("1");
 //        adminCRSClient.adminMenu();
-//        new AdminCRSClient("1").adminMenu();
+        new AdminCRSClient("1").adminMenu();
 //        new ProfessorCRSClient("10").professorMenu();
 //        new AdminCRSClient("1").adminMenu();
-        new StudentCRSClient("101").studentMenu();
+//        new ProfessorCRSClient("22").professorMenu();
+        DBUtils.closeConnection();
         System.out.println();
 
 

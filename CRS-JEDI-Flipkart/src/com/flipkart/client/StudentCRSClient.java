@@ -41,9 +41,9 @@ public class StudentCRSClient {
         if (!courseArrayList.isEmpty()) {
             for (Course course : courseArrayList) {
                 // TODO: Fetch Professor Name and print when Professor is implemented
-                if(course.getProfessorId() == null){
+                if (course.getProfessorId() == null) {
                     logger.info(course.getId() + " " + course.getName() + " N/A \t N/A");
-                }else{
+                } else {
                     Professor professor = new ProfessorOperation(course.getProfessorId()).getProfessor();
                     logger.info(course.getId() + " " + course.getName() + " " + professor.getName() + " " + professor.getDepartment());
                 }
@@ -163,6 +163,13 @@ public class StudentCRSClient {
         int choice;
 
         Student student = studentInterface.getStudentProfile();
+        if (student == null) {
+            return;
+        }
+        if (!student.isApproved()) {
+            logger.info(student.getName() + " your approval is pending.");
+            return;
+        }
         logger.info("Welcome " + student.getName() + ". You are logged in as " + student.getRole() + ".");
 
         while (true) {

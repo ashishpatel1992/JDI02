@@ -3,6 +3,7 @@ package com.flipkart.dao;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.Course;
 import com.flipkart.constants.SQLQueriesConstants;
+import com.flipkart.exception.UserNotFoundException;
 import com.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
@@ -137,29 +138,38 @@ public class AdminDaoImp implements AdminDaoInterface {
 
     @Override
     public Admin getAdminProfile(String adminId) {
+
         Admin admin = null;
-        Statement stmt = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            stmt = connection.createStatement();
-            resultSet = stmt.executeQuery(SQLQueriesConstants.GET_ADMIN_PROFILE_QUERY);
-            logger.info(resultSet.getFetchSize());
-            while (resultSet.next()) {
-                String rsUserId;
-                String rsName;
-                String rsEmail;
-                String rsRole;
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_ADMIN_PROFILE_QUERY);
+            preparedStatement.setString(1, adminId);
+            resultSet = preparedStatement.executeQuery();
 
-                rsUserId = resultSet.getString("userid");
-                rsName = resultSet.getString("name");
-                rsEmail = resultSet.getString("email");
-                rsRole = resultSet.getString("role");
-                admin = new Admin(rsUserId, rsName, rsEmail, rsRole);
-                return admin;
+            if (resultSet.isBeforeFirst()) {
+
+                while (resultSet.next()) {
+                    String rsUserId;
+                    String rsName;
+                    String rsEmail;
+                    String rsRole;
+
+                    rsUserId = resultSet.getString("userid");
+                    rsName = resultSet.getString("name");
+                    rsEmail = resultSet.getString("email");
+                    rsRole = resultSet.getString("role");
+
+                    admin = new Admin(rsUserId, rsName, rsEmail, rsRole);
+                    return admin;
+                }
+            } else {
+                throw new UserNotFoundException("AdminId " + adminId + " not found.");
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        } catch (SQLException | UserNotFoundException e) {
+            logger.error(e.getMessage());
         } finally {
             try {
                 resultSet.close();
@@ -167,7 +177,7 @@ public class AdminDaoImp implements AdminDaoInterface {
                 throwables.printStackTrace();
             }
             try {
-                stmt.close();
+                preparedStatement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

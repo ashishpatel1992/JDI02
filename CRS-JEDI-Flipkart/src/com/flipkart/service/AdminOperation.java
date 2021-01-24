@@ -62,13 +62,11 @@ public class AdminOperation implements AdminInterface {
      * @return array list of unapproved students
      */
     public ArrayList<Student> getUnApprovedStudents() {
-        // TODO: Get unapproved student list displayed
 
         ArrayList<Student> unApprovedStudentList = new ArrayList<>();
         ArrayList<String> unapprovedStudentIds = AdminDaoImp.getInstance().getUnApprovedStudentsIds();
 
         for (String unApprovedStudentId : unapprovedStudentIds) {
-            logger.info("Inside getUnApprovedStudents()");
             Student student = StudentDaoImp.getInstance().getStudent(unApprovedStudentId);
             unApprovedStudentList.add(student);
         }

@@ -34,6 +34,9 @@ public class AdminCRSClient {
         int choice;
         boolean loggedIn = true;
         Admin admin = adminInterface.getAdminProfile();
+        if (admin == null) {
+            return;
+        }
         logger.info("Welcome " + admin.getName() + ". You are logged in as " + admin.getRole() + ".");
         while (true) {
 
@@ -86,6 +89,7 @@ public class AdminCRSClient {
 
     /**
      * Displays list of unassigned professors
+     *
      * @return true if there is any unassigned professor
      */
     private boolean displayUnAssignedProfessors() {
@@ -103,6 +107,7 @@ public class AdminCRSClient {
 
     /**
      * Display list of unassigned courses
+     *
      * @return true if there is any unassigned course
      */
     private boolean displayUnAssignedCourses() {
@@ -186,7 +191,7 @@ public class AdminCRSClient {
         String professorDepartment = scanner.next();
         logger.info("Enter professor password:");
         String password = scanner.next();
-        String userId = adminInterface.addProfessor(professorId, professorName, professorEmail, professorDepartment,password);
+        String userId = adminInterface.addProfessor(professorId, professorName, professorEmail, professorDepartment, password);
         if (userId != null) {
             logger.info("Professor: " + professorName + " Successfully Added\nProfessor ID : " + userId);
         }
@@ -194,11 +199,13 @@ public class AdminCRSClient {
 
     /**
      * Display list of unapproved students
+     *
      * @return number of unapproved students
      */
     public int displayUnApprovedStudent() {
         ArrayList<Student> unApprovedStudents = adminInterface.getUnApprovedStudents();
         if (unApprovedStudents.size() > 0) {
+            logger.info("Students pending for approval: ");
             logger.info("StudentId\tStudentName");
             for (Student unApprovedStudent : unApprovedStudents) {
                 logger.info(unApprovedStudent.getId() + "\t\t" + unApprovedStudent.getName());
@@ -232,6 +239,7 @@ public class AdminCRSClient {
      * Generates the report card
      */
     public boolean generateReportCard() {
+        // TODO: Check if student is enrolled before generating reportcard
         logger.info("Enter student id to generate report card:");
         String studentId = scanner.next();
         HashMap<String, String> studentGrades = adminInterface.generateReportCard(studentId);

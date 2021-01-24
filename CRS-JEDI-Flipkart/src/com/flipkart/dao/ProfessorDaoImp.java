@@ -2,6 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Professor;
 import com.flipkart.constants.SQLQueriesConstants;
+import com.flipkart.exception.UserNotFoundException;
 import com.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
@@ -23,6 +24,7 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
 
     /**
      * Returns static instance of ProfessorDaoImp class
+     *
      * @return instance of ProfessorDaoImp class
      */
     public static ProfessorDaoImp getInstance() {
@@ -37,36 +39,59 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
 
     /**
      * Get details of professor with professor id
+     *
      * @param professorId if of professor for which the details are returned
      * @return details of professor in Professor object
      */
     @Override
     public Professor getProfessor(String professorId) {
         Connection connection = DBUtils.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Professor professor = null;
+
+
         try {
-            stmt = connection.prepareStatement(SQLQueriesConstants.GET_PROFESSOR_PROFILE_QUERY);
-            stmt.setString(1, professorId);
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                String rsProfessorId = rs.getString("userid");
-                String rsProfessorName = rs.getString("name");
-                String rsProfessorEmail = rs.getString("email");
-                String rsProfessorRole = rs.getString("role");
-                String rsProfessorDepartment = rs.getString("department");
-                professor = new Professor(rsProfessorId, rsProfessorName, rsProfessorEmail, rsProfessorRole, rsProfessorDepartment);
-                return professor;
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_PROFESSOR_PROFILE_QUERY);
+            preparedStatement.setString(1, professorId);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    String rsProfessorId = resultSet.getString("userid");
+                    String rsProfessorName = resultSet.getString("name");
+                    String rsProfessorEmail = resultSet.getString("email");
+                    String rsProfessorRole = resultSet.getString("role");
+                    String rsProfessorDepartment = resultSet.getString("department");
+                    professor = new Professor(rsProfessorId, rsProfessorName, rsProfessorEmail, rsProfessorRole, rsProfessorDepartment);
+                    return professor;
+                }
+            } else {
+                throw new UserNotFoundException("ProfessorId " + professorId + " not found.");
             }
-        } catch (SQLException e) {
+
+
+        } catch (SQLException | UserNotFoundException e) {
             logger.error(e.getMessage());
+        } finally {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            }
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            }
+
         }
         return professor;
     }
 
     /**
      * Returns list of students enrolled in a course
+     *
      * @param courseid if of course for which the list of enrolled students is returned
      * @return map of studentid, student name enrolled for course
      */
@@ -94,8 +119,9 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
 
     /**
      * Enters grades of student for a course in database
+     *
      * @param gradesOfStudents map of studentId, grade of students
-     * @param courseId id of course for which grades have to be entered
+     * @param courseId         id of course for which grades have to be entered
      * @return true if grades were successfully entered else false
      */
     @Override

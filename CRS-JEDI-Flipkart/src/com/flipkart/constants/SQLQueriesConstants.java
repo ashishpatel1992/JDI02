@@ -5,28 +5,28 @@ package com.flipkart.constants;
  */
 public class SQLQueriesConstants {
 
-    public static String LOGIN_USER_QUERY = "SELECT * FROM USERS WHERE USERID = ? AND ROLE=?";
+    public static String LOGIN_USER_QUERY = "SELECT * FROM `user` WHERE `userid` = ? AND `role` = ? ";
 
     // User Queries
     public static String GET_USER_PROFILE_QUERY = "SELECT `userid`, `name`, `email`, `role` FROM `user` WHERE `userid` = ?";
-    public static String VERIFY_CREDENTIALS_QUERY ="SELECT * FROM USER WHERE USERID = ? AND PASSWORD = ?";
+    public static String VERIFY_CREDENTIALS_QUERY ="SELECT * FROM user WHERE USERID = ? AND PASSWORD = ?";
 
     // Professor Queries
-    public static String ADD_GRADE_QUERY = "UPDATE REGISTEREDCOURSE SET GRADE = ? WHERE STUDENTID = ? AND COURSEID = ?";
-    public static String GET_ENROLLED_STUDENTS_FOR_COURSE = "SELECT user.userid,user.name FROM  USER JOIN REGISTEREDCOURSE ON USER.USERID = REGISTEREDCOURSE.STUDENTID WHERE COURSEID=?";
-    public static String GET_PROFESSOR_PROFILE_QUERY = "SELECT professor.`userid`, USER.`name`,  USER.`email`,  USER.`role`,  `professor`.`department` FROM  professor,  USER WHERE  professor.userid = USER.userid AND professor.userid = ?";
+    public static String ADD_GRADE_QUERY = "UPDATE `registeredcourse` SET `grade` = ? WHERE `studentid` = ? AND `courseid`= ?";
+    public static String GET_ENROLLED_STUDENTS_FOR_COURSE = "SELECT user.`userid`,user.`name` FROM  `user` JOIN `registeredcourse` ON user.`userid` = registeredcourse.`studentid` WHERE `courseid`=?";
+    public static String GET_PROFESSOR_PROFILE_QUERY = "SELECT professor.`userid`, user.`name`,  user.`email`,  user.`role`,  `professor`.`department` FROM  `professor`, `user` WHERE  professor.`userid` = user.`userid` AND professor.`userid` = ?";
 
     // Admin Queries
-    public static String ADD_USER_QUERY = "INSERT INTO USER(userid,name,email,password,role) VALUES(?,?,?,?,?)";
-    public static String ADD_STUDENT_QUERY = "INSERT INTO STUDENT(userid,branch,approved) VALUES(?,?,?)";
-    public static String ADD_PROFESSOR_QUERY = "INSERT INTO PROFESSOR(userid,department) VALUES(?,?)";
-    public static String ADD_COURSE_QUERY = "INSERT INTO COURSE(courseid,coursename,professorid,coursecatalogueid) VALUES(?,?,?,?)";
-    public static String APPROVE_STUDENT_QUERY = "UPDATE STUDENT SET APPROVED=\"1\" WHERE USERID = ?";
+    public static String ADD_USER_QUERY = "INSERT INTO `user`(`userid`,`name`,`email`,`password`,`role`) VALUES(?,?,?,?,?)";
+    public static String ADD_STUDENT_QUERY = "INSERT INTO `student`(`userid`,`branch`,`approved`) VALUES(?,?,?)";
+    public static String ADD_PROFESSOR_QUERY = "INSERT INTO `professor`(`userid`,`department`) VALUES(?,?)";
+    public static String ADD_COURSE_QUERY = "INSERT INTO `course`(`courseid`,`coursename`,`professorid`,`coursecatalogueid`) VALUES(?,?,?,?)";
+    public static String APPROVE_STUDENT_QUERY = "UPDATE `student` SET `approved`=\"1\" WHERE `userid` = ?";
     public static String GET_UNAPPROVED_STUDENT_LIST = "SELECT `userid`, `branch`, `approved` FROM `student` WHERE `approved` = 0";
-    public static String GET_ADMIN_PROFILE_QUERY = "SELECT `userid`, `name`, `email`, `role` FROM `user` WHERE `role` = 'admin'";
+    public static String GET_ADMIN_PROFILE_QUERY = "SELECT `userid`, `name`, `email`, `role` FROM `user` WHERE `userid` = ? AND `role` = 'admin'";
 
     // Student Queries
-    public static String GET_STUDENT_PROFILE_QUERY = "SELECT stud.`userid`, USER.`name`,  USER.`email`,  USER.`role`,  stud.`branch`,  stud.`approved` FROM  student AS stud,  USER WHERE  stud.userid = USER.userid AND stud.userid = ?";
+    public static String GET_STUDENT_PROFILE_QUERY = "SELECT stud.`userid`, user.`name`,  user.`email`,  user.`role`,  stud.`branch`,  stud.`approved` FROM  `student` AS stud,  `user` AS user WHERE  stud.userid = user.`userid` AND stud.`userid` = ?";
     public static String GET_ALL_COURSE_ID_FOR_REG_STUDENT_QUERY = "SELECT `studentid`, `courseid`, `grade` FROM `registeredcourse` WHERE `studentid` = ?";
     public static String ADD_STUDENT_COURSE_REGISTRATION = "INSERT INTO `registeredcourse`(`studentid`, `courseid`) VALUES (?,?);";
     public static String GET_APPROVAL_STATUS_QUERY = "SELECT `userid`, `branch`, `approved` FROM `student` WHERE `userid` = ?";

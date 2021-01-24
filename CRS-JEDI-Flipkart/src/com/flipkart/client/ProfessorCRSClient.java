@@ -43,6 +43,9 @@ public class ProfessorCRSClient {
         int choice;
         boolean loggedIn = true;
         Professor professor = professorInterface.getProfessor();
+        if(professor ==  null){
+            return;
+        }
         logger.info("Welcome "+ professor.getName()+". You are logged in as "+professor.getRole()+".");
 
         while (true) {

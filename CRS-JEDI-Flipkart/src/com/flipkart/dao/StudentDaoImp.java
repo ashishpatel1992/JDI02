@@ -2,6 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Student;
 import com.flipkart.constants.SQLQueriesConstants;
+import com.flipkart.exception.UserNotFoundException;
 import com.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
@@ -22,6 +23,7 @@ public class StudentDaoImp implements StudentDaoInterface {
 
     /**
      * Returns static instance of StudentDaoImp class
+     *
      * @return instance of StudentDaoImp class
      */
     public static StudentDaoImp getInstance() {
@@ -39,6 +41,7 @@ public class StudentDaoImp implements StudentDaoInterface {
 
     /**
      * Gets details of student by student id
+     *
      * @param studentId id of student for which details are returned
      * @return details of student in Student object
      */
@@ -52,28 +55,40 @@ public class StudentDaoImp implements StudentDaoInterface {
             stmt.setString(1, studentId);
             resultSet = stmt.executeQuery();
 
-            while (resultSet.next()) {
-                String rsStudentId;
-                String rsStudentName;
-                String rsStudentEmail;
-                String rsStudentRole;
-                String rsStudentBranch;
-                boolean rsStudentApproved;
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    String rsStudentId;
+                    String rsStudentName;
+                    String rsStudentEmail;
+                    String rsStudentRole;
+                    String rsStudentBranch;
+                    boolean rsStudentApproved;
 
-                rsStudentId = resultSet.getString("userid");
-                rsStudentName = resultSet.getString("name");
-                rsStudentEmail = resultSet.getString("email");
-                rsStudentRole = resultSet.getString("role");
-                rsStudentBranch = resultSet.getString("branch");
-                rsStudentApproved = resultSet.getString("approved").equalsIgnoreCase("1") ? true : false;
+                    rsStudentId = resultSet.getString("userid");
+                    rsStudentName = resultSet.getString("name");
+                    rsStudentEmail = resultSet.getString("email");
+                    rsStudentRole = resultSet.getString("role");
+                    rsStudentBranch = resultSet.getString("branch");
+                    rsStudentApproved = resultSet.getString("approved").equalsIgnoreCase("1") ? true : false;
 
-                student = new Student(rsStudentId, rsStudentName, rsStudentEmail, rsStudentRole, rsStudentBranch, rsStudentApproved);
-                return  student;
+                    student = new Student(rsStudentId, rsStudentName, rsStudentEmail, rsStudentRole, rsStudentBranch, rsStudentApproved);
+                    return student;
+                }
+            } else {
+                throw new UserNotFoundException("StudentId " + studentId + " not found.");
             }
 
+
+        } catch (UserNotFoundException e) {
+            logger.error(e.getMessage());
         } catch (SQLException e) {
             logger.error(e.getMessage());
         } finally {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            }
             try {
                 stmt.close();
             } catch (SQLException e) {
@@ -85,6 +100,7 @@ public class StudentDaoImp implements StudentDaoInterface {
 
     /**
      * Gets approved status for a student by student id
+     *
      * @param studentId id of student for which the approved status is required
      * @return true if student is approved, else false
      */
@@ -121,6 +137,7 @@ public class StudentDaoImp implements StudentDaoInterface {
 
     /**
      * Sets the approved status to 1(true) by student id
+     *
      * @param studentId id of student for which the status has to be set
      * @return true if it was successfully set, else false
      */
