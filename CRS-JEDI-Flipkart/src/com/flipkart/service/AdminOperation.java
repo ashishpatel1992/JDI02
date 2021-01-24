@@ -20,12 +20,6 @@ import java.util.HashMap;
 public class AdminOperation implements AdminInterface {
     private static Logger logger = Logger.getLogger(AdminOperation.class);
 
-//    @Override
-//    public boolean addCourse() {
-//        logger.info("Add Course");
-//        return false;
-//    }
-
     /**
      * Add professor to database
      *
@@ -36,12 +30,12 @@ public class AdminOperation implements AdminInterface {
      * @return boolean
      */
     @Override
-    public String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment) {
+    public String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment,String password) {
         //logger.info("Add Professor");
         Professor newProfessor = new Professor(professorId, professorName, professorEmail, "professor", professorDepartment);
         LoginDaoInterface loginDaoInterface = LoginDaoImp.getInstance();
-        String password = loginDaoInterface.addProfessor(newProfessor);
-        return password;
+        String userID = loginDaoInterface.addProfessor(newProfessor,password);
+        return userID;
     }
 
 //    @Override

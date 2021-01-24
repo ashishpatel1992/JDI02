@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class that implements all methods of StudentDaoInterface
+ */
 public class StudentDaoImp implements StudentDaoInterface {
 
     private static volatile StudentDaoImp instance = null;
@@ -17,6 +20,10 @@ public class StudentDaoImp implements StudentDaoInterface {
     private StudentDaoImp() {
     }
 
+    /**
+     * Returns static instance of StudentDaoImp class
+     * @return instance of StudentDaoImp class
+     */
     public static StudentDaoImp getInstance() {
         if (instance == null) {
             // This is a synchronized block, when multiple threads will access this instance
@@ -30,6 +37,11 @@ public class StudentDaoImp implements StudentDaoInterface {
     private static Logger logger = Logger.getLogger(StudentDaoImp.class);
     Connection connection = DBUtils.getConnection();
 
+    /**
+     * Gets details of student by student id
+     * @param studentId id of student for which details are returned
+     * @return details of student in Student object
+     */
     @Override
     public Student getStudent(String studentId) {
         PreparedStatement stmt = null;
@@ -71,6 +83,11 @@ public class StudentDaoImp implements StudentDaoInterface {
         return student;
     }
 
+    /**
+     * Gets approved status for a student by student id
+     * @param studentId id of student for which the approved status is required
+     * @return true if student is approved, else false
+     */
     @Override
     public boolean getApprovalStatus(String studentId) {
         PreparedStatement stmt = null;
@@ -102,6 +119,11 @@ public class StudentDaoImp implements StudentDaoInterface {
         return false;
     }
 
+    /**
+     * Sets the approved status to 1(true) by student id
+     * @param studentId id of student for which the status has to be set
+     * @return true if it was successfully set, else false
+     */
     @Override
     public boolean approveStudent(String studentId) {
         PreparedStatement stmt = null;

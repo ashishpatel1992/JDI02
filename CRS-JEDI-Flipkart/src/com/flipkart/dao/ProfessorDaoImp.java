@@ -9,16 +9,22 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that implements all methods of ProfessorDaoInterface
+ */
 public class ProfessorDaoImp implements ProfessorDaoInterface {
 
     private static Logger logger = Logger.getLogger(LoginDaoImp.class);
-
 
     private static volatile ProfessorDaoImp instance = null;
 
     private ProfessorDaoImp() {
     }
 
+    /**
+     * Returns static instance of ProfessorDaoImp class
+     * @return instance of ProfessorDaoImp class
+     */
     public static ProfessorDaoImp getInstance() {
         if (instance == null) {
             // This is a synchronized block, when multiple threads will access this instance
@@ -29,7 +35,11 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
         return instance;
     }
 
-
+    /**
+     * Get details of professor with professor id
+     * @param professorId if of professor for which the details are returned
+     * @return details of professor in Professor object
+     */
     @Override
     public Professor getProfessor(String professorId) {
         Connection connection = DBUtils.getConnection();
@@ -55,6 +65,11 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
         return professor;
     }
 
+    /**
+     * Returns list of students enrolled in a course
+     * @param courseid if of course for which the list of enrolled students is returned
+     * @return map of studentid, student name enrolled for course
+     */
     @Override
     public HashMap<String, String> getEnrolledStudentsForCourse(String courseid) {
         Connection connection = DBUtils.getConnection();
@@ -77,6 +92,12 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
         return null;
     }
 
+    /**
+     * Enters grades of student for a course in database
+     * @param gradesOfStudents map of studentId, grade of students
+     * @param courseId id of course for which grades have to be entered
+     * @return true if grades were successfully entered else false
+     */
     @Override
     public boolean enterGradesOfStudents(HashMap<String, String> gradesOfStudents, String courseId) {
         Connection connection = DBUtils.getConnection();
