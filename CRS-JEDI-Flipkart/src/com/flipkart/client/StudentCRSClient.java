@@ -65,16 +65,21 @@ public class StudentCRSClient {
         logger.info("Enter course Id");
         courseId = scanner.next();
         // TODO: Avoid same course to be added again
+        try {
+            if (studentInterface.addCourseToSelection(courseId)) {
 
-        if (studentInterface.addCourseToSelection(courseId)) {
-
-            logger.info("Course " + courseId + " added successfully");
-        } else {
+                logger.info("Course " + courseId + " added successfully");
+            } else {
+                logger.info("Invalid CourseId entered");
+                logger.info("Please choose CourseId from following list:-");
+                viewAvailableCourses();
+            }
+            printCourseSelectionInfo();
+        }catch (Exception e){
             logger.info("Invalid CourseId entered");
             logger.info("Please choose CourseId from following list:-");
             viewAvailableCourses();
         }
-        printCourseSelectionInfo();
     }
 
     /**
@@ -126,6 +131,8 @@ public class StudentCRSClient {
                 for (Course regCourse : courseArrayList) {
                     logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
                 }
+            }else{
+                logger.info("You have selected "+studentInterface.getCourseSelection().size()+" course(s). Please select 6 courses.");
             }
         }
     }

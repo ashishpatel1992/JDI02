@@ -61,6 +61,9 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
     @Override
     public ArrayList<String> registerCourses(ArrayList<String> courseIdSelectionList) {
         ArrayList<String> selectedCourseList = null;
+        if(courseIdSelectionList.size()!=6){
+            return null;
+        }
         selectedCourseList = RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
         /**
          * if selectedCourseList is null then register the courses
