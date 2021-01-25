@@ -66,4 +66,17 @@ public interface StudentInterface {
      * @return Student Profile
      */
     public Student getStudentProfile();
+
+    /**
+     * Calculate total fee for a student
+     * @return fee amount
+     */
+    public int getTotalFee();
+
+    /**
+     * Make payment of fee for a student
+     * @param paymentMethod method selected for making payment
+     * @param fees fees to be payed
+     */
+    public boolean makePayment(int paymentMethod, int fees);
 }

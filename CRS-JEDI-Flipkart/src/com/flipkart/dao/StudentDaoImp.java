@@ -10,6 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Class that implements all methods of StudentDaoInterface
@@ -167,5 +172,61 @@ public class StudentDaoImp implements StudentDaoInterface {
         }
         return false;
 
+    }
+
+    /**
+     * Calculate total fee for a student from database
+     * @return fee amount
+     */
+    @Override
+    public int getTotalFee(String studentId) {
+        int totalFees = 0;
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(SQLQueriesConstants.CALCULATE_TOTAL_FEE);
+            stmt.setString(1, studentId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+                totalFees = rs.getInt(1);
+            }
+            stmt.close();
+        }catch(SQLException se){
+            logger.error(se.getMessage());
+        }catch(Exception e){
+            logger.error(e.getMessage());
+        }
+        return totalFees;
+    }
+
+    /**
+     * Make payment of fee for a student
+     *
+     * @param studentId     if of student for which payment has to be made
+     * @param paymentMethod method selected for making payment
+     * @param fees          fees to be payed
+     */
+    @Override
+    public boolean makePayment(String studentId, int paymentMethod, int fees) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(SQLQueriesConstants.MAKE_PAYMENT_QUERY);
+            stmt.setString(1, studentId);
+            stmt.setInt(2, fees);
+            stmt.setInt(3, paymentMethod);
+            Date date = Calendar.getInstance().getTime();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+            String strDate = dateFormat.format(date);
+            stmt.setString(4, strDate);
+            int rows = stmt.executeUpdate();
+            if(rows > 0) {
+                return true;
+            }
+            stmt.close();
+        }catch(SQLException se){
+            logger.error("Fee already payed!");
+        }catch(Exception e){
+            logger.error(e.getMessage());
+        }
+        return false;
     }
 }

@@ -26,4 +26,18 @@ public interface StudentDaoInterface {
      * @return true if it was successfully set, else false
      */
     public boolean approveStudent(String studentId);
+
+    /**
+     * Calculate total fee for a student from database
+     * @return fee amount
+     */
+    public int getTotalFee(String studentId);
+
+    /**
+     * Make payment of fee for a student
+     * @param studentId if of student for which payment has to be made
+     * @param paymentMethod method selected for making payment
+     * @param fees          fees to be payed
+     */
+    public boolean makePayment(String studentId,int paymentMethod,int fees);
 }
