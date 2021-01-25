@@ -52,13 +52,13 @@ public class StudentDaoImp implements StudentDaoInterface {
      */
     @Override
     public Student getStudent(String studentId) {
-        PreparedStatement stmt = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Student student = null;
         try {
-            stmt = connection.prepareStatement(SQLQueriesConstants.GET_STUDENT_PROFILE_QUERY);
-            stmt.setString(1, studentId);
-            resultSet = stmt.executeQuery();
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_STUDENT_PROFILE_QUERY);
+            preparedStatement.setString(1, studentId);
+            resultSet = preparedStatement.executeQuery();
 
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
@@ -95,7 +95,7 @@ public class StudentDaoImp implements StudentDaoInterface {
                 logger.error(e.getMessage());
             }
             try {
-                stmt.close();
+                preparedStatement.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
             }
@@ -111,13 +111,13 @@ public class StudentDaoImp implements StudentDaoInterface {
      */
     @Override
     public boolean getApprovalStatus(String studentId) {
-        PreparedStatement stmt = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String approvedStatus = null;
         try {
-            stmt = connection.prepareStatement(SQLQueriesConstants.GET_APPROVAL_STATUS_QUERY);
-            stmt.setString(1, studentId);
-            resultSet = stmt.executeQuery();
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_APPROVAL_STATUS_QUERY);
+            preparedStatement.setString(1, studentId);
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 approvedStatus = resultSet.getString("approved");
@@ -132,7 +132,12 @@ public class StudentDaoImp implements StudentDaoInterface {
             logger.error(e.getMessage());
         } finally {
             try {
-                stmt.close();
+                resultSet.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            try {
+                preparedStatement.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
             }
@@ -148,12 +153,12 @@ public class StudentDaoImp implements StudentDaoInterface {
      */
     @Override
     public boolean approveStudent(String studentId) {
-        PreparedStatement stmt = null;
+        PreparedStatement preparedStatement = null;
         if (!getApprovalStatus(studentId)) {
             try {
-                stmt = connection.prepareStatement(SQLQueriesConstants.APPROVE_STUDENT_QUERY);
-                stmt.setString(1, studentId);
-                int updatedValues = stmt.executeUpdate();
+                preparedStatement = connection.prepareStatement(SQLQueriesConstants.APPROVE_STUDENT_QUERY);
+                preparedStatement.setString(1, studentId);
+                int updatedValues = preparedStatement.executeUpdate();
                 if (updatedValues > 0) {
                     return true;
                 } else {
@@ -163,7 +168,7 @@ public class StudentDaoImp implements StudentDaoInterface {
                 logger.error(e.getMessage());
             } finally {
                 try {
-                    stmt.close();
+                    preparedStatement.close();
                 } catch (SQLException e) {
                     logger.error(e.getMessage());
                 }
@@ -183,13 +188,13 @@ public class StudentDaoImp implements StudentDaoInterface {
     public int getTotalFee(String studentId) {
         int totalFees = 0;
         PreparedStatement preparedStatement = null;
-        ResultSet rs = null;
+        ResultSet resultSet = null;
         try {
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.CALCULATE_TOTAL_FEE);
             preparedStatement.setString(1, studentId);
-            rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                totalFees = rs.getInt(1);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                totalFees = resultSet.getInt(1);
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -197,7 +202,11 @@ public class StudentDaoImp implements StudentDaoInterface {
             logger.error(e.getMessage());
         } finally {
             try {
-                rs.close();
+                resultSet.close();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            }
+            try {
                 preparedStatement.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
@@ -215,25 +224,30 @@ public class StudentDaoImp implements StudentDaoInterface {
      */
     @Override
     public boolean makePayment(String studentId, int paymentMethod, int fees) {
-        PreparedStatement stmt = null;
+        PreparedStatement preparedStatement = null;
         try {
-            stmt = connection.prepareStatement(SQLQueriesConstants.MAKE_PAYMENT_QUERY);
-            stmt.setString(1, studentId);
-            stmt.setInt(2, fees);
-            stmt.setInt(3, paymentMethod);
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.MAKE_PAYMENT_QUERY);
+            preparedStatement.setString(1, studentId);
+            preparedStatement.setInt(2, fees);
+            preparedStatement.setInt(3, paymentMethod);
             Date date = Calendar.getInstance().getTime();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
             String strDate = dateFormat.format(date);
-            stmt.setString(4, strDate);
-            int rows = stmt.executeUpdate();
+            preparedStatement.setString(4, strDate);
+            int rows = preparedStatement.executeUpdate();
             if (rows > 0) {
                 return true;
             }
-            stmt.close();
         } catch (SQLException se) {
             logger.error("Fee already payed!");
         } catch (Exception e) {
             logger.error(e.getMessage());
+        }finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return false;
     }

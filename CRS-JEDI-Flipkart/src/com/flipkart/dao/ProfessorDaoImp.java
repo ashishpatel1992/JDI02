@@ -16,8 +16,8 @@ import java.util.Map;
 public class ProfessorDaoImp implements ProfessorDaoInterface {
 
     private static Logger logger = Logger.getLogger(LoginDaoImp.class);
-
     private static volatile ProfessorDaoImp instance = null;
+    Connection connection = DBUtils.getConnection();
 
     private ProfessorDaoImp() {
     }
@@ -45,12 +45,9 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
      */
     @Override
     public Professor getProfessor(String professorId) {
-        Connection connection = DBUtils.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Professor professor = null;
-
-
         try {
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_PROFESSOR_PROFILE_QUERY);
             preparedStatement.setString(1, professorId);
@@ -97,22 +94,32 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
      */
     @Override
     public HashMap<String, String> getEnrolledStudentsForCourse(String courseid) {
-        Connection connection = DBUtils.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         HashMap<String, String> enrolledStudentsMap = new HashMap<>();
         try {
-            stmt = connection.prepareStatement(SQLQueriesConstants.GET_ENROLLED_STUDENTS_FOR_COURSE);
-            stmt.setString(1, courseid);
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                String studentId = rs.getString("userid");
-                String studentName = rs.getString("name");
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_ENROLLED_STUDENTS_FOR_COURSE);
+            preparedStatement.setString(1, courseid);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String studentId = resultSet.getString("userid");
+                String studentName = resultSet.getString("name");
                 enrolledStudentsMap.put(studentId, studentName);
             }
             return enrolledStudentsMap;
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                resultSet.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            try {
+                preparedStatement.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return null;
     }
@@ -126,17 +133,16 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
      */
     @Override
     public boolean enterGradesOfStudents(HashMap<String, String> gradesOfStudents, String courseId) {
-        Connection connection = DBUtils.getConnection();
-        PreparedStatement stmt = null;
+        PreparedStatement preparedStatement = null;
         try {
-            stmt = connection.prepareStatement(SQLQueriesConstants.ADD_GRADE_QUERY);
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_GRADE_QUERY);
             for (Map.Entry<String, String> student : gradesOfStudents.entrySet()) {
                 String studentId = student.getKey();
                 String studentGrade = student.getValue();
-                stmt.setString(1, studentGrade);
-                stmt.setString(2, studentId);
-                stmt.setString(3, courseId);
-                int updatedValues = stmt.executeUpdate();
+                preparedStatement.setString(1, studentGrade);
+                preparedStatement.setString(2, studentId);
+                preparedStatement.setString(3, courseId);
+                int updatedValues = preparedStatement.executeUpdate();
                 if (updatedValues == 0) {
                     return false;
                 }
@@ -145,7 +151,7 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
             return false;
         } finally {
             try {
-                stmt.close();
+                preparedStatement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
