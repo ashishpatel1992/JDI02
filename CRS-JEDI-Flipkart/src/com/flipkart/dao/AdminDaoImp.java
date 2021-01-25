@@ -46,14 +46,14 @@ public class AdminDaoImp implements AdminDaoInterface {
      */
     @Override
     public boolean addCourse(Course course) {
-        PreparedStatement stmt = null;
+        PreparedStatement preparedStatement = null;
         try {
-            stmt = connection.prepareStatement(SQLQueriesConstants.ADD_COURSE_QUERY);
-            stmt.setString(1, course.getId());
-            stmt.setString(2, course.getName());
-            stmt.setString(3, course.getProfessorId());
-            stmt.setString(4, "1");
-            int updatedValues = stmt.executeUpdate();
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_COURSE_QUERY);
+            preparedStatement.setString(1, course.getId());
+            preparedStatement.setString(2, course.getName());
+            preparedStatement.setString(3, course.getProfessorId());
+            preparedStatement.setString(4, "1");
+            int updatedValues = preparedStatement.executeUpdate();
             if (updatedValues > 0) {
                 return true;
             } else {
@@ -63,7 +63,7 @@ public class AdminDaoImp implements AdminDaoInterface {
             throwables.printStackTrace();
         } finally {
             try {
-                stmt.close();
+                preparedStatement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -80,11 +80,11 @@ public class AdminDaoImp implements AdminDaoInterface {
     @Override
     public ArrayList<String> getUnApprovedStudentsIds() {
         ArrayList<String> unApprovedStudentIds = new ArrayList<String>();
-        Statement stmt = null;
+        Statement statement = null;
         ResultSet resultSet = null;
         try {
-            stmt = connection.createStatement();
-            resultSet = stmt.executeQuery(SQLQueriesConstants.GET_UNAPPROVED_STUDENT_LIST);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQLQueriesConstants.GET_UNAPPROVED_STUDENT_LIST);
             logger.info(resultSet.getFetchSize());
             while (resultSet.next()) {
                 String unApprovedStudentId;
@@ -101,11 +101,10 @@ public class AdminDaoImp implements AdminDaoInterface {
                 throwables.printStackTrace();
             }
             try {
-                stmt.close();
+                statement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-
         }
         return unApprovedStudentIds;
     }

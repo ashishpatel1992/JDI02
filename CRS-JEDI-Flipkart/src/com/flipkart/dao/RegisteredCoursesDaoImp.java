@@ -90,14 +90,14 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
     public ArrayList<String> doStudentRegistration(String studentId, ArrayList<String> courseIdSelectionList) {
         // ADD_STUDENT_COURSE_REGISTRATION
         logger.info("Inside RegisteredCoursesDaoImp:doStudentRegistration");
-        PreparedStatement stmt = null;
+        PreparedStatement preparedStatement = null;
         try {
             for (String courseIdSelection : courseIdSelectionList) {
-                stmt = connection.prepareStatement(SQLQueriesConstants.ADD_STUDENT_COURSE_REGISTRATION);
-                stmt.setString(1, studentId);
-                stmt.setString(2, courseIdSelection);
+                preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_STUDENT_COURSE_REGISTRATION);
+                preparedStatement.setString(1, studentId);
+                preparedStatement.setString(2, courseIdSelection);
 
-                int updatedValues = stmt.executeUpdate();
+                int updatedValues = preparedStatement.executeUpdate();
                 logger.info(updatedValues + " items inserted");
             }
 
@@ -105,7 +105,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
             throwables.printStackTrace();
         } finally {
             try {
-                stmt.close();
+                preparedStatement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
