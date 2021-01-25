@@ -17,7 +17,7 @@ public interface AdminDaoInterface {
      * @param course course to add
      * @return true if course is added successfully
      */
-    boolean addCourse(Course course);
+    boolean addCourse(Course course,int courseFee);
 
     /**
      * Returns list of unapproved students
