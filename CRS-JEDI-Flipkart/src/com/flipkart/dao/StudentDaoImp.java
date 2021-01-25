@@ -176,24 +176,32 @@ public class StudentDaoImp implements StudentDaoInterface {
 
     /**
      * Calculate total fee for a student from database
+     *
      * @return fee amount
      */
     @Override
     public int getTotalFee(String studentId) {
         int totalFees = 0;
-        PreparedStatement stmt = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
         try {
-            stmt = connection.prepareStatement(SQLQueriesConstants.CALCULATE_TOTAL_FEE);
-            stmt.setString(1, studentId);
-            ResultSet rs = stmt.executeQuery();
-            if(rs.next()) {
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.CALCULATE_TOTAL_FEE);
+            preparedStatement.setString(1, studentId);
+            rs = preparedStatement.executeQuery();
+            if (rs.next()) {
                 totalFees = rs.getInt(1);
             }
-            stmt.close();
-        }catch(SQLException se){
-            logger.error(se.getMessage());
-        }catch(Exception e){
+        } catch (SQLException e) {
             logger.error(e.getMessage());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        } finally {
+            try {
+                rs.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            }
         }
         return totalFees;
     }
@@ -218,13 +226,13 @@ public class StudentDaoImp implements StudentDaoInterface {
             String strDate = dateFormat.format(date);
             stmt.setString(4, strDate);
             int rows = stmt.executeUpdate();
-            if(rows > 0) {
+            if (rows > 0) {
                 return true;
             }
             stmt.close();
-        }catch(SQLException se){
+        } catch (SQLException se) {
             logger.error("Fee already payed!");
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.error(e.getMessage());
         }
         return false;
