@@ -192,7 +192,8 @@ public class StudentCRSClient {
             logger.info("4. Register Course");
             logger.info("5. View Registered Course");
             logger.info("6. Get Grades");
-            logger.info("7. Logout");
+            logger.info("7. Pay Fee");
+            logger.info("8. Logout");
 
             choice = scanner.nextInt();
 
@@ -214,8 +215,11 @@ public class StudentCRSClient {
                     break;
                 case 6:
                     printReportCardInfo();
-                    return;
+                    break;
                 case 7:
+                    payFees();
+                    break;
+                case 8:
                     // TODO Define login/logout enums
                     studentId = null;
                     return;
@@ -225,6 +229,31 @@ public class StudentCRSClient {
         }
     }
 
+    void payFees() {
+        int fee = studentInterface.getTotalFee();
+        logger.info("Total fee is Rs."+ fee + " press 'yes' to continue...");
+        String choiceSelected = scanner.next();
+        if(choiceSelected.equals("yes")) {
+            logger.info("Pay via: ");
+            logger.info("1. Credit Card");
+            logger.info("2. Debit Card");
+            logger.info("3. Cash");
+            int choice = Integer.parseInt(scanner.next());
+            if(choice >= 1 && choice <= 3) {
+                if(studentInterface.makePayment(choice, fee)){
+                    logger.info("Payment Successful");
+                }else{
+                    logger.info("Payment failed.");
+                }
+            }
+            else {
+                logger.info("Cannot do such payment!!");
+            }
+        }
+        else {
+            logger.info("Payment not done.");
+        }
+    }
     /**
      * Displays Professor menu
      */

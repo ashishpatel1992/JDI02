@@ -41,6 +41,26 @@ public class StudentOperation implements StudentInterface {
     }
 
     /**
+     * Calculate total fee for a student
+     * @return fee amount
+     */
+    @Override
+    public int getTotalFee() {
+        return StudentDaoImp.getInstance().getTotalFee(studentId);
+    }
+
+    /**
+     * Make payment of fee for a student
+     *
+     * @param paymentMethod method selected for making payment
+     * @param fees          fees to be payed
+     */
+    @Override
+    public boolean makePayment(int paymentMethod, int fees) {
+        return StudentDaoImp.getInstance().makePayment(studentId, paymentMethod, fees);
+    }
+
+    /**
      * Adds course to selection list
      * @param courseId course ID
      * @return true if added successfully

@@ -30,6 +30,8 @@ public class SQLQueriesConstants {
     public static String GET_ALL_COURSE_ID_FOR_REG_STUDENT_QUERY = "SELECT `studentid`, `courseid`, `grade` FROM `registeredcourse` WHERE `studentid` = ?";
     public static String ADD_STUDENT_COURSE_REGISTRATION = "INSERT INTO `registeredcourse`(`studentid`, `courseid`) VALUES (?,?);";
     public static String GET_APPROVAL_STATUS_QUERY = "SELECT `userid`, `branch`, `approved` FROM `student` WHERE `userid` = ?";
+    public static String CALCULATE_TOTAL_FEE = "select sum(c.fee) from registeredcourse rc join course c on c.courseid = rc.courseid where rc.studentId = ?";
+    public static String MAKE_PAYMENT_QUERY = "insert into Payment(studentId, feePaid, paymentMethod, paymentDate) values(?, ?, ?, ?)";
 
     //Course Queries
     public static String GET_COURSE_DETAIL = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid` FROM `course` WHERE `courseid` = ?";
