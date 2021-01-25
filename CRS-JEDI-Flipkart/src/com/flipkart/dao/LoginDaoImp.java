@@ -47,14 +47,14 @@ public class LoginDaoImp implements LoginDaoInterface {
      */
     @Override
     public boolean login(String userId, String password) {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            stmt = connection.prepareStatement(SQLQueriesConstants.VERIFY_CREDENTIALS_QUERY);
-            stmt.setString(1, userId);
-            stmt.setString(2, password);
-            rs = stmt.executeQuery();
-            while (rs.next()) {
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.VERIFY_CREDENTIALS_QUERY);
+            preparedStatement.setString(1, userId);
+            preparedStatement.setString(2, password);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 return true;
             }
             return false;
@@ -62,8 +62,12 @@ public class LoginDaoImp implements LoginDaoInterface {
             throwables.printStackTrace();
         } finally {
             try {
-                stmt.close();
-                rs.close();
+                resultSet.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            try {
+                preparedStatement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -82,15 +86,15 @@ public class LoginDaoImp implements LoginDaoInterface {
     @Override
     public String addStudent(Student student, String password) {
         String userId = null;
-        PreparedStatement stmt = null;
+        PreparedStatement preparedStatement = null;
         try {
             userId = addUser(student.getId(), student.getName(), student.getEmail(), "student", password);
-            stmt = connection.prepareStatement(SQLQueriesConstants.ADD_STUDENT_QUERY);
-            stmt.setString(1, student.getId());
-            stmt.setString(2, student.getBranch());
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_STUDENT_QUERY);
+            preparedStatement.setString(1, student.getId());
+            preparedStatement.setString(2, student.getBranch());
             int studentApproved = (student.isApproved()) ? 1 : 0;
-            stmt.setInt(3, studentApproved);
-            int updatedValues = stmt.executeUpdate();
+            preparedStatement.setInt(3, studentApproved);
+            int updatedValues = preparedStatement.executeUpdate();
             if (updatedValues > 0) {
                 return userId;
             } else {
@@ -100,9 +104,13 @@ public class LoginDaoImp implements LoginDaoInterface {
             logger.error(e.getMessage());
         } catch (SQLException e) {
             logger.error(e.getMessage());
+        }finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
-
-
         return password;
     }
 
@@ -175,6 +183,10 @@ public class LoginDaoImp implements LoginDaoInterface {
         } finally {
             try {
                 resultSet.close();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            }
+            try {
                 preparedStatement.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
