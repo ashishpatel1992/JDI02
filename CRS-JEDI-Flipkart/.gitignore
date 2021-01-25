@@ -8,7 +8,7 @@
 
 CRS-JEDI-Flipkart.iml
 src/config.properties
-
+doc
 # User-specific stuff
 .idea/
 .idea/**/workspace.xml
