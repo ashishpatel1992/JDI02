@@ -2,10 +2,7 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
-import com.flipkart.dao.CourseCatalogueDaoImp;
-import com.flipkart.dao.CourseCatalogueDaoInterface;
-import com.flipkart.dao.AdminDaoImp;
-import com.flipkart.dao.AdminDaoInterface;
+import com.flipkart.dao.*;
 import com.flipkart.exception.CourseNotFoundException;
 import org.apache.log4j.Logger;
 
@@ -46,6 +43,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Returns the list of all courses
+     *
      * @return array list containing courses
      */
     @Override
@@ -57,25 +55,33 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * creates a new course and add to course list and further add to database
-     * @param courseId course ID
+     *
+     * @param courseId   course ID
      * @param courseName name of the course
      * @return true if course added
      */
     @Override
     public boolean addCourse(String courseId, String courseName, String professorId) {
         logger.info("Add Course");
-        Course course = new Course(courseId, courseName, professorId);
-//        courseList.add(course);
-        AdminDaoInterface adminDaoInterface = AdminDaoImp.getInstance();
-        return adminDaoInterface.addCourse(course);
         //TODO: add course list to database
         // TODO: We need to create professor before assigning him a course
         // TODO: a course will be hidden if no professor is assigned
+        Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
+        if(professor ==  null){
+            return false;
+        }else{
+            Course course = new Course(courseId, courseName, professorId);
+
+            return AdminDaoImp.getInstance().addCourse(course);
+        }
+
+
         //return true;
     }
 
     /**
      * Returns the course along with its details
+     *
      * @param courseId course ID
      * @return Course
      */
@@ -87,6 +93,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Delete a specific course
+     *
      * @param courseId course ID
      * @return true if course deleted
      */
@@ -109,6 +116,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Assigns professor to a course
+     *
      * @param courseId course ID
      * @return true if professor assigned
      */
@@ -130,6 +138,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Get list of unassigned Courses
+     *
      * @return array list of unassigned courses
      */
     @Override
@@ -139,6 +148,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     /**
      * Get list of unassigned Professors
+     *
      * @return array list of unassigned professors
      */
     @Override

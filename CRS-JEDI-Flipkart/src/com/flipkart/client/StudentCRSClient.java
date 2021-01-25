@@ -15,10 +15,9 @@ import java.util.Scanner;
 public class StudentCRSClient {
 
     private static Logger logger = Logger.getLogger(StudentCRSClient.class);
-    //    ArrayList<String> courseIdSelectionList;
-    CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();
+
+    CourseCatalogueInterface courseCatalogueInterface = new CourseCatalogueOperation();
     StudentInterface studentInterface;
-    // TODO: if made static will it be shared with everyone? i guess yes! so avoiding it find better way for accessing studentId for session
     String studentId;
     Scanner scanner = new Scanner(System.in);
 
@@ -37,15 +36,21 @@ public class StudentCRSClient {
      */
     public void viewAvailableCourses() {
 //        ArrayList<Course> courseArrayList = courseCatalogueOperation.getCourseList();
-        ArrayList<Course> courseArrayList = courseCatalogueOperation.getCourseList();
+        ArrayList<Course> courseArrayList = courseCatalogueInterface.getCourseList();
         if (!courseArrayList.isEmpty()) {
             for (Course course : courseArrayList) {
                 // TODO: Fetch Professor Name and print when Professor is implemented
-                if (course.getProfessorId() == null) {
+                String professorId = course.getProfessorId();
+                if ( professorId == null) {
                     logger.info(course.getId() + " " + course.getName() + " N/A \t N/A");
                 } else {
-                    Professor professor = new ProfessorOperation(course.getProfessorId()).getProfessor();
-                    logger.info(course.getId() + " " + course.getName() + " " + professor.getName() + " " + professor.getDepartment());
+                    Professor professor = new ProfessorOperation(professorId).getProfessor();
+                    if(professor == null){
+                        logger.info(course.getId() + " " + course.getName() + " N/A \t N/A");
+                    }else{
+                        logger.info(course.getId() + " " + course.getName() + " " + professor.getName() + " " + professor.getDepartment());
+                    }
+
                 }
 
             }
@@ -75,7 +80,7 @@ public class StudentCRSClient {
                 viewAvailableCourses();
             }
             printCourseSelectionInfo();
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.info("Invalid CourseId entered");
             logger.info("Please choose CourseId from following list:-");
             viewAvailableCourses();
@@ -92,7 +97,7 @@ public class StudentCRSClient {
         logger.info("CourseId\tCourseName");
         for (int i = 0; i < courseIdSelectionList.size(); i++) {
             String cid = courseIdSelectionList.get(i);
-            Course c = courseCatalogueOperation.getCourse(cid);
+            Course c = courseCatalogueInterface.getCourse(cid);
             if (c != null) {
                 logger.info(c.getId() + "\t\t" + c.getName());
             } else {
@@ -131,8 +136,8 @@ public class StudentCRSClient {
                 for (Course regCourse : courseArrayList) {
                     logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
                 }
-            }else{
-                logger.info("You have selected "+studentInterface.getCourseSelection().size()+" course(s). Please select 6 courses.");
+            } else {
+                logger.info("You have selected " + studentInterface.getCourseSelection().size() + " course(s). Please select 6 courses.");
             }
         }
     }

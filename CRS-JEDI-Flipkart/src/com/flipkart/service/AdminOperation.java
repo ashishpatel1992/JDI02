@@ -25,6 +25,7 @@ public class AdminOperation implements AdminInterface {
 
     /**
      * Constructor of the class which sets admin ID
+     *
      * @param adminId admin ID
      */
     public AdminOperation(String adminId) {
@@ -33,23 +34,22 @@ public class AdminOperation implements AdminInterface {
 
     /**
      * Adds professor to database
-     * @param professorId professor ID
-     * @param professorName name of professor
-     * @param professorEmail email of professor
+     *
+     * @param professorId         professor ID
+     * @param professorName       name of professor
+     * @param professorEmail      email of professor
      * @param professorDepartment department of professor
      * @return user ID
      */
     @Override
-    public String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment,String password) {
-        //logger.info("Add Professor");
+    public String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment, String password) {
         Professor newProfessor = new Professor(professorId, professorName, professorEmail, "professor", professorDepartment);
-        LoginDaoInterface loginDaoInterface = LoginDaoImp.getInstance();
-        String userID = loginDaoInterface.addProfessor(newProfessor,password);
-        return userID;
+        return LoginDaoImp.getInstance().addProfessor(newProfessor, password);
     }
 
     /**
      * Get admin profile
+     *
      * @return profile of Admin
      */
     @Override
@@ -59,6 +59,7 @@ public class AdminOperation implements AdminInterface {
 
     /**
      * Get list of unapproved students
+     *
      * @return array list of unapproved students
      */
     public ArrayList<Student> getUnApprovedStudents() {
@@ -75,6 +76,7 @@ public class AdminOperation implements AdminInterface {
 
     /**
      * Approves student
+     *
      * @param studentId student ID
      * @return true if student is approved
      */
@@ -85,6 +87,7 @@ public class AdminOperation implements AdminInterface {
 
     /**
      * Generates report card for a student
+     *
      * @param studentId student ID
      * @return HashMap<String, String> containing student id and grades
      */
@@ -102,8 +105,9 @@ public class AdminOperation implements AdminInterface {
 
     /**
      * Assigns professor to a course
+     *
      * @param professorId professor ID
-     * @param courseId course ID
+     * @param courseId    course ID
      * @return true if professor assigned
      */
     @Override

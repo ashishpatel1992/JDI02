@@ -53,13 +53,10 @@ public class AdminCRSClient {
 
             switch (choice) {
                 case 1:
-                    if (addCourse())
-                        logger.info("Course added successfully");
-                    else
-                        logger.info("Unable to add course");
+                    addCourse();
                     break;
                 case 2:
-                    addProfessor();
+                    displayAddProfessor();
                     break;
                 case 3:
                     assignProfessorToCourse();
@@ -80,6 +77,8 @@ public class AdminCRSClient {
                     logger.info("Successfully logged out");
                     return;
                 // TODO: Remove course  and remove Professor if course is assigned to students so it cant be removed, if professor assigned to course, professor cannot be removed.
+                // TODO: Display enrolled students
+                // TODO: Display all professors
 
                 default:
                     logger.info("Invalid Choice");
@@ -95,12 +94,16 @@ public class AdminCRSClient {
     private boolean displayUnAssignedProfessors() {
         boolean isProfessorUnAssigned = false;
         ArrayList<Professor> unAssignedProfessors = courseCatalogueInterface.getUnAssignedProfessors();
-        logger.info("List of Unassigned Professors:-");
+
         if (unAssignedProfessors.size() > 0) {
+            logger.info("List of Unassigned Professors:-");
             isProfessorUnAssigned = true;
             for (Professor professor : unAssignedProfessors) {
                 logger.info(professor.getId() + " " + professor.getName());
             }
+        } else {
+            logger.info("No professor available");
+            isProfessorUnAssigned = false;
         }
         return isProfessorUnAssigned;
     }
@@ -151,38 +154,55 @@ public class AdminCRSClient {
      */
     public void viewCourses() {
         ArrayList<Course> courseArrayList = courseCatalogueInterface.getCourseList();
-        logger.info("CourseID\tCourseName\tProfessorID\tProfessorName");
-        for (Course course : courseArrayList) {
-            // TODO: Fetch Professor Name and print when Professor is implemented
-            if (course.getProfessorId() == null) {
-                logger.info(course.getId() + " " + course.getName() + " N/A");
-            } else {
-                logger.info(course.getId() + " " + course.getName() + " " + course.getProfessorId() + " " + ProfessorDaoImp.getInstance().getProfessor(course.getProfessorId()).getName());
-            }
+        if (courseArrayList.size() > 0) {
+            logger.info(String.format("%8s %10s %12s %13s", "CourseID", "CourseName", "ProfessorID", "ProfessorName"));
+            for (Course course : courseArrayList) {
 
+                String professorId = course.getProfessorId();
+                if (course.getProfessorId() == null) {
+                    logger.info(course.getId() + " " + course.getName() + " N/A");
+                } else {
+                    Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
+                    if (professor == null) {
+                        logger.info(course.getId() + " " + course.getName() + " N/A");
+                    } else {
+                        logger.info(String.format("%8s %10s %12s %13s", course.getId(), course.getName(), professorId, professor.getName()));
+                    }
+
+                }
+
+            }
+        } else {
+            logger.info("No Courses Available to display.");
         }
+
     }
 
     /**
      * Perform add course operations
      */
-    public boolean addCourse() {
+    public void addCourse() {
+        displayUnAssignedProfessors();
         logger.info("Enter the course ID you want to add");
         String courseID = scanner.next();
         logger.info("Enter the course name you want to add");
         String courseName = scanner.next();
-        logger.info("Enter the Professor Id for course " + courseName);
+        logger.info("Enter the Professor Id to assign to this course ");
         String professorId = scanner.next();
-        return courseCatalogueInterface.addCourse(courseID, courseName, professorId);
+        if (courseCatalogueInterface.addCourse(courseID, courseName, professorId)) {
+            logger.info("Course added successfully");
+        } else {
+            logger.info("Unable to add course");
+        }
 
     }
 
     /**
      * Perform add professor operations
      */
-    public void addProfessor() {
+    public void displayAddProfessor() {
         logger.info("Enter professor id:");
-        String professorId = scanner.nextLine();
+        String professorId = scanner.next();
         logger.info("Enter professor name:");
         String professorName = scanner.next();
         logger.info("Enter professor email:");
@@ -193,7 +213,7 @@ public class AdminCRSClient {
         String password = scanner.next();
         String userId = adminInterface.addProfessor(professorId, professorName, professorEmail, professorDepartment, password);
         if (userId != null) {
-            logger.info("Professor: " + professorName + " Successfully Added\nProfessor ID : " + userId);
+            logger.info("Professor: " + professorName + " added successfully with ProfessorID : " + userId);
         }
     }
 

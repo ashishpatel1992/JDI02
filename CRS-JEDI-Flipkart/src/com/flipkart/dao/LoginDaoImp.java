@@ -19,8 +19,10 @@ public class LoginDaoImp implements LoginDaoInterface {
 
     private LoginDaoImp() {
     }
+
     /**
      * Returns static instance of LoginDaoImp class
+     *
      * @return instance of LoginDaoImp class
      */
     public static LoginDaoImp getInstance() {
@@ -37,27 +39,28 @@ public class LoginDaoImp implements LoginDaoInterface {
     Connection connection = DBUtils.getConnection();
 
     /**
-     *  Verify credentials and returns login status
-     * @param userId id of user to login
+     * Verify credentials and returns login status
+     *
+     * @param userId   id of user to login
      * @param password password of user
      * @return true if provided userid and password are correct
      */
     @Override
     public boolean login(String userId, String password) {
         PreparedStatement stmt = null;
-        ResultSet rs= null;
-        try{
+        ResultSet rs = null;
+        try {
             stmt = connection.prepareStatement(SQLQueriesConstants.VERIFY_CREDENTIALS_QUERY);
-            stmt.setString(1,userId);
-            stmt.setString(2,password);
+            stmt.setString(1, userId);
+            stmt.setString(2, password);
             rs = stmt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 return true;
             }
             return false;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }finally {
+        } finally {
             try {
                 stmt.close();
                 rs.close();
@@ -71,17 +74,17 @@ public class LoginDaoImp implements LoginDaoInterface {
 
     /**
      * Adds a new student to database
-     * @param student details of student in Student object
+     *
+     * @param student  details of student in Student object
      * @param password password of student
-     * @return userId if student was successfully added
      * @return null if adding student failed
      */
     @Override
-    public String addStudent(Student student,String password) {
+    public String addStudent(Student student, String password) {
         String userId = null;
         PreparedStatement stmt = null;
         try {
-            userId = addUser(student.getId(), student.getName(), student.getEmail(), "student",password);
+            userId = addUser(student.getId(), student.getName(), student.getEmail(), "student", password);
             stmt = connection.prepareStatement(SQLQueriesConstants.ADD_STUDENT_QUERY);
             stmt.setString(1, student.getId());
             stmt.setString(2, student.getBranch());
@@ -105,54 +108,65 @@ public class LoginDaoImp implements LoginDaoInterface {
 
     /**
      * Adds a new professor to database
+     *
      * @param professor details of professor in Professor object
-     * @param password password of professor
-     * @return userId if professor was successfully added
+     * @param password  password of professor
      * @return null if adding professor failed
      */
     @Override
-    public String addProfessor(Professor professor,String password) {
-        String userId = null;
-        PreparedStatement stmt = null;
+    public String addProfessor(Professor professor, String password) {
+        String professorId = null;
+        PreparedStatement preparedStatement = null;
         try {
-            userId = addUser(professor.getId(), professor.getName(), professor.getEmail(), "professor",password);
-            stmt = connection.prepareStatement(SQLQueriesConstants.ADD_PROFESSOR_QUERY);
-            stmt.setString(1, professor.getId());
-            stmt.setString(2, professor.getDepartment());
-            int updatedValues = stmt.executeUpdate();
-            if (updatedValues > 0) {
-                return userId;
-            } else {
-                return null;
+            professorId = addUser(professor.getId(), professor.getName(), professor.getEmail(), "professor", password);
+            try {
+                if (professorId != null) {
+                    preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_PROFESSOR_QUERY);
+                    preparedStatement.setString(1, professor.getId());
+                    preparedStatement.setString(2, professor.getDepartment());
+                    int updatedValues = preparedStatement.executeUpdate();
+                    if (updatedValues > 0) {
+                        return professorId;
+                    }
+                }
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            } finally {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.error(e.getMessage());
+                }
             }
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
+
+
         } catch (UserAlreadyExistException e) {
             logger.error(e.getMessage());
         }
-        return null;
+        return professorId;
     }
 
     /**
      * Check if a user already exists in database
+     *
      * @param userId id of user to check
      * @return true if user already exists
      */
     @Override
-    public boolean checkIfUserAlreadyExist(String userId){
+    public boolean checkIfUserAlreadyExist(String userId) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        try{
+        try {
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_USER_PROFILE_QUERY);
-            preparedStatement.setString(1,userId);
+            preparedStatement.setString(1, userId);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String rsUserId;
 
                 rsUserId = resultSet.getString("userid");
-                if(rsUserId.equalsIgnoreCase(userId)){
+                if (rsUserId.equalsIgnoreCase(userId)) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
@@ -171,16 +185,16 @@ public class LoginDaoImp implements LoginDaoInterface {
 
     /**
      * Adds a new user to database
-     * @param userid if of new user
-     * @param name name of new user
-     * @param email email of new user
-     * @param role role of new user
+     *
+     * @param userid   if of new user
+     * @param name     name of new user
+     * @param email    email of new user
+     * @param role     role of new user
      * @param password password of new user
-     * @return user id if user was added successfully
      * @return null if adding user failed
      * @throws UserAlreadyExistException Exception is thrown when new user already exists in database
      */
-    public String addUser(String userid, String name, String email, String role,String password) throws UserAlreadyExistException {
+    public String addUser(String userid, String name, String email, String role, String password) throws UserAlreadyExistException {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_USER_QUERY);
