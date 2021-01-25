@@ -2,6 +2,8 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Course;
 import com.flipkart.constants.CRSConstants;
+import com.flipkart.dao.NotificationDaoImp;
+import com.flipkart.dao.NotificationDaoInterface;
 import com.flipkart.dao.RegisteredCoursesDaoImp;
 import com.flipkart.dao.RegisteredCoursesDaoInterface;
 import org.apache.log4j.Logger;
@@ -72,6 +74,7 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
          */
         if (registerdCourseList.size() < 1) {
             return RegisteredCoursesDaoImp.getInstance().doStudentRegistration(studentId, courseIdSelectionList);
+
         } else {
             return RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
         }
