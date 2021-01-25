@@ -1,6 +1,7 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Course;
+import com.flipkart.constants.CRSConstants;
 import com.flipkart.dao.RegisteredCoursesDaoImp;
 import com.flipkart.dao.RegisteredCoursesDaoInterface;
 import org.apache.log4j.Logger;
@@ -61,18 +62,18 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
      */
     @Override
     public ArrayList<String> registerCourses(ArrayList<String> courseIdSelectionList) {
-        ArrayList<String> selectedCourseList = null;
-        if (courseIdSelectionList.size() != 6) {
+        ArrayList<String> registerdCourseList = null;
+        if (courseIdSelectionList.size() != CRSConstants.MIN_COURSE_REQUIREMENT) {
             return null;
         }
-        selectedCourseList = RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
+        registerdCourseList = RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
         /**
-         * if selectedCourseList is null then register the courses
+         * if registerdCourseList is null then register the courses
          */
-        if (selectedCourseList == null) {
+        if (registerdCourseList.size() < 1) {
             return RegisteredCoursesDaoImp.getInstance().doStudentRegistration(studentId, courseIdSelectionList);
         } else {
-            return selectedCourseList;
+            return RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
         }
 //        boolean flag = false;
 //        ArrayList<String> studentCoursesIdList = registeredCourseIdList.get(studentId);

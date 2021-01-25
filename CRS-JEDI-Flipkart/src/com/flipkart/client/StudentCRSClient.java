@@ -3,6 +3,7 @@ package com.flipkart.client;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
+import com.flipkart.constants.CRSConstants;
 import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
@@ -68,25 +69,37 @@ public class StudentCRSClient {
     public void printAddCourseToSelectionInfo() {
 
         String courseId;
-
+        viewAvailableCourses();
         logger.info("Enter course Id");
         courseId = scanner.next();
         // TODO: Avoid same course to be added again
-        try {
-            if (studentInterface.addCourseToSelection(courseId)) {
 
-                logger.info("Course " + courseId + " added successfully");
-            } else {
+        if (studentInterface.getCourseSelection().contains(courseId)) {
+            logger.info("Course Already in your Selection List");
+            return;
+        } else {
+            try {
+                if (studentInterface.addCourseToSelection(courseId)) {
+
+                    logger.info("Course " + courseId + " added successfully");
+                } else {
+                    logger.info("Invalid CourseId entered");
+                    logger.info("Please choose CourseId from following list:-");
+                    viewAvailableCourses();
+                }
+                printCourseSelectionInfo();
+
+            } catch (Exception e) {
                 logger.info("Invalid CourseId entered");
                 logger.info("Please choose CourseId from following list:-");
                 viewAvailableCourses();
             }
-            printCourseSelectionInfo();
-        } catch (Exception e) {
-            logger.info("Invalid CourseId entered");
-            logger.info("Please choose CourseId from following list:-");
-            viewAvailableCourses();
         }
+        if (studentInterface.getCourseSelection().size() >= CRSConstants.MIN_COURSE_REQUIREMENT) {
+            logger.info("Minimum Course requirement fulfilled. You can proceed for registration");
+        }
+
+
     }
 
     /**
@@ -139,7 +152,7 @@ public class StudentCRSClient {
                     logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
                 }
             } else {
-                logger.info("You have selected " + studentInterface.getCourseSelection().size() + " course(s). Please select 6 courses.");
+                logger.info("You have selected " + studentInterface.getCourseSelection().size() + " course(s). Please select " + CRSConstants.MIN_COURSE_REQUIREMENT + " courses.");
             }
         }
     }
