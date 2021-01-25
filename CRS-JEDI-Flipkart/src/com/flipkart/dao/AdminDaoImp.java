@@ -46,7 +46,7 @@ public class AdminDaoImp implements AdminDaoInterface {
      * @return true if course is added successfully
      */
     @Override
-    public boolean addCourse(Course course) {
+    public boolean addCourse(Course course,int courseFee) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_COURSE_QUERY);
@@ -54,6 +54,7 @@ public class AdminDaoImp implements AdminDaoInterface {
             preparedStatement.setString(2, course.getName());
             preparedStatement.setString(3, course.getProfessorId());
             preparedStatement.setString(4, "1");
+            preparedStatement.setInt(5,courseFee);
             int updatedValues = preparedStatement.executeUpdate();
             if (updatedValues > 0) {
                 return true;
