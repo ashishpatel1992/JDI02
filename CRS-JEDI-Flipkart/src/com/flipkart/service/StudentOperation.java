@@ -2,6 +2,8 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Student;
+import com.flipkart.dao.NotificationDaoImp;
+import com.flipkart.dao.NotificationDaoInterface;
 import com.flipkart.dao.StudentDaoImp;
 import com.flipkart.dao.StudentDaoInterface;
 import org.apache.log4j.Logger;
@@ -62,7 +64,25 @@ public class StudentOperation implements StudentInterface {
      */
     @Override
     public boolean makePayment(int paymentMethod, int fees) {
-        return StudentDaoImp.getInstance().makePayment(studentId, paymentMethod, fees);
+        boolean result =  StudentDaoImp.getInstance().makePayment(studentId, paymentMethod, fees);
+        if(result){
+            NotificationDaoInterface notificationDaoInterface = NotificationDaoImp.getInstance();
+            String paymentType = null;
+            switch(paymentMethod){
+                case 1:
+                    paymentType="Credit Card";
+                    break;
+                case 2:
+                    paymentType="Debit Card";
+                    break;
+                case 3:
+                    paymentType="Cash";
+                    break;
+            }
+            String message = "Fee payment successful via "+paymentType;
+            notificationDaoInterface.addNotification(studentId,message);
+        }
+        return result;
     }
 
     /**
@@ -124,7 +144,13 @@ public class StudentOperation implements StudentInterface {
     @Override
     public ArrayList<String> registerCourses() {
         logger.info("REGISTER COURSES");
-        return registeredCoursesOperation.registerCourses(courseIdSelectionList);
+        ArrayList<String> registeredCourses =  registeredCoursesOperation.registerCourses(courseIdSelectionList);
+        if(registeredCourses!=null){
+            NotificationDaoInterface notificationDaoInterface = NotificationDaoImp.getInstance();
+            String message = "Registration completed successfully.";
+            notificationDaoInterface.addNotification(studentId,message);
+        }
+        return registeredCourses;
 //        boolean flag = false;
 //        if (registeredCoursesOperation.registerCourses(courseIdSelectionList)) {
 //            flag = true;

@@ -4,6 +4,8 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 import com.flipkart.constants.CRSConstants;
+import com.flipkart.dao.NotificationDaoImp;
+import com.flipkart.dao.NotificationDaoInterface;
 import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
@@ -206,9 +208,10 @@ public class StudentCRSClient {
             logger.info("3. Drop Course from selection");
             logger.info("4. Register Course");
             logger.info("5. View Registered Course");
-            logger.info("6. Get Grades");
-            logger.info("7. Pay Fee");
-            logger.info("8. Logout");
+            logger.info("6. Pay Fee");
+            logger.info("7. View Notifications");
+            logger.info("8. Get Grades");
+            logger.info("9. Logout");
 
             choice = scanner.nextInt();
 
@@ -229,12 +232,16 @@ public class StudentCRSClient {
                     printRegisteredCourseInfo();
                     break;
                 case 6:
-                    printReportCardInfo();
-                    break;
-                case 7:
                     payFees();
                     break;
+                case 7:
+                    getNotifications();
+                    break;
                 case 8:
+                    printReportCardInfo();
+                    break;
+
+                case 9:
                     // TODO Define login/logout enums
                     studentId = null;
                     return;
@@ -265,6 +272,26 @@ public class StudentCRSClient {
             }
         } else {
             logger.info("Payment not done.");
+        }
+    }
+
+    /**
+     * Display notifications for student
+     */
+    void getNotifications(){
+        try{
+        NotificationDaoInterface notificationDaoInterface = NotificationDaoImp.getInstance();
+        ArrayList<String> notifications = notificationDaoInterface.getNotificationsForStudent(studentId);
+        if(notifications.size()==0){
+            logger.info("No notifications available");
+        }else{
+            logger.info("Notifications :");
+            for(String notification : notifications){
+                logger.info(notification);
+            }
+        }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

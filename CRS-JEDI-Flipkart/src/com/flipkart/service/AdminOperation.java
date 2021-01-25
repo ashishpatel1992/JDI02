@@ -84,7 +84,13 @@ public class AdminOperation implements AdminInterface {
      */
     @Override
     public boolean approveStudent(String studentId) {
-        return AdminDaoImp.getInstance().approveStudent(studentId);
+        boolean result = AdminDaoImp.getInstance().approveStudent(studentId);
+        if(result){
+            NotificationDaoInterface notificationDaoInterface = NotificationDaoImp.getInstance();
+            String message = "Student approved for registration.";
+            notificationDaoInterface.addNotification(studentId,message);
+        }
+        return result;
     }
 
     /**
