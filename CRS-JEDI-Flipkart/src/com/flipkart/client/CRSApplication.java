@@ -3,6 +3,8 @@ package com.flipkart.client;
 import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Scanner;
 
 /**
@@ -45,7 +47,10 @@ public class CRSApplication {
                         logger.info("Please Login to proceed further");
                         String studentId = CRSApplication.authenticateUser();
                         if (studentId != null) {
-                            logger.info("Login Successful");
+                            ZoneId zoneId = ZoneId.of("Asia/Kolkata");
+                            ZonedDateTime date = ZonedDateTime.now(zoneId);
+                            logger.info("Login Successful at : "+date);
+
                             StudentCRSClient studentCRSClient = new StudentCRSClient(studentId);
                             studentCRSClient.studentMenu();
                         } else {
@@ -55,7 +60,9 @@ public class CRSApplication {
                     case 3:
                         String professorId = CRSApplication.authenticateUser();
                         if (professorId != null) {
-                            logger.info("Login Successful");
+                            ZoneId zoneId = ZoneId.of("Asia/Kolkata");
+                            ZonedDateTime date = ZonedDateTime.now(zoneId);
+                            logger.info("Login Successful at : "+date);
                             ProfessorCRSClient professorCRSClient = new ProfessorCRSClient(professorId);
                             professorCRSClient.professorMenu();
                         } else {
@@ -65,7 +72,9 @@ public class CRSApplication {
                     case 4:
                         String adminId = CRSApplication.authenticateUser();
                         if (adminId != null) {
-                            logger.info("Login Successful");
+                            ZoneId zoneId = ZoneId.of("Asia/Kolkata");
+                            ZonedDateTime date = ZonedDateTime.now(zoneId);
+                            logger.info("Login Successful at : "+date);
                             AdminCRSClient adminCRSClient = new AdminCRSClient(adminId);
                             adminCRSClient.adminMenu();
                         } else {
