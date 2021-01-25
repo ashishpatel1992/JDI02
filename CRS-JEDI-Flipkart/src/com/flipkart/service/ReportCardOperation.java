@@ -29,8 +29,7 @@ public class ReportCardOperation implements ReportCardInterface {
      */
     @Override
     public ArrayList<String> getGrades() {
-        logger.info(studentId);
-        logger.info("Get Grades for student");
+        // TODO: Get Grades Implementation
         return null;
     }
 }

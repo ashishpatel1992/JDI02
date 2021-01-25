@@ -111,7 +111,6 @@ public class StudentOperation implements StudentInterface {
 
         } else {
             flag = false;
-            logger.info("Course not present in the Selection list");
         }
         return flag;
     }
