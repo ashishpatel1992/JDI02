@@ -2,15 +2,17 @@ package com.flipkart.service;
 
 /**
  * Class of Payment System
+ *
+ * @Author -  Team JEDI 02
  */
-public class PaymentSystem
-{
+public class PaymentSystem {
     String paymentMethod;
     double amount;
     String transactionNumber;
 
     /**
      * Gets payment method
+     *
      * @return payment method
      */
     public String getPaymentMethod() {
@@ -19,6 +21,7 @@ public class PaymentSystem
 
     /**
      * Sets Payment method
+     *
      * @param paymentMethod
      */
     public void setPaymentMethod(String paymentMethod) {
@@ -27,6 +30,7 @@ public class PaymentSystem
 
     /**
      * Gets amount
+     *
      * @return amount
      */
     public double getAmount() {
@@ -35,6 +39,7 @@ public class PaymentSystem
 
     /**
      * Gets amount
+     *
      * @param amount Amount
      */
     public void setAmount(double amount) {
@@ -43,6 +48,7 @@ public class PaymentSystem
 
     /**
      * Gets transaction Number
+     *
      * @return transaction number
      */
     public String getTransactionNumber() {
@@ -51,6 +57,7 @@ public class PaymentSystem
 
     /**
      * Sets transaction Number
+     *
      * @param transactionNumber transaction Number
      */
     public void setTransactionNumber(String transactionNumber) {

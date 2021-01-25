@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Class to Handle the operation of CourseCatalogue
+ *
+ * @Author -  Team JEDI 02
  */
 public class CourseCatalogueOperation implements CourseCatalogueInterface {
 

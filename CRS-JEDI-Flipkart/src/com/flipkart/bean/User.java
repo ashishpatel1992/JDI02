@@ -2,6 +2,7 @@ package com.flipkart.bean;
 
 /**
  * User - bean class for user
+ * @Author -  Team JEDI 02
  */
 public class User {
     String id;

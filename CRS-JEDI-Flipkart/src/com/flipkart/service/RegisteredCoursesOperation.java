@@ -11,6 +11,8 @@ import java.util.HashMap;
 
 /**
  * Class to handle Registered Courses Operations
+ *
+ * @Author -  Team JEDI 02
  */
 public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 
@@ -23,12 +25,9 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
     public HashMap<String, HashMap<String, String>> studentCourseGradesMap = new HashMap<>();
 
     public RegisteredCoursesOperation() {
-        //TODO Initialise registeredCourseIdList variable from database
-
     }
 
     public RegisteredCoursesOperation(String studentId) {
-//        setStudentCourseGradesMap();
         this.studentId = studentId;
     }
 
@@ -44,6 +43,7 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 
     /**
      * Updates to database and also update local variable
+     *
      * @param studentCourseGradesMap Map containing student's courses and grades
      */
     public void updateStudentCourseGradesMap(HashMap<String, HashMap<String, String>> studentCourseGradesMap) {
@@ -55,13 +55,14 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 
     /**
      * Registers the student into the course by taking list of courseIds
+     *
      * @param courseIdSelectionList List of selected courses
      * @return array list of registered courses
      */
     @Override
     public ArrayList<String> registerCourses(ArrayList<String> courseIdSelectionList) {
         ArrayList<String> selectedCourseList = null;
-        if(courseIdSelectionList.size()!=6){
+        if (courseIdSelectionList.size() != 6) {
             return null;
         }
         selectedCourseList = RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
@@ -92,6 +93,7 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 
     /**
      * Get list of all courses student is registered in.
+     *
      * @return array list of courses
      */
     @Override

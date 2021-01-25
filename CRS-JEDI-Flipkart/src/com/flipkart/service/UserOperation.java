@@ -6,26 +6,29 @@ import org.apache.log4j.Logger;
 
 /**
  * Class to handle user operations
+ *
+ * @Author -  Team JEDI 02
  */
-public class UserOperation implements UserInterface{
+public class UserOperation implements UserInterface {
     private static Logger logger = Logger.getLogger(UserOperation.class);
 
     /**
      * Verifies credentials of the student
-     * @param userId user ID
+     *
+     * @param userId   user ID
      * @param password password of user
      * @return user ID
      */
     @Override
     public String verifyCredentials(String userId, String password) {
-        if(userId==null || password ==null){
+        if (userId == null || password == null) {
             return null;
         }
         //logger.info("Verify Credentials");
         //logger.info(userId);
         LoginDaoInterface loginDaoInterface = LoginDaoImp.getInstance();
-        boolean loginSuccess = loginDaoInterface.login(userId,password);
-        if(loginSuccess){
+        boolean loginSuccess = loginDaoInterface.login(userId, password);
+        if (loginSuccess) {
             return userId;
         }
         return null;

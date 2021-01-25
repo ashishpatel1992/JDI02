@@ -2,6 +2,7 @@ package com.flipkart.bean;
 
 /**
  * Professor - bean class for professor
+ * @Author -  Team JEDI 02
  */
 public class Professor extends User {
     String department;

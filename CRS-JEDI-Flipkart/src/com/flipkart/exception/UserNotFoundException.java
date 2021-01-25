@@ -3,6 +3,8 @@ package com.flipkart.exception;
 
 /**
  * Custom exception class for user not found
+ *
+ * @Author -  Team JEDI 02
  */
 public class UserNotFoundException extends Exception {
     public String message;

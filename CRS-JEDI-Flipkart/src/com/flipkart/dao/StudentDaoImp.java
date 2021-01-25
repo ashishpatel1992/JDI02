@@ -18,6 +18,8 @@ import java.util.Date;
 
 /**
  * Class that implements all methods of StudentDaoInterface
+ *
+ * @Author -  Team JEDI 02
  */
 public class StudentDaoImp implements StudentDaoInterface {
 
@@ -242,7 +244,7 @@ public class StudentDaoImp implements StudentDaoInterface {
             logger.error("Fee already payed!");
         } catch (Exception e) {
             logger.error(e.getMessage());
-        }finally {
+        } finally {
             try {
                 preparedStatement.close();
             } catch (SQLException throwables) {

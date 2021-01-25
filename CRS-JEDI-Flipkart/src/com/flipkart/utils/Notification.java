@@ -1,5 +1,9 @@
 package com.flipkart.utils;
 
+/**
+ * Handles Notification for a student
+ * @Author -  Team JEDI 02
+ */
 public class Notification {
     String messageId;
     String studentId;

@@ -16,6 +16,8 @@ import java.util.Map;
  * 1. get course details
  * 2. get list of enrolled students
  * 3. grade enrolled students
+ *
+ * @Author -  Team JEDI 02
  */
 public class ProfessorOperation implements ProfessorInterface {
     private static Logger logger = Logger.getLogger(ProfessorOperation.class);
@@ -23,6 +25,7 @@ public class ProfessorOperation implements ProfessorInterface {
 
     /**
      * Constructor to set professor id
+     *
      * @param professorId professor ID
      */
     public ProfessorOperation(String professorId) {
@@ -31,6 +34,7 @@ public class ProfessorOperation implements ProfessorInterface {
 
     /**
      * Get Professor details
+     *
      * @return Professor details
      */
     public Professor getProfessor() {
@@ -39,6 +43,7 @@ public class ProfessorOperation implements ProfessorInterface {
 
     /**
      * Returns the course details
+     *
      * @return Course
      */
     @Override
@@ -62,6 +67,7 @@ public class ProfessorOperation implements ProfessorInterface {
 
     /**
      * Gets list of enrolled students
+     *
      * @return Array List of Students
      */
     @Override
@@ -95,6 +101,7 @@ public class ProfessorOperation implements ProfessorInterface {
 
     /**
      * Grade students
+     *
      * @param gradesOfStudents Hashmap containing Student Id and grades.
      * @return true if graded successfully
      */

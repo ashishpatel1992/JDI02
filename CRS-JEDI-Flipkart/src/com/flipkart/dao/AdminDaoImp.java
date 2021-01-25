@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Class that implements all methods of AdminDaoInterface
+ * @Author -  Team JEDI 02
  */
 public class AdminDaoImp implements AdminDaoInterface {
 

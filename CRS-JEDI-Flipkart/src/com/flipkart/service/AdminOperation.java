@@ -17,6 +17,8 @@ import java.util.HashMap;
  * 2. add new course
  * 3. approve student
  * 4. generate report card for a student
+ *
+ * @Author -  Team JEDI 02
  */
 public class AdminOperation implements AdminInterface {
     private static Logger logger = Logger.getLogger(AdminOperation.class);

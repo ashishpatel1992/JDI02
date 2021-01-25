@@ -11,6 +11,8 @@ import java.util.Scanner;
 
 /**
  * Class to handle Student frontend operations
+ *
+ * @Author -  Team JEDI 02
  */
 public class StudentCRSClient {
 
@@ -41,13 +43,13 @@ public class StudentCRSClient {
             for (Course course : courseArrayList) {
                 // TODO: Fetch Professor Name and print when Professor is implemented
                 String professorId = course.getProfessorId();
-                if ( professorId == null) {
+                if (professorId == null) {
                     logger.info(course.getId() + " " + course.getName() + " N/A \t N/A");
                 } else {
                     Professor professor = new ProfessorOperation(professorId).getProfessor();
-                    if(professor == null){
+                    if (professor == null) {
                         logger.info(course.getId() + " " + course.getName() + " N/A \t N/A");
-                    }else{
+                    } else {
                         logger.info(course.getId() + " " + course.getName() + " " + professor.getName() + " " + professor.getDepartment());
                     }
 
@@ -231,29 +233,28 @@ public class StudentCRSClient {
 
     void payFees() {
         int fee = studentInterface.getTotalFee();
-        logger.info("Total fee is Rs."+ fee + " press 'yes' to continue...");
+        logger.info("Total fee is Rs." + fee + " press 'yes' to continue...");
         String choiceSelected = scanner.next();
-        if(choiceSelected.equals("yes")) {
+        if (choiceSelected.equals("yes")) {
             logger.info("Pay via: ");
             logger.info("1. Credit Card");
             logger.info("2. Debit Card");
             logger.info("3. Cash");
             int choice = Integer.parseInt(scanner.next());
-            if(choice >= 1 && choice <= 3) {
-                if(studentInterface.makePayment(choice, fee)){
+            if (choice >= 1 && choice <= 3) {
+                if (studentInterface.makePayment(choice, fee)) {
                     logger.info("Payment Successful");
-                }else{
+                } else {
                     logger.info("Payment failed.");
                 }
-            }
-            else {
+            } else {
                 logger.info("Cannot do such payment!!");
             }
-        }
-        else {
+        } else {
             logger.info("Payment not done.");
         }
     }
+
     /**
      * Displays Professor menu
      */

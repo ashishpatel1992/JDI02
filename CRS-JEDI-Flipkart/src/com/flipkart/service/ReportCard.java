@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Class for Report Card
+ *
+ * @Author -  Team JEDI 02
  */
 public class ReportCard {
     String studentId;
@@ -12,6 +14,7 @@ public class ReportCard {
 
     /**
      * Gets Student ID
+     *
      * @return student ID
      */
     public String getStudentId() {
@@ -20,6 +23,7 @@ public class ReportCard {
 
     /**
      * Sets Student ID
+     *
      * @param studentId Student ID
      */
     public void setStudentId(String studentId) {
@@ -28,6 +32,7 @@ public class ReportCard {
 
     /**
      * Gets Course ID
+     *
      * @return Course ID
      */
     public ArrayList<String> getCourseId() {
@@ -36,6 +41,7 @@ public class ReportCard {
 
     /**
      * Sets Course ID
+     *
      * @param courseId Course ID
      */
     public void setCourseId(ArrayList<String> courseId) {
@@ -44,6 +50,7 @@ public class ReportCard {
 
     /**
      * Gets Grade
+     *
      * @return grade
      */
     public String getGrade() {
@@ -52,6 +59,7 @@ public class ReportCard {
 
     /**
      * Sets Grade
+     *
      * @param grade
      */
     public void setGrade(String grade) {

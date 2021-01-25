@@ -12,6 +12,8 @@ import java.util.Map;
 
 /**
  * Class that implements all methods of ProfessorDaoInterface
+ *
+ * @Author -  Team JEDI 02
  */
 public class ProfessorDaoImp implements ProfessorDaoInterface {
 
@@ -109,7 +111,7 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
             return enrolledStudentsMap;
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 resultSet.close();
             } catch (SQLException throwables) {

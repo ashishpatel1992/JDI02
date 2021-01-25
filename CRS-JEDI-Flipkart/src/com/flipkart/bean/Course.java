@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 /**
  * Course - bean class for course
+ * @Author -  Team JEDI 02
  */
 public class Course {
     String id;
@@ -27,7 +28,7 @@ public class Course {
      * , course name and professorId
      * @param courseId course id
      * @param courseName course name
-     * @param professorId professor id
+     * @param professorId stores the information about professor, if no professor is assigned it is null
      */
     public Course(String courseId, String courseName,String professorId){
         id = courseId;

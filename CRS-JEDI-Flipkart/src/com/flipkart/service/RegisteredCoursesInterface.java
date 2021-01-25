@@ -5,24 +5,31 @@ import com.flipkart.bean.Course;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Interface to handle Registered Courses Operations
+ *
+ * @Author -  Team JEDI 02
+ */
 public interface RegisteredCoursesInterface {
     /**
      * Registers the student into the course by taking list of courseIds
+     *
      * @param courseIdSelectionList
-     * @return
+     * @return returns the courses successfully registered
      */
 
     public ArrayList<String> registerCourses(ArrayList<String> courseIdSelectionList);
 
     /**
      * Get list of all courses student is registered in.
+     *
      * @return array list of courses
      */
     public ArrayList<Course> getRegisteredCourses();
 
     /**
-            * Drops a course in which student is already enrolled in.
-            * @param courseId course ID
+     * Drops a course in which student is already enrolled in.
+     * @param courseId course ID
      * @return true if dropped successfully
      */
 //    public boolean dropCourse(String courseId);

@@ -5,16 +5,23 @@ import com.flipkart.bean.Professor;
 
 import java.util.ArrayList;
 
+/**
+ * Class to Handle the operation of CourseCatalogue
+ *
+ * @Author -  Team JEDI 02
+ */
 public interface CourseCatalogueInterface {
     /**
      * Returns the list of all courses
+     *
      * @return array list containing courses
      */
     public ArrayList<Course> getCourseList();
 
     /**
      * creates a new course and add to course list and further add to database
-     * @param courseId course ID
+     *
+     * @param courseId   course ID
      * @param courseName name of the course
      * @return true if course added
      */
@@ -22,6 +29,7 @@ public interface CourseCatalogueInterface {
 
     /**
      * Returns the course along with its details
+     *
      * @param courseId course ID
      * @return Course
      */
@@ -29,6 +37,7 @@ public interface CourseCatalogueInterface {
 
     /**
      * Delete a specific course
+     *
      * @param courseId course ID
      * @return true if course deleted
      */
@@ -36,6 +45,7 @@ public interface CourseCatalogueInterface {
 
     /**
      * Assigns professor to a course
+     *
      * @param courseId course ID
      * @return true if professor assigned
      */
@@ -43,12 +53,14 @@ public interface CourseCatalogueInterface {
 
     /**
      * Get list of unassigned Courses
+     *
      * @return array list of unassigned courses
      */
     public ArrayList<Course> getUnAssignedCourses();
 
     /**
      * Get list of unassigned Professors
+     *
      * @return array list of unassigned professors
      */
     public ArrayList<Professor> getUnAssignedProfessors();

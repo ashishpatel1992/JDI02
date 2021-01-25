@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 /**
  * Class that implements all methods of RegisteredCoursesDaoInterface
+ *
+ * @Author -  Team JEDI 02
  */
 public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
 
@@ -23,6 +25,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
 
     /**
      * Returns static instance of RegisteredCoursesDaoImp class
+     *
      * @return instance of RegisteredCoursesDaoImp class
      */
     public static RegisteredCoursesDaoImp getInstance() {
@@ -37,6 +40,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
 
     /**
      * Returns list of course ids a student is enrolled in
+     *
      * @param studentId id of student for which the list of courses is required
      * @return arraylist of courseids the student is enrolled in
      */
@@ -82,7 +86,8 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
 
     /**
      * Enrolls student in selected courses
-     * @param studentId id of the student for which the courses have to be enrolled
+     *
+     * @param studentId             id of the student for which the courses have to be enrolled
      * @param courseIdSelectionList list of courseids which have to be enrolled for student
      * @return arraylist of courseids in which the student was enrolled
      */

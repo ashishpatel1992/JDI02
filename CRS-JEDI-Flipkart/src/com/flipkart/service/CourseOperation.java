@@ -7,12 +7,15 @@ import java.util.ArrayList;
 
 /**
  * Class to handle course operations
+ *
+ * @Author -  Team JEDI 02
  */
-public class CourseOperation implements CourseInterface{
+public class CourseOperation implements CourseInterface {
     private static Logger logger = Logger.getLogger(CourseOperation.class);
 
     /**
      * Adds a course
+     *
      * @return false if course not added
      */
     @Override
@@ -24,6 +27,7 @@ public class CourseOperation implements CourseInterface{
 
     /**
      * Modifies a course
+     *
      * @return false if course not modified
      */
     @Override
@@ -34,6 +38,7 @@ public class CourseOperation implements CourseInterface{
 
     /**
      * Deletes a course
+     *
      * @return false if course not deleted
      */
     @Override
@@ -44,6 +49,7 @@ public class CourseOperation implements CourseInterface{
 
     /**
      * Get the students enrolled in course
+     *
      * @return array list of the students enrolled
      */
     @Override

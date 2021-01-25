@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 /**
  * Class to handle Report Card Operations
+ *
+ * @Author -  Team JEDI 02
  */
 public class ReportCardOperation implements ReportCardInterface {
     private static Logger logger = Logger.getLogger(ReportCardOperation.class);
@@ -13,6 +15,7 @@ public class ReportCardOperation implements ReportCardInterface {
 
     /**
      * Constructor for the class which sets the student ID
+     *
      * @param studentId student ID
      */
     public ReportCardOperation(String studentId) {
@@ -21,6 +24,7 @@ public class ReportCardOperation implements ReportCardInterface {
 
     /**
      * Get grades of student
+     *
      * @return array list containing grades
      */
     @Override

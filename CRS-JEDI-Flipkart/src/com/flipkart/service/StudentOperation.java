@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 /**
  * Class to handle student operations
+ *
+ * @Author -  Team JEDI 02
  */
 public class StudentOperation implements StudentInterface {
 
@@ -25,6 +27,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Constructor of class which sets the student ID
+     *
      * @param studentId Student ID
      */
     public StudentOperation(String studentId) {
@@ -34,6 +37,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Gets student Profile
+     *
      * @return Student Profile
      */
     public Student getStudentProfile() {
@@ -42,6 +46,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Calculate total fee for a student
+     *
      * @return fee amount
      */
     @Override
@@ -62,6 +67,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Adds course to selection list
+     *
      * @param courseId course ID
      * @return true if added successfully
      */
@@ -81,6 +87,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Gets course selection list
+     *
      * @return array list of courses selected
      */
     @Override
@@ -91,6 +98,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Drops course from selection
+     *
      * @param courseId course ID
      * @return true if course dropped successfully
      */
@@ -110,6 +118,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Registers the courses selected
+     *
      * @return array list of courses registered
      */
     @Override
@@ -127,6 +136,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Checks if fee is paid
+     *
      * @return true if paid
      */
     @Override
@@ -137,8 +147,10 @@ public class StudentOperation implements StudentInterface {
 
 
     //TODO : review return type
+
     /**
      * Gets student grades
+     *
      * @return hashmap of grades
      */
     @Override
@@ -149,6 +161,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Adds course
+     *
      * @param id course ID
      * @return true if added successfully
      */
@@ -161,6 +174,7 @@ public class StudentOperation implements StudentInterface {
 
     /**
      * Gets list of registered courses
+     *
      * @return array list of courses
      */
     @Override

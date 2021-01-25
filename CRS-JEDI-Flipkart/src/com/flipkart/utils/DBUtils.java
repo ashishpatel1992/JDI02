@@ -14,6 +14,8 @@ import java.util.Properties;
  * Database utility class performs the following operations
  * 1. Get a connection to database
  * 2. Close a connection to database
+ *
+ * @Author -  Team JEDI 02
  */
 public class DBUtils {
 

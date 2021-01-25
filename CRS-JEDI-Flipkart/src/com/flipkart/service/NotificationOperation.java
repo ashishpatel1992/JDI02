@@ -4,8 +4,10 @@ import org.apache.log4j.Logger;
 
 /**
  * Class to handle notification operation
+ *
+ * @Author -  Team JEDI 02
  */
-public class NotificationOperation implements NotificationInterface{
+public class NotificationOperation implements NotificationInterface {
     private static Logger logger = Logger.getLogger(NotificationOperation.class);
 
     /**

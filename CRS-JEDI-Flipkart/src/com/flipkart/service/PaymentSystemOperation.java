@@ -4,12 +4,15 @@ import org.apache.log4j.Logger;
 
 /**
  * Class to handle Payment System operations
+ *
+ * @Author -  Team JEDI 02
  */
-public class PaymentSystemOperation implements PaymentSystemInterface{
+public class PaymentSystemOperation implements PaymentSystemInterface {
     private static Logger logger = Logger.getLogger(PaymentSystemOperation.class);
 
     /**
      * Calculates the fee
+     *
      * @return the fee
      */
     @Override

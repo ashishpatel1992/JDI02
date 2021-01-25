@@ -12,6 +12,8 @@ import java.util.Random;
 
 /**
  * Class that implements all methods of LoginDaoInterface
+ *
+ * @Author -  Team JEDI 02
  */
 public class LoginDaoImp implements LoginDaoInterface {
 
@@ -104,7 +106,7 @@ public class LoginDaoImp implements LoginDaoInterface {
             logger.error(e.getMessage());
         } catch (SQLException e) {
             logger.error(e.getMessage());
-        }finally {
+        } finally {
             try {
                 preparedStatement.close();
             } catch (SQLException throwables) {
