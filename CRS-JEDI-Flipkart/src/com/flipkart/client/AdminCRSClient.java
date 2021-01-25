@@ -132,21 +132,21 @@ public class AdminCRSClient {
      */
     private void assignProfessorToCourse() {
         // TODO: If any of the below is unassigned then only procced for course assignment
-        displayUnAssignedProfessors();
-        displayUnAssignedCourses();
+        if (displayUnAssignedProfessors() && displayUnAssignedCourses()) {
+            logger.info("Enter course ID to assign");
+            String courseId = scanner.next();
+            logger.info("Enter professor ID to assign");
+            String professorId = scanner.next();
 
-        logger.info("Enter course ID to assign");
-        String courseId = scanner.next();
-        logger.info("Enter professor ID to assign");
-        String professorId = scanner.next();
-
-        if (adminInterface.assignProfessorToCourse(professorId, courseId)) {
-            logger.info(professorId + " assigned to course " + courseId);
+            if (adminInterface.assignProfessorToCourse(professorId, courseId)) {
+                logger.info(professorId + " assigned to course " + courseId);
+            } else {
+                logger.info("Unable to assign professor to course.");
+            }
         } else {
-            logger.info("Unable to assign professor to course.");
+            logger.info("No professor or course available to be assigned.");
         }
 
-        logger.info("");
     }
 
     /**
@@ -160,14 +160,10 @@ public class AdminCRSClient {
 
                 String professorId = course.getProfessorId();
                 if (course.getProfessorId() == null) {
-                    logger.info(course.getId() + " " + course.getName() + " N/A");
+                    logger.info(String.format("%8s %10s", course.getId(), course.getName()));
                 } else {
                     Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
-                    if (professor == null) {
-                        logger.info(course.getId() + " " + course.getName() + " N/A");
-                    } else {
-                        logger.info(String.format("%8s %10s %12s %13s", course.getId(), course.getName(), professorId, professor.getName()));
-                    }
+                    logger.info(String.format("%8s %10s %12s %13s", course.getId(), course.getName(), professorId, professor.getName()));
 
                 }
 
@@ -182,13 +178,17 @@ public class AdminCRSClient {
      * Perform add course operations
      */
     public void addCourse() {
-        displayUnAssignedProfessors();
+        boolean unAssignedProfessors = displayUnAssignedProfessors();
         logger.info("Enter the course ID you want to add");
         String courseID = scanner.next();
         logger.info("Enter the course name you want to add");
         String courseName = scanner.next();
-        logger.info("Enter the Professor Id to assign to this course ");
-        String professorId = scanner.next();
+        String professorId = null;
+        if (unAssignedProfessors) {
+            logger.info("Enter the Professor Id to assign to this course ");
+            professorId = scanner.next();
+        }
+
         if (courseCatalogueInterface.addCourse(courseID, courseName, professorId)) {
             logger.info("Course added successfully");
         } else {

@@ -63,20 +63,18 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     @Override
     public boolean addCourse(String courseId, String courseName, String professorId) {
         logger.info("Add Course");
-        //TODO: add course list to database
-        // TODO: We need to create professor before assigning him a course
-        // TODO: a course will be hidden if no professor is assigned
-        Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
-        if(professor ==  null){
-            return false;
-        }else{
-            Course course = new Course(courseId, courseName, professorId);
 
+        Course course = null;
+
+        if (professorId == null) {
+            course = new Course(courseId, courseName);
+            return AdminDaoImp.getInstance().addCourse(course);
+        } else {
+            Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
+            course = new Course(courseId, courseName, professorId);
             return AdminDaoImp.getInstance().addCourse(course);
         }
 
-
-        //return true;
     }
 
     /**
