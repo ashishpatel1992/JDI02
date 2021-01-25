@@ -17,6 +17,7 @@ import java.util.Date;
 
 /**
  * Class that implements all methods of NotificationDaoInterface
+ *
  * @Author -  Team JEDI 02
  */
 public class NotificationDaoImp implements NotificationDaoInterface {
@@ -52,17 +53,22 @@ public class NotificationDaoImp implements NotificationDaoInterface {
     @Override
     public void addNotification(String studentId, String message) {
         PreparedStatement preparedStatement = null;
-        try{
+        try {
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_NOTIFICATION_QUERY);
-            preparedStatement.setString(1,studentId);
-            preparedStatement.setString(2,message);
+            preparedStatement.setString(1, studentId);
+            preparedStatement.setString(2, message);
             Date date = Calendar.getInstance().getTime();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
             String strDate = dateFormat.format(date);
-            preparedStatement.setString(3,strDate);
+            preparedStatement.setString(3, strDate);
             preparedStatement.executeUpdate();
-        }catch (SQLException e){
-
+        } catch (SQLException e) {
+            logger.info(e.getMessage());
+            try {
+                preparedStatement.close();
+            } catch (SQLException ex) {
+                logger.error(ex.getMessage());
+            }
         }
     }
 
@@ -76,26 +82,24 @@ public class NotificationDaoImp implements NotificationDaoInterface {
     public ArrayList<String> getNotificationsForStudent(String studentId) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        ArrayList<String> notifications=new ArrayList<>();
-        try{
+        ArrayList<String> notifications = new ArrayList<>();
+        try {
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_NOTIFICATIONS_QUERY);
-            preparedStatement.setString(1,studentId);
+            preparedStatement.setString(1, studentId);
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                notifications.add(resultSet.getString("date")+"\t"+resultSet.getString("message"));
+            while (resultSet.next()) {
+                notifications.add(resultSet.getString("date") + "\t" + resultSet.getString("message"));
             }
 
             return notifications;
-        }catch (SQLException e){
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
             try {
                 resultSet.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            try {
                 preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
             }
         }
         return notifications;

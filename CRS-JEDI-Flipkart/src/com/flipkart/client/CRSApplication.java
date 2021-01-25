@@ -78,7 +78,7 @@ public class CRSApplication {
                         return;
 
                     default:
-                        logger.info("Student is selected");
+                        logger.info("Invalid Choice");
 
 
                 }
