@@ -89,7 +89,6 @@ public class StudentCRSClient {
      */
     public void printAddCourseToSelectionInfo() {
 
-
         if (!isRegistered()) {
             String courseId;
             logger.info("Please choose CourseId from following list:-");
@@ -323,20 +322,20 @@ public class StudentCRSClient {
      * Display notifications for student
      */
     void getNotifications(){
-        try{
         NotificationDaoInterface notificationDaoInterface = NotificationDaoImp.getInstance();
         ArrayList<String> notifications = notificationDaoInterface.getNotificationsForStudent(studentId);
-        if(notifications.size()==0){
-            logger.info("No notifications available");
+        if(notifications==null){
+            logger.info("No notifications available.");
+        }
+        else if(notifications.size()==0){
+            logger.info("No notifications available.");
         }else{
             logger.info("Notifications :");
             for(String notification : notifications){
                 logger.info(notification);
             }
         }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+
     }
 
     /**
