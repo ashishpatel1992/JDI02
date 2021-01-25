@@ -4,8 +4,12 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 import com.flipkart.constants.CRSConstants;
+
 import com.flipkart.dao.NotificationDaoImp;
 import com.flipkart.dao.NotificationDaoInterface;
+
+import com.flipkart.dao.RegisteredCoursesDaoInterface;
+
 import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
@@ -40,29 +44,44 @@ public class StudentCRSClient {
      * Displays list of available courses in log
      */
     public void viewAvailableCourses() {
-//        ArrayList<Course> courseArrayList = courseCatalogueOperation.getCourseList();
-        ArrayList<Course> courseArrayList = courseCatalogueInterface.getCourseList();
-        if (!courseArrayList.isEmpty()) {
-            for (Course course : courseArrayList) {
-                // TODO: Fetch Professor Name and print when Professor is implemented
-                String professorId = course.getProfessorId();
-                if (professorId == null) {
-                    logger.info(course.getId() + " " + course.getName() + " N/A \t N/A");
-                } else {
-                    Professor professor = new ProfessorOperation(professorId).getProfessor();
-                    if (professor == null) {
-                        logger.info(course.getId() + " " + course.getName() + " N/A \t N/A");
-                    } else {
-                        logger.info(course.getId() + " " + course.getName() + " " + professor.getName() + " " + professor.getDepartment());
+        if (!isRegistered()) {
+            ArrayList<Course> courseArrayList = courseCatalogueInterface.getCourseList();
+            if (!courseArrayList.isEmpty()) {
+                logger.info(String.format("%8s %10s %11s %13s", "CourseId", "CourseName", "ProfessorId", "ProfessorName"));
+                for (Course course : courseArrayList) {
+                    if (course.getProfessorId() != null) {
+                        String professorId = course.getProfessorId();
+                        if (professorId == null) {
+                            logger.info(String.format("%8s %10s", course.getId(), course.getName()));
+                        } else {
+                            Professor professor = new ProfessorOperation(professorId).getProfessor();
+                            if (professor == null) {
+                                logger.info(String.format("%8s %10s", course.getId(), course.getName()));
+                            } else {
+                                logger.info(String.format("%8s %10s %11s %13s", course.getId(), course.getName(), professor.getName(), professor.getDepartment()));
+                            }
+
+                        }
                     }
-
                 }
-
+            } else {
+                logger.info("No Courses available to display.");
             }
         } else {
-            logger.info("No Courses available to display.");
+            logger.info("You are already Registered.");
         }
 
+
+    }
+
+    /**
+     * Checks if student is already registered for courses
+     *
+     * @return returns true if student is already registered and if registration is pending returns false
+     */
+    boolean isRegistered() {
+        RegisteredCoursesOperation registeredCoursesOperation = new RegisteredCoursesOperation(studentId);
+        return registeredCoursesOperation.isRegistered();
     }
 
     /**
@@ -70,35 +89,42 @@ public class StudentCRSClient {
      */
     public void printAddCourseToSelectionInfo() {
 
-        String courseId;
-        viewAvailableCourses();
-        logger.info("Enter course Id");
-        courseId = scanner.next();
-        // TODO: Avoid same course to be added again
 
-        if (studentInterface.getCourseSelection().contains(courseId)) {
-            logger.info("Course Already in your Selection List");
-            return;
-        } else {
-            try {
-                if (studentInterface.addCourseToSelection(courseId)) {
+        if (!isRegistered()) {
+            String courseId;
+            logger.info("Please choose CourseId from following list:-");
+            viewAvailableCourses();
+            logger.info("Enter course Id");
+            courseId = scanner.next();
+            // TODO: Hide courses without professor
 
-                    logger.info("Course " + courseId + " added successfully");
-                } else {
+            if (studentInterface.getCourseSelection().contains(courseId)) {
+                logger.info("Course Already in your Selection List");
+                return;
+            } else {
+                try {
+                    if (studentInterface.addCourseToSelection(courseId)) {
+
+                        logger.info("Course " + courseId + " added successfully");
+                    } else {
+                        logger.info("Invalid CourseId entered");
+                        logger.info("Please choose CourseId from following list:-");
+                        viewAvailableCourses();
+                    }
+                    printCourseSelectionInfo();
+
+                } catch (Exception e) {
                     logger.info("Invalid CourseId entered");
                     logger.info("Please choose CourseId from following list:-");
                     viewAvailableCourses();
                 }
-                printCourseSelectionInfo();
-
-            } catch (Exception e) {
-                logger.info("Invalid CourseId entered");
-                logger.info("Please choose CourseId from following list:-");
-                viewAvailableCourses();
             }
-        }
-        if (studentInterface.getCourseSelection().size() >= CRSConstants.MIN_COURSE_REQUIREMENT) {
-            logger.info("Minimum Course requirement fulfilled. You can proceed for registration");
+            if (studentInterface.getCourseSelection().size() >= CRSConstants.MIN_COURSE_REQUIREMENT) {
+                logger.info("Minimum Course requirement fulfilled. You can proceed for registration");
+            }
+
+        } else {
+            logger.info("You are already Registered.");
         }
 
 
@@ -129,34 +155,44 @@ public class StudentCRSClient {
      * Removes a course from Selection cart
      */
     public void printDropCourseFromSelectionInfo() {
-        logger.info("Enter course Id");
-        String courseId;
-        courseId = scanner.next();
-        if (studentInterface.dropCourseFromSelection(courseId)) {
-            logger.info("Course " + courseId + " has been removed.");
+        if (!isRegistered()) {
+            logger.info("Enter course Id");
+            String courseId;
+            courseId = scanner.next();
+            if (studentInterface.dropCourseFromSelection(courseId)) {
+                logger.info("Course " + courseId + " has been removed.");
+            } else {
+                logger.info("Course not present in the Selection list");
+            }
+            printCourseSelectionInfo();
         } else {
-            logger.info("Course not present in the Selection list");
+            logger.info("You are already Registered.");
         }
-        printCourseSelectionInfo();
+
     }
 
     /**
      * Displays registered courses information
      */
     public void printDoRegisterCourseInfo() {
-        printCourseSelectionInfo();
-        if (studentInterface.getCourseSelection().size() > 0) {
-            if (studentInterface.registerCourses() != null) {
-                ArrayList<Course> courseArrayList = studentInterface.getRegisteredCourses();
-                logger.info("You are successfully registered for following courses.");
-                logger.info("CourseId\tCourseName");
-                for (Course regCourse : courseArrayList) {
-                    logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
+        if (!isRegistered()) {
+            printCourseSelectionInfo();
+            if (studentInterface.getCourseSelection().size() > 0) {
+                if (studentInterface.registerCourses() != null) {
+                    ArrayList<Course> courseArrayList = studentInterface.getRegisteredCourses();
+                    logger.info("You are successfully registered for following courses.");
+                    logger.info("CourseId\tCourseName");
+                    for (Course regCourse : courseArrayList) {
+                        logger.info(regCourse.getId() + "\t\t" + regCourse.getName() + "\t\t" + regCourse.getProfessorId());
+                    }
+                } else {
+                    logger.info("You have selected " + studentInterface.getCourseSelection().size() + " course(s). Please select " + CRSConstants.MIN_COURSE_REQUIREMENT + " courses.");
                 }
-            } else {
-                logger.info("You have selected " + studentInterface.getCourseSelection().size() + " course(s). Please select " + CRSConstants.MIN_COURSE_REQUIREMENT + " courses.");
             }
+        } else {
+            logger.info("You are already Registered.");
         }
+
     }
 
     /**
@@ -166,7 +202,7 @@ public class StudentCRSClient {
         logger.info("You are registered for following courses:- ");
 
         ArrayList<Course> registeredCourseList = studentInterface.getRegisteredCourses();
-        logger.info(registeredCourseList.size());
+
         if (registeredCourseList.size() > 0) {
             logger.info("CourseId\tCourseName");
             for (Course regCourse : registeredCourseList) {
@@ -181,8 +217,11 @@ public class StudentCRSClient {
      * Displays report card information
      */
     public void printReportCardInfo() {
+        // TODO: Finish Get Grades Feature
         ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
         reportCardOperation.getGrades();
+        // TODO: Fix with if else condition whether registration over or not
+        logger.info("Course Registration is not over yet");
     }
 
     /**
@@ -252,27 +291,32 @@ public class StudentCRSClient {
     }
 
     void payFees() {
-        int fee = studentInterface.getTotalFee();
-        logger.info("Total fee is Rs." + fee + " press 'yes' to continue...");
-        String choiceSelected = scanner.next();
-        if (choiceSelected.equals("yes")) {
-            logger.info("Pay via: ");
-            logger.info("1. Credit Card");
-            logger.info("2. Debit Card");
-            logger.info("3. Cash");
-            int choice = Integer.parseInt(scanner.next());
-            if (choice >= 1 && choice <= 3) {
-                if (studentInterface.makePayment(choice, fee)) {
-                    logger.info("Payment Successful");
+        if (isRegistered()) {
+            int fee = studentInterface.getTotalFee();
+            logger.info("Total fee is Rs." + fee + " press 'yes' to continue...");
+            String choiceSelected = scanner.next();
+            if (choiceSelected.equals("yes")) {
+                logger.info("Pay via: ");
+                logger.info("1. Credit Card");
+                logger.info("2. Debit Card");
+                logger.info("3. Cash");
+                int choice = Integer.parseInt(scanner.next());
+                if (choice >= 1 && choice <= 3) {
+                    if (studentInterface.makePayment(choice, fee)) {
+                        logger.info("Payment Successful");
+                    } else {
+                        logger.info("Payment failed.");
+                    }
                 } else {
-                    logger.info("Payment failed.");
+                    logger.info("Cannot do such payment!!");
                 }
             } else {
-                logger.info("Cannot do such payment!!");
+                logger.info("Payment not done.");
             }
         } else {
-            logger.info("Payment not done.");
+            logger.info("You need to complete registration before paying fee.");
         }
+
     }
 
     /**

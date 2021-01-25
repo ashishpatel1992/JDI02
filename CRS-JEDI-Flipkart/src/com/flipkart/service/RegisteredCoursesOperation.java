@@ -124,8 +124,22 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 //
 //            }
 //        }
-        logger.info(registeredCourseIdList.size());
+//        logger.info(registeredCourseIdList.size());
         return registeredCourseList;
+    }
+
+    /**
+     * Drops a course in which student is already enrolled in.
+     *
+     * @return true if dropped successfully
+     */
+    @Override
+    public boolean isRegistered() {
+        if (getRegisteredCourses().size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

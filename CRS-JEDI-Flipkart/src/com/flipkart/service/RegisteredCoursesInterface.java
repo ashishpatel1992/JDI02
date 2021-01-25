@@ -32,6 +32,6 @@ public interface RegisteredCoursesInterface {
      * @param courseId course ID
      * @return true if dropped successfully
      */
-//    public boolean dropCourse(String courseId);
 
+    public boolean isRegistered();
 }
