@@ -180,22 +180,27 @@ public class AdminCRSClient {
      */
     public void addCourse() {
         boolean unAssignedProfessors = displayUnAssignedProfessors();
-        logger.info("Enter the course ID you want to add");
-        String courseID = scanner.next();
-        logger.info("Enter the course name you want to add");
-        String courseName = scanner.next();
-        String professorId = null;
-        if (unAssignedProfessors) {
-            logger.info("Enter the Professor Id to assign to this course ");
-            professorId = scanner.next();
-        }
+        try {
+            logger.info("Enter the course ID you want to add");
+            String courseID = scanner.next();
+            logger.info("Enter the course name you want to add");
+            String courseName = scanner.next();
+            logger.info("Enter course fee");
+            int courseFee = scanner.nextInt();
+            String professorId = null;
+            if (unAssignedProfessors) {
+                logger.info("Enter the Professor Id to assign to this course ");
+                professorId = scanner.next();
+            }
 
-        if (courseCatalogueInterface.addCourse(courseID, courseName, professorId)) {
-            logger.info("Course added successfully");
-        } else {
-            logger.info("Unable to add course");
+            if (courseCatalogueInterface.addCourse(courseID, courseName, professorId, courseFee)) {
+                logger.info("Course added successfully");
+            } else {
+                logger.info("Unable to add course");
+            }
+        }catch (Exception e){
+            logger.info("Invalid Input");
         }
-
     }
 
     /**

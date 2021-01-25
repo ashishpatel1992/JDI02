@@ -25,7 +25,7 @@ public interface CourseCatalogueInterface {
      * @param courseName name of the course
      * @return true if course added
      */
-    public boolean addCourse(String courseId, String courseName, String professorId);
+    public boolean addCourse(String courseId, String courseName, String professorId,int courseFee);
 
     /**
      * Returns the course along with its details

@@ -22,7 +22,7 @@ public class SQLQueriesConstants {
     public static String ADD_USER_QUERY = "INSERT INTO `user`(`userid`,`name`,`email`,`password`,`role`) VALUES(?,?,?,?,?)";
     public static String ADD_STUDENT_QUERY = "INSERT INTO `student`(`userid`,`branch`,`approved`) VALUES(?,?,?)";
     public static String ADD_PROFESSOR_QUERY = "INSERT INTO `professor`(`userid`,`department`) VALUES(?,?)";
-    public static String ADD_COURSE_QUERY = "INSERT INTO `course`(`courseid`,`coursename`,`professorid`,`coursecatalogueid`) VALUES(?,?,?,?)";
+    public static String ADD_COURSE_QUERY = "INSERT INTO `course`(`courseid`,`coursename`,`professorid`,`coursecatalogueid`,`fee`) VALUES(?,?,?,?,?)";
     public static String APPROVE_STUDENT_QUERY = "UPDATE `student` SET `approved`=\"1\" WHERE `userid` = ?";
     public static String GET_UNAPPROVED_STUDENT_LIST = "SELECT `userid`, `branch`, `approved` FROM `student` WHERE `approved` = 0";
     public static String GET_ADMIN_PROFILE_QUERY = "SELECT `userid`, `name`, `email`, `role` FROM `user` WHERE `userid` = ? AND `role` = 'admin'";
