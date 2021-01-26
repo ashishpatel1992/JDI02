@@ -60,18 +60,14 @@ public class LoginDaoImp implements LoginDaoInterface {
                 return true;
             }
             return false;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
         } finally {
             try {
                 resultSet.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            try {
                 preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
             }
         }
 
@@ -109,11 +105,11 @@ public class LoginDaoImp implements LoginDaoInterface {
         } finally {
             try {
                 preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
             }
         }
-        return password;
+        return userId;
     }
 
     /**
@@ -224,9 +220,9 @@ public class LoginDaoImp implements LoginDaoInterface {
                 return null;
             }
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new UserAlreadyExistException("UserId: " + userid + " already exists.");
+            throw new UserAlreadyExistException("UserId " + userid + " already exists.");
         } catch (SQLException e) {
-            logger.info(e.getMessage());
+            logger.error(e.getMessage());
         } finally {
             try {
                 preparedStatement.close();

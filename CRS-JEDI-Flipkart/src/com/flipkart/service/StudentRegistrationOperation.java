@@ -12,15 +12,13 @@ import com.flipkart.dao.LoginDaoInterface;
 public class StudentRegistrationOperation implements StudentRegistrationInterface {
 
     /**
-     * Checks if registration data is valid
+     * Checks if student registration is valid and perform the registration
      *
      * @param newStudent Student details
-     * @return password
+     * @param password   Student Password
+     * @return studentId
      */
     public String isRegistrationDataValid(Student newStudent, String password) {
-        // TODO: Call DOA to check if student Enrollment number and Email exist
-        LoginDaoInterface loginDaoInterface = LoginDaoImp.getInstance();
-        String userId = loginDaoInterface.addStudent(newStudent, password);
-        return userId;
+        return LoginDaoImp.getInstance().addStudent(newStudent, password);
     }
 }

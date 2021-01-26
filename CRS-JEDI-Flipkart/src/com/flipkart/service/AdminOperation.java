@@ -126,8 +126,9 @@ public class AdminOperation implements AdminInterface {
 
         if (course != null && course.getProfessorId() == null && ProfessorDaoImp.getInstance().getProfessor(professorId) != null) {
             // TODO: Another if condition to check if professor is already assigned to a course
-            AdminDaoImp.getInstance().assignProfessorToCourse(professorId, courseId);
-            return true;
+            // Check if Professor is already assigned
+            return AdminDaoImp.getInstance().assignProfessorToCourse(professorId, courseId);
+
         } else {
             // TODO: Cannot assign professor to Course Exception
             return false;

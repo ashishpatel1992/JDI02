@@ -1,5 +1,6 @@
 package com.flipkart.client;
 
+import com.flipkart.constants.CRSConstants;
 import com.flipkart.service.*;
 import org.apache.log4j.Logger;
 
@@ -27,13 +28,15 @@ public class CRSApplication {
 
         try {
             while (true) {
-                logger.info("=== Login MENU ===");
-                logger.info("Login As:-");
-                logger.info("1. Student Registration");
-                logger.info("2. Student");
-                logger.info("3. Professor");
-                logger.info("4. Admin");
-                logger.info("5. Exit");
+                logger.info("+-----------------------------+");
+                logger.info(String.format("| %-28s|", "Login MENU "));
+                logger.info("+-----------------------------+");
+                logger.info(String.format("| 1. %-24s |", "Student Registration"));
+                logger.info(String.format("| 2. %-24s |", "Student"));
+                logger.info(String.format("| 3. %-24s |", "Professor"));
+                logger.info(String.format("| 4. %-24s |", "Admin"));
+                logger.info(String.format("| 5. %-24s |", "Exit"));
+                logger.info("+-----------------------------+");
 
                 choice = scanner.nextInt();
 
@@ -43,14 +46,10 @@ public class CRSApplication {
                         studentRegistrationCRSClient.registrationMenu();
                         break;
                     case 2:
-
+                        printLoginTime();
                         logger.info("Please Login to proceed further");
                         String studentId = CRSApplication.authenticateUser();
                         if (studentId != null) {
-                            ZoneId zoneId = ZoneId.of("Asia/Kolkata");
-                            ZonedDateTime date = ZonedDateTime.now(zoneId);
-                            logger.info("Login Successful at : "+date);
-
                             StudentCRSClient studentCRSClient = new StudentCRSClient(studentId);
                             studentCRSClient.studentMenu();
                         } else {
@@ -60,9 +59,7 @@ public class CRSApplication {
                     case 3:
                         String professorId = CRSApplication.authenticateUser();
                         if (professorId != null) {
-                            ZoneId zoneId = ZoneId.of("Asia/Kolkata");
-                            ZonedDateTime date = ZonedDateTime.now(zoneId);
-                            logger.info("Login Successful at : "+date);
+                            printLoginTime();
                             ProfessorCRSClient professorCRSClient = new ProfessorCRSClient(professorId);
                             professorCRSClient.professorMenu();
                         } else {
@@ -74,7 +71,7 @@ public class CRSApplication {
                         if (adminId != null) {
                             ZoneId zoneId = ZoneId.of("Asia/Kolkata");
                             ZonedDateTime date = ZonedDateTime.now(zoneId);
-                            logger.info("Login Successful at : "+date);
+                            logger.info("Login Successful at : " + date);
                             AdminCRSClient adminCRSClient = new AdminCRSClient(adminId);
                             adminCRSClient.adminMenu();
                         } else {
@@ -88,11 +85,7 @@ public class CRSApplication {
 
                     default:
                         logger.info("Invalid Choice");
-
-
                 }
-
-
             }
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -100,6 +93,12 @@ public class CRSApplication {
             scanner.close();
         }
 
+    }
+
+    public static void printLoginTime() {
+        ZoneId zoneId = ZoneId.of("Asia/Kolkata");
+        ZonedDateTime date = ZonedDateTime.now(zoneId);
+        logger.info("Login Successful at " + date.format(CRSConstants.dateTimeFormatter));
     }
 
     /**
@@ -111,9 +110,9 @@ public class CRSApplication {
         String userId;
         String userPassword = null;
         Scanner scanner = new Scanner(System.in);
-        logger.info("Enter User ID ? ");
+        logger.info("Enter User ID >");
         userId = scanner.next();
-        logger.info("Enter User Password ? ");
+        logger.info("Enter User Password >");
         userPassword = scanner.next();
         UserInterface userInterface = new UserOperation();
         // TODO: try catch can be done for handling authentication error

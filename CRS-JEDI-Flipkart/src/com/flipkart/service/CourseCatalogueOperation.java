@@ -19,28 +19,7 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
     private static Logger logger = Logger.getLogger(CourseCatalogueOperation.class);
 
-//    ArrayList<Course> courseList = new ArrayList<Course>();
-
     public CourseCatalogueOperation() {
-//        CourseCatalogueDaoInterface courseCatalogueDaoInterface = new CourseCatalogueDaoImp();
-//        CourseCatalogueDaoInterface courseCatalogueDaoInterface = CourseCatalogueDaoImp.getInstance().getAllCourses();
-//        courseList = courseCatalogueDaoInterface.getAllCourses();
-
-        // TODO: Remove Dummy Data once connected to DB
-
-//        ArrayList<String> courseName = new ArrayList<String>(){
-//            {
-//                add("OS");
-//                add("DBMS");
-//                add("ML");
-//                add("AI");
-//            }
-//        };
-//        for(int i=0;i<courseName.size();i++){
-//            Course course = new Course(String.valueOf(200+i+1), courseName.get(i));
-//            courseList.add(course);
-//
-//        }
     }
 
     /**
@@ -50,7 +29,6 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
      */
     @Override
     public ArrayList<Course> getCourseList() {
-        logger.info("ViewCourses");
         return CourseCatalogueDaoImp.getInstance().getAllCourses();
     }
 
@@ -63,18 +41,18 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
      * @return true if course added
      */
     @Override
-    public boolean addCourse(String courseId, String courseName, String professorId,int courseFee) {
+    public boolean addCourse(String courseId, String courseName, String professorId, int courseFee) {
         logger.info("Add Course");
 
         Course course = null;
 
         if (professorId == null) {
             course = new Course(courseId, courseName);
-            return AdminDaoImp.getInstance().addCourse(course,courseFee);
+            return AdminDaoImp.getInstance().addCourse(course, courseFee);
         } else {
             Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
             course = new Course(courseId, courseName, professorId);
-            return AdminDaoImp.getInstance().addCourse(course,courseFee);
+            return AdminDaoImp.getInstance().addCourse(course, courseFee);
         }
 
     }
@@ -112,28 +90,6 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
         logger.info("Delete Course");
         return flag;
-    }
-
-    /**
-     * Assigns professor to a course
-     *
-     * @param courseId course ID
-     * @return true if professor assigned
-     */
-    @Override
-    public boolean assignProfessor(String courseId) {
-        // TODO: do Assign Professor to course
-//        Course course = null;
-//        for(int i=0;i<courseList.size();i++){
-//            if(courseList.get(i).getId() == courseId){
-//
-//                course = courseList.get(i);
-//                break;
-//            }
-//        }
-//        logger.info("Assign Professor");
-//        return course;
-        return true;
     }
 
     /**

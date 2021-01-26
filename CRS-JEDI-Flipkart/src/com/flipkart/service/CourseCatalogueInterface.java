@@ -25,7 +25,7 @@ public interface CourseCatalogueInterface {
      * @param courseName name of the course
      * @return true if course added
      */
-    public boolean addCourse(String courseId, String courseName, String professorId,int courseFee);
+    public boolean addCourse(String courseId, String courseName, String professorId, int courseFee);
 
     /**
      * Returns the course along with its details
@@ -42,14 +42,6 @@ public interface CourseCatalogueInterface {
      * @return true if course deleted
      */
     public boolean deleteCourse(String courseId);
-
-    /**
-     * Assigns professor to a course
-     *
-     * @param courseId course ID
-     * @return true if professor assigned
-     */
-    public boolean assignProfessor(String courseId);
 
     /**
      * Get list of unassigned Courses

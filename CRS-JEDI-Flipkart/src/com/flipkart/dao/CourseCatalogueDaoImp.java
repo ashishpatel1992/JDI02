@@ -147,7 +147,7 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
      */
     @Override
     public boolean assignProfessorToCourse(String professorId, String courseId) {
-        //Connection connection = DBUtils.getConnection();
+
         PreparedStatement preparedStatement = null;
         try {
 

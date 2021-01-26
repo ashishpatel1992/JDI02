@@ -1,6 +1,7 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.Student;
+import com.flipkart.exception.UserAlreadyExistException;
 import com.flipkart.service.StudentRegistrationOperation;
 import org.apache.log4j.Logger;
 
@@ -43,27 +44,25 @@ public class StudentRegistrationCRSClient {
     public void registrationMenu() {
         Scanner scanner = new Scanner(System.in);
 
-        logger.info("=== Student Registration MENU ===");
-        logger.info("Enter your RollNumber (this will also be your userID): ");
+        logger.info("+-----------------------------+");
+        logger.info(String.format("| %-28s|", "Student Registration "));
+        logger.info("+-----------------------------+");
+        logger.info("Enter your RollNumber (this will also be your userID) >");
         studentId = scanner.next();
-        logger.info("Enter your Name");
+        logger.info("Enter your Name >");
         studentName = scanner.next();
-        logger.info("Enter your email");
+        logger.info("Enter your email >");
         studentEmail = scanner.next();
-        logger.info("Enter your Branch");
+        logger.info("Enter your Branch >");
         studentBranch = scanner.next();
-        logger.info("Enter your password");
+        logger.info("Enter your password >");
         studentPassword = scanner.next();
         Student student = new Student(studentId, studentName, studentEmail, studentRole, studentBranch, studentApproved);
         String userId = studentRegistrationOperation.isRegistrationDataValid(student, studentPassword);
         if (userId != null) {
-            logger.info(studentName + " Successfully registered, pending for admin approval");
-            logger.info("Student Id : " + studentId);
-
+            logger.info(studentName + " Successfully registered with userId" + studentId + ", pending for admin approval.");
         } else {
-//            logger.info("Student ID "+studentId+" already exist");
             logger.info("Student Registration Unsuccessfull");
         }
-
     }
 }

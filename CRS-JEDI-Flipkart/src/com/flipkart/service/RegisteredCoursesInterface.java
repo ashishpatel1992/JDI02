@@ -29,7 +29,6 @@ public interface RegisteredCoursesInterface {
 
     /**
      * Drops a course in which student is already enrolled in.
-     * @param courseId course ID
      * @return true if dropped successfully
      */
 
