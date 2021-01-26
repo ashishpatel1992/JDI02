@@ -52,11 +52,14 @@ public class ProfessorCRSClient {
         logger.info("Welcome " + professor.getName() + ". You are logged in as " + professor.getRole() + ".");
 
         while (true) {
-            logger.info("==== Professor Menu =====");
-            logger.info("1. View Course");
-            logger.info("2. Grade Students");
-            logger.info("3. View Enrolled Students");
-            logger.info("4. Logout");
+            logger.info("+-----------------------------+");
+            logger.info(String.format("| %-28s|", "PROFESSOR MENU "));
+            logger.info("+-----------------------------+");
+            logger.info(String.format("| 1. %-24s |", "View Course"));
+            logger.info(String.format("| 2. %-24s |", "Grade Students"));
+            logger.info(String.format("| 3. %-24s |", "View Enrolled Students"));
+            logger.info(String.format("| 4. %-24s |", "Logout"));
+            logger.info("+-----------------------------+");
 
             choice = scanner.nextInt();
 
@@ -89,11 +92,15 @@ public class ProfessorCRSClient {
      */
     void viewCourse() {
         Course course = professorInterface.getCourseDetail();
-        logger.info(course.getStudentsEnrolled());
         if (course != null) {
             try {
-                logger.info("CourseId\tCourseName");
-                logger.info(course.getId() + "\t\t" + course.getName());
+                logger.info("+---------------------------+");
+                logger.info(String.format("| %-26s|", "PROFESSOR COURSES "));
+                logger.info("+---------------------------+");
+                logger.info(String.format("| %-8s | %-14s |", "CourseId", "CourseName", "ProfessorId"));
+                logger.info("+---------------------------+");
+                logger.info(String.format("| %-8s | %-14s |", course.getId(), course.getName()));
+                logger.info("+---------------------------+");
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
@@ -111,9 +118,10 @@ public class ProfessorCRSClient {
          * String - studentId
          * String - grade
          */
-        logger.info(studentsEnrolled.size());
+
         if (studentsEnrolled.size() > 0) {
             // TODO: As of now Grading all students at once
+            // TODO: Display list of student ID's with name for students to be graded, once the registration process is over
             HashMap<String, String> gradeOfStudent = new HashMap<>();
             for (Map.Entry<String, String> student : studentsEnrolled.entrySet()) {
                 logger.info("Enter grade for Student ID - " + student.getKey() + "\t" + student.getValue() + ":");
@@ -138,10 +146,15 @@ public class ProfessorCRSClient {
     void viewEnrolledStudents() {
         HashMap<String, String> enrolledStudentsMap = professorInterface.getEnrolledStudents();
         if (enrolledStudentsMap.size() > 0) {
-            logger.info("Student ID\tName");
+            logger.info("+-----------------------------+");
+            logger.info(String.format("| %-27s |", "ENROLLED STUDENTS"));
+            logger.info("+-----------------------------+");
+            logger.info(String.format("| %-8s | %-15s |", "StudentId", "StudentName"));
+            logger.info("+-----------------------------+");
             for (Map.Entry<String, String> student : enrolledStudentsMap.entrySet()) {
-                logger.info(student.getKey() + "\t\t" + student.getValue());
+                logger.info(String.format("| %-9s | %-15s |", student.getKey(), student.getValue()));
             }
+            logger.info("+-----------------------------+");
         } else {
             logger.info("No student registered!");
         }

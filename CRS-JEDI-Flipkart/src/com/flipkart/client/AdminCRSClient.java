@@ -41,15 +41,18 @@ public class AdminCRSClient {
         }
         logger.info("Welcome " + admin.getName() + ". You are logged in as " + admin.getRole() + ".");
         while (true) {
+            logger.info("+-------------------------------+");
+            logger.info(String.format("| %-30s|", "ADMIN MENU "));
+            logger.info("+-------------------------------+");
+            logger.info(String.format("| 1. %-26s |", "Add Course"));
+            logger.info(String.format("| 2. %-26s |", "Add Professor"));
+            logger.info(String.format("| 3. %-26s |", "Assign Professor to Course"));
+            logger.info(String.format("| 4. %-26s |", "Approve Student"));
+            logger.info(String.format("| 5. %-26s |", "View Courses"));
+            logger.info(String.format("| 6. %-26s |", "Generate Report Card"));
+            logger.info(String.format("| 7. %-26s |", "Logout"));
+            logger.info("+-------------------------------+");
 
-            logger.info("==== Admin Menu =====");
-            logger.info("1. Add Course");
-            logger.info("2. Add Professor");
-            logger.info("3. Assign Professor to Course");
-            logger.info("4. Approve Student");
-            logger.info("5. View Courses");
-            logger.info("6. Generate Report Card");
-            logger.info("7. Logout");
             Scanner scanner = new Scanner(System.in);
             choice = scanner.nextInt();
 
@@ -81,7 +84,7 @@ public class AdminCRSClient {
                 // TODO: Remove course  and remove Professor if course is assigned to students so it cant be removed, if professor assigned to course, professor cannot be removed.
                 // TODO: Display enrolled students
                 // TODO: Display all professors
-
+                // TODO: Close the Registration process
                 default:
                     logger.info("Invalid Choice");
             }
@@ -98,11 +101,16 @@ public class AdminCRSClient {
         ArrayList<Professor> unAssignedProfessors = courseCatalogueInterface.getUnAssignedProfessors();
 
         if (unAssignedProfessors.size() > 0) {
-            logger.info("List of Unassigned Professors:-");
+            logger.info("+-------------------------------+");
+            logger.info(String.format("| %-30s|", "UNASSIGNED PROFESSORS"));
+            logger.info("+-------------------------------+");
+            logger.info(String.format("| %-12s | %-14s |", "ProfessorId", "ProfessorName"));
+            logger.info("+-------------------------------+");
             isProfessorUnAssigned = true;
             for (Professor professor : unAssignedProfessors) {
-                logger.info(professor.getId() + " " + professor.getName());
+                logger.info(String.format("| %-12s | %-14s |", professor.getId(), professor.getName()));
             }
+            logger.info("+-------------------------------+");
         } else {
             isProfessorUnAssigned = false;
         }
@@ -117,13 +125,18 @@ public class AdminCRSClient {
     private boolean displayUnAssignedCourses() {
         boolean isCourseUnAssigned = false;
 
-        logger.info("List of Unassigned Courses:-");
         ArrayList<Course> unAssignedCourses = courseCatalogueInterface.getUnAssignedCourses();
         if (unAssignedCourses.size() > 0) {
+            logger.info("+-------------------------------+");
+            logger.info(String.format("| %-30s|", "UNASSIGNED COURSES"));
+            logger.info("+-------------------------------+");
+            logger.info(String.format("| %-12s | %-14s |", "CourseId", "CourseName"));
+            logger.info("+-------------------------------+");
             isCourseUnAssigned = true;
             for (Course course : unAssignedCourses) {
-                logger.info(course.getId() + " " + course.getName());
+                logger.info(String.format("| %-12s | %-14s |", course.getId(), course.getName()));
             }
+            logger.info("+-------------------------------+");
         }
         return isCourseUnAssigned;
     }
@@ -134,13 +147,13 @@ public class AdminCRSClient {
     private void assignProfessorToCourse() {
         // TODO: If any of the below is unassigned then only procced for course assignment
         if (displayUnAssignedProfessors() && displayUnAssignedCourses()) {
-            logger.info("Enter course ID to assign");
+            logger.info("Enter course ID >");
             String courseId = scanner.next();
-            logger.info("Enter professor ID to assign");
+            logger.info("Enter professor ID to be assigned >");
             String professorId = scanner.next();
 
             if (adminInterface.assignProfessorToCourse(professorId, courseId)) {
-                logger.info(professorId + " assigned to course " + courseId);
+                logger.info("ProfessorId " + professorId + " assigned to courseID " + courseId);
             } else {
                 logger.info("Unable to assign professor to course.");
             }
@@ -156,19 +169,22 @@ public class AdminCRSClient {
     public void viewCourses() {
         ArrayList<Course> courseArrayList = courseCatalogueInterface.getCourseList();
         if (courseArrayList.size() > 0) {
-            logger.info(String.format("%8s %10s %12s %13s", "CourseID", "CourseName", "ProfessorID", "ProfessorName"));
+            logger.info("+----------------------------------------------------------+");
+            logger.info(String.format("| %-57s|", "AVAILABLE COURSES"));
+            logger.info("+----------------------------------------------------------+");
+            logger.info(String.format("| %-8s | %-15s | %-11s | %-13s |", "CourseId", "CourseName", "ProfessorId", "ProfessorName"));
+            logger.info("+----------------------------------------------------------+");
             for (Course course : courseArrayList) {
 
                 String professorId = course.getProfessorId();
                 if (course.getProfessorId() == null) {
-                    logger.info(String.format("%8s %10s", course.getId(), course.getName()));
+                    logger.info(String.format("| %-8s | %-15s | %-11s | %-13s |", course.getId(), course.getName(), "", ""));
                 } else {
                     Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
-                    logger.info(String.format("%8s %10s %12s %13s", course.getId(), course.getName(), professorId, professor.getName()));
-
+                    logger.info(String.format("| %-8s | %-15s | %-11s | %-13s |", course.getId(), course.getName(), professor.getId(), professor.getName()));
                 }
-
             }
+            logger.info("+----------------------------------------------------------+");
         } else {
             logger.info("No Courses Available to display.");
         }
@@ -189,7 +205,7 @@ public class AdminCRSClient {
             double courseFee = scanner.nextDouble();
             String professorId = null;
             if (unAssignedProfessors) {
-                logger.info("Enter the Professor Id to assign to this course ");
+                logger.info("Enter the Professor Id to assign to this course >");
                 professorId = scanner.next();
             }
 
@@ -219,7 +235,7 @@ public class AdminCRSClient {
         String password = scanner.next();
         String userId = adminInterface.addProfessor(professorId, professorName, professorEmail, professorDepartment, password);
         if (userId != null) {
-            logger.info("Professor: " + professorName + " added successfully with ProfessorID : " + userId);
+            logger.info("Professor " + professorName + " added successfully with ProfessorID " + userId);
         }
     }
 
@@ -266,7 +282,7 @@ public class AdminCRSClient {
      */
     public boolean generateReportCard() {
         // TODO: Check if student is enrolled before generating reportcard
-        logger.info("Enter student id to generate report card:");
+        logger.info("Enter student Id to generate report card:");
         String studentId = scanner.next();
         HashMap<String, String> studentGrades = adminInterface.generateReportCard(studentId);
         if (studentGrades != null) {

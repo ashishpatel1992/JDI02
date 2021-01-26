@@ -23,8 +23,8 @@ public class TestStudentMenu {
 //        new AdminCRSClient("1").adminMenu();
 //        new ProfessorCRSClient("10").professorMenu();
 //        new AdminCRSClient("1").adminMenu();
-//        new ProfessorCRSClient("22").professorMenu();
-        new StudentCRSClient("102").studentMenu();
+        new ProfessorCRSClient("11").professorMenu();
+//        new StudentCRSClient("102").studentMenu();
         DBUtils.closeConnection();
         System.out.println();
 
