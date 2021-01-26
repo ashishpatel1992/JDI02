@@ -20,10 +20,11 @@ public class TestStudentMenu {
 //
 //        AdminCRSClient adminCRSClient = new AdminCRSClient("1");
 //        adminCRSClient.adminMenu();
-        new AdminCRSClient("1").adminMenu();
+//        new AdminCRSClient("1").adminMenu();
 //        new ProfessorCRSClient("10").professorMenu();
 //        new AdminCRSClient("1").adminMenu();
 //        new ProfessorCRSClient("22").professorMenu();
+        new StudentCRSClient("102").studentMenu();
         DBUtils.closeConnection();
         System.out.println();
 

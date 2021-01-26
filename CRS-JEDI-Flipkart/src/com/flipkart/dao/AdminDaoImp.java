@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Class that implements all methods of AdminDaoInterface
+ *
  * @Author -  Team JEDI 02
  */
 public class AdminDaoImp implements AdminDaoInterface {
@@ -46,7 +47,7 @@ public class AdminDaoImp implements AdminDaoInterface {
      * @return true if course is added successfully
      */
     @Override
-    public boolean addCourse(Course course,int courseFee) {
+    public boolean addCourse(Course course) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_COURSE_QUERY);
@@ -54,20 +55,20 @@ public class AdminDaoImp implements AdminDaoInterface {
             preparedStatement.setString(2, course.getName());
             preparedStatement.setString(3, course.getProfessorId());
             preparedStatement.setString(4, "1");
-            preparedStatement.setInt(5,courseFee);
+            preparedStatement.setDouble(5, course.getFee());
             int updatedValues = preparedStatement.executeUpdate();
             if (updatedValues > 0) {
                 return true;
             } else {
                 return false;
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
         } finally {
             try {
                 preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
             }
         }
 
@@ -99,13 +100,9 @@ public class AdminDaoImp implements AdminDaoInterface {
         } finally {
             try {
                 resultSet.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            try {
                 statement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
             }
         }
         return unApprovedStudentIds;
@@ -174,15 +171,10 @@ public class AdminDaoImp implements AdminDaoInterface {
         } finally {
             try {
                 resultSet.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            try {
                 preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
             }
-
         }
         return admin;
     }

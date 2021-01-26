@@ -41,18 +41,18 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
      * @return true if course added
      */
     @Override
-    public boolean addCourse(String courseId, String courseName, String professorId, int courseFee) {
+    public boolean addCourse(String courseId, String courseName, String professorId, double courseFee) {
         logger.info("Add Course");
 
         Course course = null;
 
         if (professorId == null) {
-            course = new Course(courseId, courseName);
-            return AdminDaoImp.getInstance().addCourse(course, courseFee);
+            course = new Course(courseId, courseName, courseFee);
+            return AdminDaoImp.getInstance().addCourse(course);
         } else {
             Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
-            course = new Course(courseId, courseName, professorId);
-            return AdminDaoImp.getInstance().addCourse(course, courseFee);
+            course = new Course(courseId, courseName, professorId, courseFee);
+            return AdminDaoImp.getInstance().addCourse(course);
         }
 
     }

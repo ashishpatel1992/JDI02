@@ -105,26 +105,14 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
         ArrayList<Course> registeredCourseList = new ArrayList<>();
         ArrayList<String> registeredCourseIdList = null;
         registeredCourseIdList = RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
-//        logger.info(registeredCourseIdList);
 
         for (String registeredCourseId : registeredCourseIdList) {
-            // TODO: Not able to fetch course details
-//            logger.info(registeredCourseId);
+
             CourseCatalogueOperation courseCatalogueOperation = new CourseCatalogueOperation();
             Course registeredCourse = courseCatalogueOperation.getCourse(registeredCourseId);
-//            logger.info(registeredCourse.getName());
+
             registeredCourseList.add(registeredCourse);
         }
-
-//        CourseCatalogueOperation courseCatalogueOperation = new CourseCatalogueOperation();
-//        if (registeredCourseIdList.containsKey(studentId)) {
-//            for (String courseId : registeredCourseIdList.get(studentId)) {
-//                Course c = courseCatalogueOperation.getCourse(courseId);
-//                courseArrayList.add(c);
-//
-//            }
-//        }
-//        logger.info(registeredCourseIdList.size());
         return registeredCourseList;
     }
 

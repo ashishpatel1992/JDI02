@@ -36,10 +36,10 @@ public class SQLQueriesConstants {
     public static String MAKE_PAYMENT_QUERY = "insert into Payment(studentId, feePaid, paymentMethod, paymentDate) values(?, ?, ?, ?)";
 
     //Course Queries
-    public static String GET_COURSE_DETAIL = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid` FROM `course` WHERE `courseid` = ?";
-    public static String GET_ALL_COURSES_QUERY = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid` FROM `course`";
+    public static String GET_COURSE_DETAIL = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid`, `fee` FROM `course` WHERE `courseid` = ?";
+    public static String GET_ALL_COURSES_QUERY = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid`, `fee` FROM `course`";
     public static String ADD_PROFESSOR_TO_COURSE_ID = "UPDATE `course` SET `professorid`=? WHERE `courseid` = ?";
-    public static String GET_UNASSIGNED_COURSES_QUERY = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid` FROM `course` WHERE `professorid` IS NULL";
+    public static String GET_UNASSIGNED_COURSES_QUERY = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid`, `fee` FROM `course` WHERE `professorid` IS NULL";
     public static String GET_UNASSIGNED_PROFESSORS_QUERY = "SELECT `userid`,`department` FROM `professor` WHERE professor.userid NOT IN (SELECT `professorid` FROM `course` WHERE `professorid` IS NOT NULL)";
 
     //Notification Queries

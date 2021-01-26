@@ -9,6 +9,7 @@ import java.util.*;
 
 /**
  * Class to Handle admin frontend operations
+ *
  * @Author -  Team JEDI 02
  */
 public class AdminCRSClient {
@@ -103,7 +104,6 @@ public class AdminCRSClient {
                 logger.info(professor.getId() + " " + professor.getName());
             }
         } else {
-            logger.info("No professor available");
             isProfessorUnAssigned = false;
         }
         return isProfessorUnAssigned;
@@ -181,12 +181,12 @@ public class AdminCRSClient {
     public void addCourse() {
         boolean unAssignedProfessors = displayUnAssignedProfessors();
         try {
-            logger.info("Enter the course ID you want to add");
+            logger.info("Enter the course ID >");
             String courseID = scanner.next();
-            logger.info("Enter the course name you want to add");
+            logger.info("Enter the course name >");
             String courseName = scanner.next();
-            logger.info("Enter course fee");
-            int courseFee = scanner.nextInt();
+            logger.info("Enter course fee >");
+            double courseFee = scanner.nextDouble();
             String professorId = null;
             if (unAssignedProfessors) {
                 logger.info("Enter the Professor Id to assign to this course ");
@@ -198,7 +198,7 @@ public class AdminCRSClient {
             } else {
                 logger.info("Unable to add course");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.info("Invalid Input");
         }
     }

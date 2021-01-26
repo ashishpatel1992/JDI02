@@ -24,8 +24,7 @@ public class UserOperation implements UserInterface {
         if (userId == null || password == null) {
             return null;
         }
-        //logger.info("Verify Credentials");
-        //logger.info(userId);
+
         LoginDaoInterface loginDaoInterface = LoginDaoImp.getInstance();
         boolean loginSuccess = loginDaoInterface.login(userId, password);
         if (loginSuccess) {

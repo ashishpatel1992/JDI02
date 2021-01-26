@@ -57,6 +57,7 @@ public class StudentRegistrationCRSClient {
         studentBranch = scanner.next();
         logger.info("Enter your password >");
         studentPassword = scanner.next();
+        // TODO: Display and Confirm information
         Student student = new Student(studentId, studentName, studentEmail, studentRole, studentBranch, studentApproved);
         String userId = studentRegistrationOperation.isRegistrationDataValid(student, studentPassword);
         if (userId != null) {

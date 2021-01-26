@@ -46,14 +46,16 @@ public class CRSApplication {
                         studentRegistrationCRSClient.registrationMenu();
                         break;
                     case 2:
-                        printLoginTime();
+
                         logger.info("Please Login to proceed further");
                         String studentId = CRSApplication.authenticateUser();
+
                         if (studentId != null) {
+                            printLoginTime();
                             StudentCRSClient studentCRSClient = new StudentCRSClient(studentId);
                             studentCRSClient.studentMenu();
                         } else {
-                            logger.info("Invalid User Id or Password!");
+                            logger.info(CRSConstants.INVALID_USERID_OR_PASSWORD);
                         }
                         break;
                     case 3:
@@ -63,7 +65,7 @@ public class CRSApplication {
                             ProfessorCRSClient professorCRSClient = new ProfessorCRSClient(professorId);
                             professorCRSClient.professorMenu();
                         } else {
-                            logger.info("Invalid User Id or Password!");
+                            logger.info(CRSConstants.INVALID_USERID_OR_PASSWORD);
                         }
                         break;
                     case 4:

@@ -58,13 +58,13 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
                 String courseId;
                 String courseName;
                 String professorId;
+                double courseFee;
 
                 courseId = resultSet.getString("courseid");
                 courseName = resultSet.getString("coursename");
-                // TODO: if professor is not null then fetch professor Name and return
                 professorId = resultSet.getString("professorid");
-//                logger.info(courseId+" "+courseName+" "+professorId);
-                Course course = new Course(courseId, courseName, professorId);
+                courseFee = resultSet.getDouble("fee");
+                Course course = new Course(courseId, courseName, professorId, courseFee);
                 courseArrayList.add(course);
             }
 
@@ -110,12 +110,13 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
                     String rsCourseId;
                     String rsCourseName;
                     String rsProfessorId;
+                    double rsCourseFee;
 
                     rsCourseId = resultSet.getString("courseid");
                     rsCourseName = resultSet.getString("coursename");
-                    // TODO: if professor is not null then fetch professor Name and return
                     rsProfessorId = resultSet.getString("professorid");
-                    course = new Course(rsCourseId, rsCourseName, rsProfessorId);
+                    rsCourseFee = resultSet.getDouble("fee");
+                    course = new Course(rsCourseId, rsCourseName, rsProfessorId, rsCourseFee);
                     break;
                 }
             }
@@ -181,11 +182,13 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
                     String rsCourseId;
                     String rsCourseName;
                     String rsProfessorId;
+                    double rsCourseFee;
 
                     rsCourseId = resultSet.getString("courseid");
                     rsCourseName = resultSet.getString("coursename");
                     rsProfessorId = resultSet.getString("professorid");
-                    course = new Course(rsCourseId, rsCourseName, rsProfessorId);
+                    rsCourseFee = resultSet.getDouble("fee");
+                    course = new Course(rsCourseId, rsCourseName, rsProfessorId, rsCourseFee);
                     unAssignedCourses.add(course);
                 }
                 return unAssignedCourses;
@@ -196,10 +199,6 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
         } finally {
             try {
                 resultSet.close();
-            } catch (SQLException e) {
-                logger.error(e);
-            }
-            try {
                 preparedStatement.close();
             } catch (SQLException e) {
                 logger.error(e);

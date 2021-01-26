@@ -64,23 +64,23 @@ public class StudentOperation implements StudentInterface {
      */
     @Override
     public boolean makePayment(int paymentMethod, int fees) {
-        boolean result =  StudentDaoImp.getInstance().makePayment(studentId, paymentMethod, fees);
-        if(result){
+        boolean result = StudentDaoImp.getInstance().makePayment(studentId, paymentMethod, fees);
+        if (result) {
             NotificationDaoInterface notificationDaoInterface = NotificationDaoImp.getInstance();
             String paymentType = null;
-            switch(paymentMethod){
+            switch (paymentMethod) {
                 case 1:
-                    paymentType="Credit Card";
+                    paymentType = "Credit Card";
                     break;
                 case 2:
-                    paymentType="Debit Card";
+                    paymentType = "Debit Card";
                     break;
                 case 3:
-                    paymentType="Cash";
+                    paymentType = "Cash";
                     break;
             }
-            String message = "Fee payment successful via "+paymentType;
-            notificationDaoInterface.addNotification(studentId,message);
+            String message = "Fee payment successful via " + paymentType;
+            notificationDaoInterface.addNotification(studentId, message);
         }
         return result;
     }
@@ -95,7 +95,7 @@ public class StudentOperation implements StudentInterface {
     public boolean addCourseToSelection(String courseId) {
         boolean flag = false;
         Course c = courseCatalogueOperation.getCourse(courseId);
-        logger.info("addCourseTOSelection " + c.getId());
+//        logger.info("addCourseTOSelection " + c.getId());
         if (c != null) {
             courseIdSelectionList.add(courseId);
             flag = true;
@@ -142,21 +142,13 @@ public class StudentOperation implements StudentInterface {
      */
     @Override
     public ArrayList<String> registerCourses() {
-        logger.info("REGISTER COURSES");
-        ArrayList<String> registeredCourses =  registeredCoursesOperation.registerCourses(courseIdSelectionList);
-        if(registeredCourses!=null){
+        ArrayList<String> registeredCourses = registeredCoursesOperation.registerCourses(courseIdSelectionList);
+        if (registeredCourses != null) {
             NotificationDaoInterface notificationDaoInterface = NotificationDaoImp.getInstance();
             String message = "Registration completed successfully.";
-            notificationDaoInterface.addNotification(studentId,message);
+            notificationDaoInterface.addNotification(studentId, message);
         }
         return registeredCourses;
-//        boolean flag = false;
-//        if (registeredCoursesOperation.registerCourses(courseIdSelectionList)) {
-//            flag = true;
-//        } else {
-//            flag = false;
-//        }
-//        return flag;
     }
 
     /**
@@ -204,8 +196,6 @@ public class StudentOperation implements StudentInterface {
      */
     @Override
     public ArrayList<Course> getRegisteredCourses() {
-//        logger.info("get List of Registered Courses");
-
         return registeredCoursesOperation.getRegisteredCourses();
     }
 }
