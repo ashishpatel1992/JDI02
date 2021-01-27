@@ -42,7 +42,6 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
      */
     @Override
     public boolean addCourse(String courseId, String courseName, String professorId, double courseFee) {
-        logger.info("Add Course");
 
         Course course = null;
 

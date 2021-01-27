@@ -71,9 +71,7 @@ public class CRSApplication {
                     case 4:
                         String adminId = CRSApplication.authenticateUser();
                         if (adminId != null) {
-                            ZoneId zoneId = ZoneId.of("Asia/Kolkata");
-                            ZonedDateTime date = ZonedDateTime.now(zoneId);
-                            logger.info("Login Successful at : " + date);
+                            printLoginTime();
                             AdminCRSClient adminCRSClient = new AdminCRSClient(adminId);
                             adminCRSClient.adminMenu();
                         } else {

@@ -1,10 +1,20 @@
 package com.flipkart.bean;
 
+/**
+ * CourseGradeCard - bean class for CoursGradeing
+ * @Author -  Team JEDI 02
+ */
 public class CourseGradeCard {
     Course course;
     Student student;
     String grade;
 
+    /**
+     * Creates a Course Grade Card
+     * @param course object
+     * @param student object
+     * @param grade of student in a given course
+     */
     public CourseGradeCard(Course course, Student student, String grade) {
         this.course = course;
         this.student = student;
