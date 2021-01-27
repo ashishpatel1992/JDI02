@@ -107,9 +107,9 @@ public class AdminCRSClient {
             logger.info(String.format("| %-12s | %-14s |", "ProfessorId", "ProfessorName"));
             logger.info("+-------------------------------+");
             isProfessorUnAssigned = true;
-            for (Professor professor : unAssignedProfessors) {
-                logger.info(String.format("| %-12s | %-14s |", professor.getId(), professor.getName()));
-            }
+            unAssignedProfessors.forEach((unAssignedProfessor -> {
+                logger.info(String.format("| %-12s | %-14s |", unAssignedProfessor.getId(), unAssignedProfessor.getName()));
+            }));
             logger.info("+-------------------------------+");
         } else {
             isProfessorUnAssigned = false;
@@ -133,9 +133,11 @@ public class AdminCRSClient {
             logger.info(String.format("| %-12s | %-14s |", "CourseId", "CourseName"));
             logger.info("+-------------------------------+");
             isCourseUnAssigned = true;
-            for (Course course : unAssignedCourses) {
-                logger.info(String.format("| %-12s | %-14s |", course.getId(), course.getName()));
-            }
+
+            unAssignedCourses.forEach(unAssignedCourse -> {
+                logger.info(String.format("| %-12s | %-14s |", unAssignedCourse.getId(), unAssignedCourse.getName()));
+            });
+
             logger.info("+-------------------------------+");
         }
         return isCourseUnAssigned;
@@ -249,9 +251,10 @@ public class AdminCRSClient {
         if (unApprovedStudents.size() > 0) {
             logger.info("Students pending for approval: ");
             logger.info("StudentId\tStudentName");
-            for (Student unApprovedStudent : unApprovedStudents) {
+            unApprovedStudents.forEach(unApprovedStudent -> {
                 logger.info(unApprovedStudent.getId() + "\t\t" + unApprovedStudent.getName());
-            }
+            });
+
 
         } else {
             logger.info("No students pending for approval");
