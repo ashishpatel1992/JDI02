@@ -42,6 +42,10 @@ public class SQLQueriesConstants {
     public static String GET_UNASSIGNED_COURSES_QUERY = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid`, `fee` FROM `course` WHERE `professorid` IS NULL";
     public static String GET_UNASSIGNED_PROFESSORS_QUERY = "SELECT `userid`,`department` FROM `professor` WHERE professor.userid NOT IN (SELECT `professorid` FROM `course` WHERE `professorid` IS NOT NULL)";
 
+    // Course Grade Card Queries
+
+    public static String GET_COURSES_GRADE = "SELECT `registeredcourse`.`studentid`, `user`.`name`,`user`.`email`,`user`.`role`,`student`.`branch`,`student`.`approved`, `registeredcourse`.`courseid`,`course`.`coursename`,`course`.`professorid`,`course`.`fee`, `registeredcourse`.`grade` FROM `registeredcourse`,`course`,`user`,`student` WHERE `registeredcourse`.`courseid`=`course`.`courseid` AND `registeredcourse`.`studentid` = `user`.`userid` AND `student`.`userid`=`user`.`userid` AND `registeredcourse`.`studentid` = ?";
+
     //Notification Queries
     public static String ADD_NOTIFICATION_QUERY = "INSERT INTO notification(studentid,message,date) values(?,?,?)";
     public static String GET_NOTIFICATIONS_QUERY = "SELECT date,notificationid,message from notification where studentid = ? ";

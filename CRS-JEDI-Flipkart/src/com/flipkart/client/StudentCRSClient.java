@@ -1,6 +1,7 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.CourseGradeCard;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
 import com.flipkart.constants.CRSConstants;
@@ -327,9 +328,27 @@ public class StudentCRSClient {
     public void printReportCardInfo() {
         // TODO: Finish Get Grades Feature
         ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
-        reportCardOperation.getGrades();
+        ArrayList<CourseGradeCard> courseGradeCards = reportCardOperation.getGrades();
         // TODO: Fix with if else condition whether registration over or not
-        logger.info("Course Registration is not over yet");
+        if (courseGradeCards.size() > 0) {
+
+            logger.info("+----------------------------------------------+");
+            logger.info(String.format("| %-44s |", "REPORT CARD"));
+            logger.info("+----------------------------------------------+");
+            logger.info(String.format("| %-8s | %-15s | %-15s |", "CourseId", "CourseName", "Grade"));
+            logger.info("+----------------------------------------------+");
+            for (CourseGradeCard courseGradeCard : courseGradeCards) {
+                String gradCardCourseId = courseGradeCard.getCourse().getId();
+                String gradeCardCourseName = courseGradeCard.getCourse().getName();
+                String gradeCardGrade = courseGradeCard.getGrade();
+
+                logger.info(String.format("| %-8s | %-15s | %-15s |", gradCardCourseId, gradeCardCourseName, gradeCardGrade));
+
+            }
+            logger.info("+----------------------------------------------+");
+        } else {
+            logger.info(CRSConstants.NO_COURSE_ASSIGNED);
+        }
     }
 
 

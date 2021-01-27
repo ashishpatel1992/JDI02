@@ -1,5 +1,7 @@
 package com.flipkart.service;
 
+import com.flipkart.bean.CourseGradeCard;
+
 import java.util.ArrayList;
 
 /**
@@ -14,5 +16,5 @@ public interface ReportCardInterface {
      *
      * @return array list containing grades
      */
-    public ArrayList<String> getGrades();
+    public ArrayList<CourseGradeCard> getGrades();
 }

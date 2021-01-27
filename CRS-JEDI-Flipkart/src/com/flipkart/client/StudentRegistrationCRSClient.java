@@ -61,7 +61,7 @@ public class StudentRegistrationCRSClient {
         Student student = new Student(studentId, studentName, studentEmail, studentRole, studentBranch, studentApproved);
         String userId = studentRegistrationOperation.isRegistrationDataValid(student, studentPassword);
         if (userId != null) {
-            logger.info(studentName + " Successfully registered with userId" + studentId + ", pending for admin approval.");
+            logger.info(studentName + " Successfully registered with userId " + studentId + ", pending for admin approval.");
         } else {
             logger.info("Student Registration Unsuccessfull");
         }

@@ -1,5 +1,8 @@
 package com.flipkart.dao;
 
+import com.flipkart.bean.Course;
+import com.flipkart.bean.CourseGradeCard;
+import com.flipkart.bean.Student;
 import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.service.RegisteredCoursesOperation;
 import com.flipkart.utils.DBUtils;
@@ -46,7 +49,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
      */
     @Override
     public ArrayList<String> getCourseIdsForStudent(String studentId) {
-        Connection connection = DBUtils.getConnection();
+
         ArrayList<String> studentCourseIdList = new ArrayList<String>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -63,22 +66,17 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
                 rsCourseId = resultSet.getString("courseid");
                 rsStudentId = resultSet.getString("studentId");
 
-//                logger.info(rsCourseId+" ==== "+rsStudentId);
                 studentCourseIdList.add(rsCourseId);
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             try {
                 resultSet.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            try {
                 preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
             }
             return studentCourseIdList;
         }
@@ -113,5 +111,52 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
             }
         }
         return courseIdSelectionList;
+    }
+
+    @Override
+    public ArrayList<CourseGradeCard> getCourseGradeCardForStudent(String studentId) {
+        ArrayList<CourseGradeCard> courseGradeCards = new ArrayList<>();
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_COURSES_GRADE);
+            preparedStatement.setString(1, studentId);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String rsStudentId = studentId;
+                String rsName = resultSet.getString("name");
+                String rsEmail = resultSet.getString("email");
+                String rsRole = resultSet.getString("role");
+                String rsBranch = resultSet.getString("branch");
+                boolean rsApproved = resultSet.getString("approved") == "1" ? true : false;
+                String rsCourseId = resultSet.getString("courseid");
+                String rsCourseName = resultSet.getString("coursename");
+                String rsProfessorId = resultSet.getString("professorid");
+                double rsFee = resultSet.getDouble("fee");
+                String rsGrade = resultSet.getString("grade") != null ? resultSet.getString("grade") : "-";
+
+                Course course = new Course(rsCourseId, rsCourseName, rsProfessorId, rsFee);
+                Student student = new Student(rsStudentId, rsName, rsEmail, rsRole, rsBranch, rsApproved);
+
+                CourseGradeCard courseGradeCard = new CourseGradeCard(course, student, rsGrade);
+                courseGradeCards.add(courseGradeCard);
+
+            }
+            return courseGradeCards;
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            }
+            return courseGradeCards;
+        }
     }
 }

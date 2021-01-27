@@ -249,11 +249,15 @@ public class AdminCRSClient {
     public int displayUnApprovedStudent() {
         ArrayList<Student> unApprovedStudents = adminInterface.getUnApprovedStudents();
         if (unApprovedStudents.size() > 0) {
-            logger.info("Students pending for approval: ");
-            logger.info("StudentId\tStudentName");
+            logger.info("+----------------------------------------------+");
+            logger.info(String.format("| %-44s |", "PENDING FOR APPROVAL"));
+            logger.info("+----------------------------------------------+");
+            logger.info(String.format("| %-18s | %-23s |", "StudentId", "StudentName"));
+            logger.info("+----------------------------------------------+");
             unApprovedStudents.forEach(unApprovedStudent -> {
-                logger.info(unApprovedStudent.getId() + "\t\t" + unApprovedStudent.getName());
+                logger.info(String.format("| %-18s | %-23s |", unApprovedStudent.getId(), unApprovedStudent.getName()));
             });
+            logger.info("+----------------------------------------------+");
 
 
         } else {
@@ -268,11 +272,11 @@ public class AdminCRSClient {
      */
     public void approveStudent() {
         if (displayUnApprovedStudent() > 0) {
-            logger.info("Enter Student Id to approve:");
+            logger.info("Enter Student Id to approve >");
             String studentId = scanner.next();
             // TODO: Exception Handling to return StudentAlready approved, Student Id invalid
             if (adminInterface.approveStudent(studentId)) {
-                logger.info("Student ID : " + studentId + " Approved Successfully");
+                logger.info("StudentId " + studentId + " approved Successfully");
             } else {
                 logger.info("Invalid student id provided or Student Id already approved");
             }
@@ -285,6 +289,7 @@ public class AdminCRSClient {
      */
     public boolean generateReportCard() {
         // TODO: Check if student is enrolled before generating reportcard
+        // TODO: GENERATE REPORT CARD
         logger.info("Enter student Id to generate report card:");
         String studentId = scanner.next();
         HashMap<String, String> studentGrades = adminInterface.generateReportCard(studentId);

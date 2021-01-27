@@ -1,5 +1,7 @@
 package com.flipkart.service;
 
+import com.flipkart.bean.CourseGradeCard;
+import com.flipkart.dao.RegisteredCoursesDaoImp;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -28,8 +30,7 @@ public class ReportCardOperation implements ReportCardInterface {
      * @return array list containing grades
      */
     @Override
-    public ArrayList<String> getGrades() {
-        // TODO: Get Grades Implementation
-        return null;
+    public ArrayList<CourseGradeCard> getGrades() {
+        return RegisteredCoursesDaoImp.getInstance().getCourseGradeCardForStudent(studentId);
     }
 }

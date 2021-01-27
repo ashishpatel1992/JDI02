@@ -1,5 +1,7 @@
 package com.flipkart.dao;
 
+import com.flipkart.bean.CourseGradeCard;
+
 import java.util.ArrayList;
 
 /**
@@ -14,7 +16,7 @@ public interface RegisteredCoursesDaoInterface {
      * @param studentId id of student for which the list of courses is required
      * @return arraylist of courseids the student is enrolled in
      */
-    public ArrayList<String> getCourseIdsForStudent(String studentId);
+    ArrayList<String> getCourseIdsForStudent(String studentId);
 
     /**
      * Enrolls student in selected courses
@@ -23,6 +25,8 @@ public interface RegisteredCoursesDaoInterface {
      * @param courseIdSelectionList list of courseids which have to be enrolled for student
      * @return arraylist of courseids in which the student was enrolled
      */
-    public ArrayList<String> doStudentRegistration(String studentId, ArrayList<String> courseIdSelectionList);
+    ArrayList<String> doStudentRegistration(String studentId, ArrayList<String> courseIdSelectionList);
+
+    ArrayList<CourseGradeCard> getCourseGradeCardForStudent(String studentId);
 
 }

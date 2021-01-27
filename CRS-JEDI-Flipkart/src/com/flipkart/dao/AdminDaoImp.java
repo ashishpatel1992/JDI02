@@ -88,7 +88,7 @@ public class AdminDaoImp implements AdminDaoInterface {
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SQLQueriesConstants.GET_UNAPPROVED_STUDENT_LIST);
-            logger.info(resultSet.getFetchSize());
+
             while (resultSet.next()) {
                 String unApprovedStudentId;
                 unApprovedStudentId = resultSet.getString("userid");
@@ -96,7 +96,7 @@ public class AdminDaoImp implements AdminDaoInterface {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             try {
                 resultSet.close();
