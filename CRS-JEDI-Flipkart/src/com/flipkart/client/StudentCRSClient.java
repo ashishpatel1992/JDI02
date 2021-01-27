@@ -64,7 +64,7 @@ public class StudentCRSClient {
             logger.info(String.format("| 2. %-28s |", "Add Course to selection"));
             logger.info(String.format("| 3. %-28s |", "Drop Course from selection"));
             logger.info(String.format("| 4. %-28s |", "Register Course"));
-            logger.info(String.format("| 5. %-28s |", "View Registered Course"));
+            logger.info(String.format("| 5. %-28s |", "View Registered Courses"));
             logger.info(String.format("| 6. %-28s |", "Pay Fee"));
             logger.info(String.format("| 7. %-28s |", "View Notifications"));
             logger.info(String.format("| 8. %-28s |", "Get Grades"));

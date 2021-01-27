@@ -3,6 +3,7 @@ package com.flipkart.client;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.Student;
+import com.flipkart.constants.CRSConstants;
 import com.flipkart.service.CourseCatalogueInterface;
 import com.flipkart.service.CourseCatalogueOperation;
 import com.flipkart.service.ProfessorInterface;
@@ -105,7 +106,7 @@ public class ProfessorCRSClient {
                 logger.info(e.getMessage());
             }
         } else {
-            logger.info("No course assigned!");
+            logger.info(CRSConstants.NO_COURSE_ASSIGNED);
         }
     }
 
@@ -118,23 +119,26 @@ public class ProfessorCRSClient {
          * String - studentId
          * String - grade
          */
-
-        if (studentsEnrolled.size() > 0) {
-            // TODO: As of now Grading all students at once
-            // TODO: Display list of student ID's with name for students to be graded, once the registration process is over
-            HashMap<String, String> gradeOfStudent = new HashMap<>();
-            for (Map.Entry<String, String> student : studentsEnrolled.entrySet()) {
-                logger.info("Enter grade for Student ID - " + student.getKey() + "\t" + student.getValue() + ":");
-                String gradeEntered = scanner.next();
-                gradeOfStudent.put(student.getKey(), gradeEntered);
-            }
-            if (professorInterface.gradeStudent(gradeOfStudent)) {
-                logger.info("Grades assigned to all students of course " + professorInterface.getCourseDetail().getId());
+        if (studentsEnrolled != null) {
+            if (studentsEnrolled.size() > 0) {
+                // TODO: As of now Grading all students at once
+                // TODO: Display list of student ID's with name for students to be graded, once the registration process is over
+                HashMap<String, String> gradeOfStudent = new HashMap<>();
+                for (Map.Entry<String, String> student : studentsEnrolled.entrySet()) {
+                    logger.info("Enter grade for Student ID - " + student.getKey() + "\t" + student.getValue() + ":");
+                    String gradeEntered = scanner.next();
+                    gradeOfStudent.put(student.getKey(), gradeEntered);
+                }
+                if (professorInterface.gradeStudent(gradeOfStudent)) {
+                    logger.info("Grades assigned to all students of course " + professorInterface.getCourseDetail().getId());
+                } else {
+                    logger.info("Unable to assign grades");
+                }
             } else {
-                logger.info("Unable to assign grades");
+                logger.info("No Students enrolled");
             }
         } else {
-            logger.info("No Students enrolled");
+            logger.info(CRSConstants.NO_COURSE_ASSIGNED);
         }
 
 

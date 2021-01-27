@@ -48,7 +48,6 @@ public class ProfessorOperation implements ProfessorInterface {
      */
     @Override
     public Course getCourseDetail() {
-        //logger.info("Get Course Detail");
         try {
             ArrayList<Course> courseArrayList = new CourseCatalogueOperation().getCourseList();
 
@@ -72,30 +71,16 @@ public class ProfessorOperation implements ProfessorInterface {
      */
     @Override
     public HashMap<String, String> getEnrolledStudents() {
-        //logger.info("Get list of Enrolled Students");
-        /*ArrayList<Student> studentsEnrolled = new ArrayList<>();
-        try {
-            String courseId = getCourseDetail().getId();
-//            RegisteredCoursesOperation registeredCoursesOperation = new RegisteredCoursesOperation();
-            // TODO: getter setter for registeredCourseIdList
-//            HashMap<String, ArrayList<String>> registeredCourseIdList = registeredCoursesOperation.registeredCourseIdList;
-            // TODO: Professor will break here
-            HashMap<String, ArrayList<String>> registeredCourseIdList = null;
 
+        Course course = getCourseDetail();
+        HashMap<String, String> studentsEnrolledList = null;
 
-            for (Map.Entry<String, ArrayList<String>> studentHashCourseList : registeredCourseIdList.entrySet()) {
-                if (studentHashCourseList.getValue().contains(courseId)) {
-
-                    studentsEnrolled.add(new StudentOperation(studentHashCourseList.getKey()).getStudent());
-                }
-            }
-            return studentsEnrolled;
-        } catch (Exception e) {
-            logger.info(e.getMessage());
+        if (course == null) {
+            return studentsEnrolledList;
         }
-        return studentsEnrolled;*/
-        String courseId = getCourseDetail().getId();
-        HashMap<String, String> studentsEnrolledList = ProfessorDaoImp.getInstance().getEnrolledStudentsForCourse(courseId);
+        String courseId = course.getId();
+
+        studentsEnrolledList = ProfessorDaoImp.getInstance().getEnrolledStudentsForCourse(courseId);
         return studentsEnrolledList;
     }
 
@@ -107,25 +92,16 @@ public class ProfessorOperation implements ProfessorInterface {
      */
     @Override
     public boolean gradeStudent(HashMap<String, String> gradesOfStudents) {
-        /*logger.info("Grade a student");
-        try {
-            RegisteredCoursesOperation registeredCoursesOperation = new RegisteredCoursesOperation();
 
-            String courseId = getCourseDetail().getId();
-            for (Map.Entry<String, String> studentGradeMap : gradesOfStudents.entrySet()) {
-                String studentId = studentGradeMap.getKey();
-                String studentGrade = studentGradeMap.getValue();
-                HashMap<String,HashMap<String,String>> studentCourseGradesMap= registeredCoursesOperation.getStudentCourseGradesMap();
-                HashMap<String,String> studentCourseGradeMap = studentCourseGradesMap.get(studentId);
-                studentCourseGradeMap.put(courseId, studentGrade);
-            }
+        Course course = getCourseDetail();
+        if (course != null) {
+            String courseId = course.getId();
 
-            return true;
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+            return ProfessorDaoImp.getInstance().enterGradesOfStudents(gradesOfStudents, courseId);
+        } else {
+            // TODO: Throw GradeAssignmentException
             return false;
-        }*/
-        String courseId = getCourseDetail().getId();
-        return ProfessorDaoImp.getInstance().enterGradesOfStudents(gradesOfStudents, courseId);
+        }
+
     }
 }
