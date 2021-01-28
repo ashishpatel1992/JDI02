@@ -172,8 +172,7 @@ public class StudentOperation implements StudentInterface {
      */
     @Override
     public HashMap<String, String> getGrades() {
-        //TODO: Fetch Grades from DAO
-        logger.info("get grades");
+
         return null;
     }
 

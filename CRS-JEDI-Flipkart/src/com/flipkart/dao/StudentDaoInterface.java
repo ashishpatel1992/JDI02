@@ -2,6 +2,8 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Student;
 
+import java.util.HashMap;
+
 /**
  * Interface for student dao
  *
@@ -47,4 +49,5 @@ public interface StudentDaoInterface {
      * @param fees          fees to be payed
      */
     public boolean makePayment(String studentId, int paymentMethod, int fees);
+
 }
