@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Class that implements all methods of StudentDaoInterface
@@ -254,4 +255,5 @@ public class StudentDaoImp implements StudentDaoInterface {
         }
         return false;
     }
+
 }

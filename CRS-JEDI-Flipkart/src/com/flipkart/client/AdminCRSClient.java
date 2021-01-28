@@ -1,5 +1,6 @@
 package com.flipkart.client;
 
+import com.flipkart.constants.CRSConstants;
 import com.flipkart.dao.ProfessorDaoImp;
 import org.apache.log4j.Logger;
 import com.flipkart.bean.*;
@@ -73,10 +74,7 @@ public class AdminCRSClient {
                     viewCourses();
                     break;
                 case 6:
-                    if (generateReportCard())
-                        logger.info("Report Card Generated");
-                    else
-                        logger.info("Unable to generate report card");
+                    generateReportCard();
                     break;
                 case 7:
                     logger.info("Successfully logged out");
@@ -289,19 +287,33 @@ public class AdminCRSClient {
      */
     public boolean generateReportCard() {
         // TODO: Check if student is enrolled before generating reportcard
-        // TODO: GENERATE REPORT CARD
-        logger.info("Enter student Id to generate report card:");
+        logger.info("Enter student Id to generate report card >");
         String studentId = scanner.next();
-        HashMap<String, String> studentGrades = adminInterface.generateReportCard(studentId);
-        if (studentGrades != null) {
-            logger.info("Course ID\tGrade");
-            for (Map.Entry<String, String> courseGradeMap : studentGrades.entrySet()) {
-                logger.info(courseGradeMap.getKey() + "\t" + courseGradeMap.getValue());
+        ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
+        ArrayList<CourseGradeCard> courseGradeCards = reportCardOperation.getGrades();
+        // TODO: Fix with if else condition whether registration over or not
+        if (courseGradeCards.size() > 0) {
+
+            logger.info("+----------------------------------------------+");
+            logger.info(String.format("| %-44s |", "REPORT CARD"));
+            logger.info("+----------------------------------------------+");
+            logger.info(String.format("| %-8s | %-15s | %-15s |", "CourseId", "CourseName", "Grade"));
+            logger.info("+----------------------------------------------+");
+            for (CourseGradeCard courseGradeCard : courseGradeCards) {
+                String gradCardCourseId = courseGradeCard.getCourse().getId();
+                String gradeCardCourseName = courseGradeCard.getCourse().getName();
+                String gradeCardGrade = courseGradeCard.getGrade();
+
+                logger.info(String.format("| %-8s | %-15s | %-15s |", gradCardCourseId, gradeCardCourseName, gradeCardGrade));
+
             }
+            logger.info("+----------------------------------------------+");
             return true;
         } else {
+            logger.info(CRSConstants.NO_COURSE_ASSIGNED);
             return false;
         }
+
     }
 
 }
