@@ -5,6 +5,8 @@
 /.idea/
 /CRS-JEDI-Flipkart/CRS-JEDI-Flipkart.iml
 /CRS-JEDI-Flipkart/contacts.log.1
+/CRS-JEDI-Flipkart/CRS-JEDI-REST.iml
+/CRS-JEDI-REST/src/main/resources/config.properties
 out/
 ### Java ###
 # Compiled class file
@@ -38,3 +40,6 @@ target/
 # End of https://www.toptal.com/developers/gitignore/api/java,java-web
 CRS-JEDI-Flipkart/CRS-JEDI-Flipkart.iml
 *.iml
+*.properties
+CRS-JEDI-REST/src/main/resources/config.properties
+CRS-JEDI-REST/.idea/artifacts/CRS_JEDI_REST_war_exploded.xml
