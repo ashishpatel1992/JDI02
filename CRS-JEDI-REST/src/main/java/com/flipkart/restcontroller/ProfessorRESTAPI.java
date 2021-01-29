@@ -6,6 +6,8 @@ import com.flipkart.service.CourseCatalogueOperation;
 import com.flipkart.service.ProfessorInterface;
 import com.flipkart.service.ProfessorOperation;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
@@ -25,7 +27,7 @@ public class ProfessorRESTAPI {
     @Path("/getstatus")
     @Produces("application/json")
     public String getStatus(){
-        return "rgeg";
+        return "success";
     }
 
     @GET
@@ -56,8 +58,7 @@ public class ProfessorRESTAPI {
     @Path("/update-grades/{professorId}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response gradeStudents(@PathParam("professorId") String professorId, HashMap<String,String> gradeOfStudent) {
-
+    public Response gradeStudents(@NotNull @PathParam("professorId") String professorId, @NotNull HashMap<String,String> gradeOfStudent) {
         ProfessorInterface professorInterface = new ProfessorOperation(professorId);
         if(professorInterface.gradeStudent(gradeOfStudent)){
             return Response.status(200).entity("{\"msg\":\"Students graded successfully\"}").build();
