@@ -13,6 +13,9 @@ public class Course {
     String professorId;
     double fee;
 
+    public Course(){
+
+    }
 
     ArrayList<Student> studentsEnrolled;
 

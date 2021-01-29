@@ -7,6 +7,9 @@ package com.flipkart.bean;
 public class Professor extends User {
     String department;
 
+    public Professor(){
+
+    }
     /**
      * Constructor for professor class, initialises id, name, email,role and department
      *

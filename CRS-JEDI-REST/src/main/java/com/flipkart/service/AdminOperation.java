@@ -25,6 +25,10 @@ public class AdminOperation implements AdminInterface {
 
     String adminId;
 
+    public AdminOperation(){
+
+    }
+
     /**
      * Constructor of the class which sets admin ID
      *
