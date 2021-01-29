@@ -1,13 +1,20 @@
 package com.flipkart.bean;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
+
 /**
  * User - bean class for user
  * @Author -  Team JEDI 02
  */
 public class User {
+    @Size(min = 1, max = 15, message = "The length of Id should be between 1 to 15")
     String id;
+    @Size(min = 1, max = 30, message = "The length of Name should be between 1 to 30")
     String name;
+    @Email(message = "Invalid Email Address->" + "Valid emails : user@gmail.com or my.user@domain.com etc.")
     String email;
+    @Size(min = 1, max = 10, message = "The length of Role should be between 1 to 10")
     String role;
 
     /**

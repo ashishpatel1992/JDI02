@@ -53,7 +53,7 @@ public class AdminRESTAPI {
     @PUT
     @Path("assign-professor")
     @Consumes("application/json")
-    public Response assignProfessorToCourse(ProfessorCourseRest professorCourse) {
+    public Response assignProfessorToCourse(@Valid ProfessorCourseRest professorCourse) {
         AdminInterface adminInterface = new AdminOperation();
         if (adminInterface.assignProfessorToCourse(professorCourse.getProfessorId(), professorCourse.getCourseId())) {
             return Response.status(200).entity(professorCourse).build();
@@ -102,7 +102,7 @@ public class AdminRESTAPI {
     @POST
     @Path("add-professor")
     @Consumes("application/json")
-    public Response displayAddProfessor(ProfessorRest professorRest) {
+    public Response displayAddProfessor(@Valid ProfessorRest professorRest) {
         Professor professor = professorRest.getProfessor();
         AdminInterface adminInterface = new AdminOperation();
         String userId = adminInterface.addProfessor(professor.getId(), professor.getName(), professor.getEmail(), professor.getDepartment(), professorRest.getPassword());
@@ -131,7 +131,7 @@ public class AdminRESTAPI {
     @PUT
     @Path("approve-student")
     @Consumes("application/json")
-    public Response approveStudent(StudentIdRest studentIdRest) {
+    public Response approveStudent(@Valid StudentIdRest studentIdRest) {
             AdminInterface adminInterface = new AdminOperation();
             // TODO: Exception Handling to return StudentAlready approved, Student Id invalid
             if (adminInterface.approveStudent(studentIdRest.getStudentId())) {

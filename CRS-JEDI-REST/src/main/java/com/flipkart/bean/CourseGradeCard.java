@@ -1,12 +1,18 @@
 package com.flipkart.bean;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * CourseGradeCard - bean class for CoursGradeing
  * @Author -  Team JEDI 02
  */
 public class CourseGradeCard {
+    @NotNull
     Course course;
+    @NotNull
     Student student;
+    @Size(min = 1, max = 2, message = "The length of Grade should be between 1 to 2, example A,A-,etc")
     String grade;
 
     /**
