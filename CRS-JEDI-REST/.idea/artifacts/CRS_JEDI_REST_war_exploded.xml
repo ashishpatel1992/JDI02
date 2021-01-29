@@ -1,0 +1,29 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="CRS-JEDI-REST:war exploded">
+    <output-path>$PROJECT_DIR$/target/CRS-JEDI-REST-1.0</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>CRS-JEDI-REST</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="CRS-JEDI-REST" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/../../../Compressed/apache-log4j-2.14.0-bin/apache-log4j-2.14.0-bin/log4j-1.2-api-2.14.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/../../../Compressed/apache-log4j-2.14.0-bin/apache-log4j-2.14.0-bin/log4j-api-2.14.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/../../../Compressed/apache-log4j-2.14.0-bin/apache-log4j-2.14.0-bin/log4j-core-2.14.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/../../mariadb-java-client-2.7.1.jar" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/CRS-JEDI-REST-1.0/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="CRS-JEDI-REST/web/Web" />
+    </root>
+  </artifact>
+</component>
