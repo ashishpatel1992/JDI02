@@ -1,5 +1,7 @@
 package com.flipkart.bean;
 
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 
 /**
@@ -8,9 +10,13 @@ import java.util.ArrayList;
  * @Author -  Team JEDI 02
  */
 public class Course {
+    @Size(min = 1, max = 10, message = "The length of Course Id should be between 1 to 10")
     String id;
+    @Size(min = 1, max = 30, message = "The length of Course Name should be between 1 to 30")
     String name;
+    @Size(min = 0, max = 25, message = "The length of Professor Id should be less than 25")
     String professorId;
+    @Min(value = 1,message="Fee should be greater that 0")
     double fee;
 
     public Course(){
