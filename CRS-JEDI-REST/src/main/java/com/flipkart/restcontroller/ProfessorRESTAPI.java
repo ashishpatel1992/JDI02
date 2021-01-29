@@ -11,15 +11,12 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 
 /**
- * Class to handle Professor frontend operations
+ * Class to control Professor REST
  *
  * @Author -  Team JEDI 02
  */
 @Path("/professor")
 public class ProfessorRESTAPI {
-
-    public ProfessorRESTAPI(){
-    }
 
     /**
      * View all the courses
