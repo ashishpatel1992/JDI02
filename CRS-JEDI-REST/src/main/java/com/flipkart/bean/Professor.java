@@ -1,10 +1,13 @@
 package com.flipkart.bean;
 
+import javax.validation.constraints.Size;
+
 /**
  * Professor - bean class for professor
  * @Author -  Team JEDI 02
  */
 public class Professor extends User {
+    @Size(min = 1, max = 40, message = "The length of Department should be between 1 to 40")
     String department;
 
     public Professor(){

@@ -2,7 +2,10 @@ package com.flipkart.restcontroller.beans;
 
 import com.flipkart.bean.Student;
 
+import javax.validation.constraints.Size;
+
 public class StudentRest extends Student{
+    @Size(min = 1, max = 40, message = "The length of Password should be between 1 to 40")
     public String password;
 
     public StudentRest(){
