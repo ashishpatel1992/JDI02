@@ -5,11 +5,11 @@
 /.idea/
 /CRS-JEDI-Flipkart/CRS-JEDI-Flipkart.iml
 /CRS-JEDI-Flipkart/contacts.log.1
-
 /CRS-JEDI-Flipkart/CRS-JEDI-REST.iml
 /CRS-JEDI-REST/src/main/resources/config.properties
 /CRS-JEDI-REST/src/main/resources/log4j.properties
 /CRS-JEDI-REST/.idea/
+
 
 out/
 ### Java ###
@@ -45,5 +45,5 @@ target/
 CRS-JEDI-Flipkart/CRS-JEDI-Flipkart.iml
 *.iml
 *.properties
-CRS-JEDI-REST/src/main/resources/config.properties
+
 CRS-JEDI-REST/.idea/artifacts/CRS_JEDI_REST_war_exploded.xml

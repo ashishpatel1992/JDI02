@@ -17,31 +17,8 @@ import java.util.HashMap;
  */
 @Path("/professor")
 public class ProfessorRESTAPI {
-//    private static Logger logger = Logger.getLogger(ProfessorRESTAPI.class);
 
     public ProfessorRESTAPI(){
-
-    }
-    public ProfessorRESTAPI(String professorId) {
-//        professorInterface = new ProfessorOperation(professorId);
-    }
-    /**
-     * Displays frontend menu for Professor
-     */
-    public void professorMenu() {
-//        int choice;
-//        boolean loggedIn = true;
-
-//        logger.info("Welcome " + professor.getName() + ". You are logged in as " + professor.getRole() + ".");
-
-//            logger.info("+-----------------------------+");
-//            logger.info(String.format("| %-28s|", "PROFESSOR MENU "));
-//            logger.info("+-----------------------------+");
-//            logger.info(String.format("| 1. %-24s |", "View Course"));
-//            logger.info(String.format("| 2. %-24s |", "Grade Students"));
-//            logger.info(String.format("| 3. %-24s |", "View Enrolled Students"));
-//            logger.info(String.format("| 4. %-24s |", "Logout"));
-//            logger.info("+-----------------------------+");
     }
 
     /**
@@ -83,30 +60,7 @@ public class ProfessorRESTAPI {
     @Consumes("application/json")
     @Produces("application/json")
     public Response gradeStudents(@PathParam("professorId") String professorId, HashMap<String,String> gradeOfStudent) {
-//        HashMap<String, String> studentsEnrolled = professorInterface.getEnrolledStudents();
-//        /**
-//         * String - studentId
-//         * String - grade
-//         */
-//        if (studentsEnrolled != null) {
-//            if (studentsEnrolled.size() > 0) {
-//                HashMap<String, String> gradeOfStudent = new HashMap<>();
-//                for (Map.Entry<String, String> student : studentsEnrolled.entrySet()) {
-////                    logger.info("Enter grade for Student ID - " + student.getKey() + "\t" + student.getValue() + ":");
-//                    String gradeEntered = scanner.next();
-//                    gradeOfStudent.put(student.getKey(), gradeEntered);
-//                }
-//                if (professorInterface.gradeStudent(gradeOfStudent)) {
-////                    logger.info("Grades assigned to all students of course " + professorInterface.getCourseDetail().getId());
-//                } else {
-////                    logger.info("Unable to assign grades");
-//                }
-//            } else {
-////                logger.info("No Students enrolled");
-//            }
-//        } else {
-////            logger.info(CRSConstants.NO_COURSE_ASSIGNED);
-//        }
+
         ProfessorInterface professorInterface = new ProfessorOperation(professorId);
         if(professorInterface.gradeStudent(gradeOfStudent)){
             return Response.status(200).entity("{\"msg\":\"Students graded successfully\"}").build();
