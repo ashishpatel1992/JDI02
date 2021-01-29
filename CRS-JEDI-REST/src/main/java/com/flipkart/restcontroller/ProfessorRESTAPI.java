@@ -69,10 +69,10 @@ public class ProfessorRESTAPI {
     @GET
     @Path("/get-students/{professorId}")
     @Produces("application/json")
-    public String getEnrolledStudents(@PathParam("professorId") String professorId){
+    public HashMap<String, String> getEnrolledStudents(@PathParam("professorId") String professorId){
         ProfessorInterface professorInterface = new ProfessorOperation(professorId);
         HashMap<String, String> studentsEnrolled = professorInterface.getEnrolledStudents();
-        return studentsEnrolled.get("20170035");
+        return studentsEnrolled;
     }
 
     /**
@@ -109,9 +109,9 @@ public class ProfessorRESTAPI {
 //        }
         ProfessorInterface professorInterface = new ProfessorOperation(professorId);
         if(professorInterface.gradeStudent(gradeOfStudent)){
-            return Response.status(200).entity("Grades successfully entered").build();
+            return Response.status(200).entity("{\"msg\":\"Students graded successfully\"}").build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).entity("Entering grades failed.").build();
+        return Response.status(Response.Status.BAD_REQUEST).entity("{\"msg\":\"Unable to update grades\"}").build();
 
     }
 
