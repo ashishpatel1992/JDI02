@@ -6,6 +6,8 @@ import com.flipkart.restcontroller.beans.ProfessorRest;
 import com.flipkart.restcontroller.beans.StudentIdRest;
 import com.flipkart.service.*;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -84,7 +86,7 @@ public class AdminRESTAPI {
     @POST
     @Path("add-course")
     @Consumes("application/json")
-    public Response addCourse(Course course) {
+    public Response addCourse(@Valid Course course) throws ValidationException {
         //displayUnAssignedProfessors();
         CourseCatalogueInterface courseCatalogueInterface = new CourseCatalogueOperation();
         if (courseCatalogueInterface.addCourse(course.getId(), course.getName(), course.getProfessorId(), course.getFee())) {
