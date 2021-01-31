@@ -150,6 +150,7 @@ public class ProfessorDaoImp implements ProfessorDaoInterface {
                 }
             }
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             return false;
         } finally {
             try {

@@ -65,7 +65,7 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
     @Override
     public ArrayList<String> registerCourses(ArrayList<String> courseIdSelectionList) {
         ArrayList<String> registerdCourseList = null;
-        if (courseIdSelectionList.size() != CRSConstants.MIN_COURSE_REQUIREMENT) {
+        if (courseIdSelectionList.size() <= CRSConstants.MIN_COURSE_REQUIREMENT) {
             return null;
         }
         registerdCourseList = RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
@@ -78,21 +78,6 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
         } else {
             return RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
         }
-//        boolean flag = false;
-//        ArrayList<String> studentCoursesIdList = registeredCourseIdList.get(studentId);
-//
-//        // TODO: set limit for number of courses 3>= no of course <=10
-//
-//        if (studentCoursesIdList == null) {
-//            logger.info("Register Course");
-//            registeredCourseIdList.put(studentId, courseIdSelectionList);
-//            flag = true;
-//        } else {
-//
-//            flag = false;
-//        }
-//
-//        return flag;
     }
 
     /**

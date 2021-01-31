@@ -5,6 +5,7 @@ import com.flipkart.bean.CourseGradeCard;
 import com.flipkart.bean.Student;
 import com.flipkart.dao.NotificationDaoImp;
 import com.flipkart.dao.NotificationDaoInterface;
+import com.flipkart.restcontroller.beans.ResponseMessageRest;
 import com.flipkart.restcontroller.beans.StudentCourseIdRest;
 import com.flipkart.restcontroller.beans.StudentFeeRest;
 import com.flipkart.restcontroller.beans.StudentRest;
@@ -39,23 +40,32 @@ public class StudentRESTAPI {
         StudentRegistrationInterface studentRegistrationInterface = new StudentRegistrationOperation();
         Student newStudent = new Student(studentRest.getId(), studentRest.getName(), studentRest.getEmail(), studentRest.getRole(), studentRest.getBranch(), false);
         String pass = studentRegistrationInterface.isRegistrationDataValid(newStudent, studentRest.password);
-        return Response.status(201).entity(newStudent.getId()).build();
+        if(pass != null){
+            return Response.status(201).entity(newStudent).build();
+        }
+        else{
+            return Response.status(201).entity(new ResponseMessageRest("Unable to register student")).build();
+        }
     }
 
     @POST
     @Path("/{studentid}/register-courses")
     @Produces("application/json")
+    @Consumes("application/json")
     public Response registerCourses(@PathParam("studentid") String studentId, StudentCourseIdRest studentCourseIds) {
         logger.info("Register course");
+        logger.info(studentCourseIds.getStudentCourseIdList());
         RegisteredCoursesInterface registeredCoursesInterface = new RegisteredCoursesOperation(studentId);
         CourseCatalogueInterface courseCatalogueInterface = new CourseCatalogueOperation();
 
         ArrayList<String> registeredCourseIds = registeredCoursesInterface.registerCourses(studentCourseIds.getStudentCourseIdList());
         ArrayList<Course> courseArraylist = new ArrayList<>();
-
-        for (String courseId : registeredCourseIds) {
-            courseArraylist.add(courseCatalogueInterface.getCourse(courseId));
+        if (registeredCourseIds != null) {
+            for (String courseId : registeredCourseIds) {
+                courseArraylist.add(courseCatalogueInterface.getCourse(courseId));
+            }
         }
+
         return Response.status(200).entity(courseArraylist).build();
     }
 

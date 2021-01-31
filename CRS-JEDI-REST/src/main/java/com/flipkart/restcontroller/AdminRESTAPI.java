@@ -1,8 +1,11 @@
 package com.flipkart.restcontroller;
 
 import com.flipkart.bean.*;
+import com.flipkart.restcontroller.beans.AssignProfessorRest;
 import com.flipkart.restcontroller.beans.ProfessorRest;
+import com.flipkart.restcontroller.beans.ResponseMessageRest;
 import com.flipkart.service.*;
+import org.apache.log4j.Logger;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
  */
 @Path("/admin")
 public class AdminRESTAPI {
+    private static final Logger logger = Logger.getLogger(AdminRESTAPI.class);
 
     /**
      * Displays list of unassigned professors
@@ -51,21 +55,22 @@ public class AdminRESTAPI {
      * Assigns Professor to a course
      */
     @PUT
-    @Path("assign-professor")
-    public Response assignProfessorToCourse(@Size(min = 1, max = 15, message = "The length of Id should be between 1 to 15") @QueryParam("professorId") String professorId,
-                                            @Size(min = 1, max = 10, message = "The length of Course Id should be between 1 to 10") @QueryParam("courseId") String courseId ) throws ValidationException{
+    @Path("/assign-professor")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response assignProfessorToCourse(AssignProfessorRest assignProfessorRest) throws ValidationException {
         AdminInterface adminInterface = new AdminOperation();
-        if (adminInterface.assignProfessorToCourse(professorId, courseId)) {
-            return Response.status(200).entity("Professor - "+professorId +" assigned to course - "+courseId).build();
+        if (adminInterface.assignProfessorToCourse(assignProfessorRest.getProfessorId(), assignProfessorRest.getCourseId())) {
+            return Response.status(200).entity(new ResponseMessageRest("Professor - " + assignProfessorRest.getProfessorId() + " assigned to course - " + assignProfessorRest.getCourseId())).build();
         } else {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ResponseMessageRest("Unable to assign professor to the course")).build();
         }
     }
 
     @GET
     @Path("/getstatus")
     @Produces("application/json")
-    public String getStatus(){
+    public String getStatus() {
         return "success";
     }
 
@@ -93,7 +98,7 @@ public class AdminRESTAPI {
         if (courseCatalogueInterface.addCourse(course.getId(), course.getName(), course.getProfessorId(), course.getFee())) {
             return Response.status(201).entity(course).build();
         } else {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(200).entity(new ResponseMessageRest("Course Already Exist")).build();
         }
     }
 
@@ -104,14 +109,14 @@ public class AdminRESTAPI {
     @Path("/add-professor")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response displayAddProfessor(@Valid ProfessorRest professorRest) throws ValidationException{
+    public Response displayAddProfessor(@Valid ProfessorRest professorRest) throws ValidationException {
         Professor professor = professorRest.getProfessor();
         AdminInterface adminInterface = new AdminOperation();
         String userId = adminInterface.addProfessor(professor.getId(), professor.getName(), professor.getEmail(), professor.getDepartment(), professorRest.getPassword());
         if (userId != null) {
             return Response.status(201).entity(professor).build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).build();
+        return Response.status(Response.Status.BAD_REQUEST).entity(new ResponseMessageRest("Unable to add professor")).build();
     }
 
     /**
@@ -131,25 +136,30 @@ public class AdminRESTAPI {
      * Approves a student
      */
     @PUT
-    @Path("/approve-student")
-    public Response approveStudent(@Size(min = 1, max = 15, message = "The length of Id should be between 1 to 15") @QueryParam("studentId") String studentId) throws ValidationException{
-            AdminInterface adminInterface = new AdminOperation();
-            // TODO: Exception Handling to return StudentAlready approved, Student Id invalid
-            if (adminInterface.approveStudent(studentId)) {
-                return Response.status(200).entity("Student ID - "+studentId+" successfully approved").build();
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+    @Path("/approve-student/{studentid}")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response approveStudent(@Size(min = 2, max = 15, message = "The length of Id should be between 1 to 15") @PathParam("studentid") String studentId) throws ValidationException {
+        AdminInterface adminInterface = new AdminOperation();
+        logger.info("Approve Student");
+        // TODO: Exception Handling to return StudentAlready approved, Student Id invalid
+        if (adminInterface.approveStudent(studentId)) {
+            return Response.status(200).entity(new ResponseMessageRest("Student ID - " + studentId + " successfully approved")).build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ResponseMessageRest("Student ID - " + studentId + " already approved")).build();
+        }
     }
 
     /**
      * Generates the report card
      */
     @GET
-    @Path("/get-report-card")
+    @Path("/get-report-card/{studentid}")
     @Produces("application/json")
-    public ArrayList<CourseGradeCard> generateReportCard(@QueryParam("studentId") String studentId) throws ValidationException{
+    @Consumes("application/json")
+    public ArrayList<CourseGradeCard> generateReportCard(@PathParam("studentid") String studentId) throws ValidationException {
         // TODO: Check if student is enrolled before generating reportcard
+
         ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
         return reportCardOperation.getGrades();
         // TODO: Fix with if else condition whether registration over or not

@@ -2,6 +2,7 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
+import com.flipkart.bean.Student;
 import com.flipkart.dao.*;
 import com.flipkart.exception.CourseNotFoundException;
 import org.apache.log4j.Logger;
@@ -109,5 +110,16 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
     @Override
     public ArrayList<Professor> getUnAssignedProfessors() {
         return CourseCatalogueDaoImp.getInstance().getUnAssignedProfessors();
+    }
+
+    /**
+     * Get List of all students assigned to a specific course
+     *
+     * @param courseId
+     * @return
+     */
+
+    public ArrayList<Student> getStudentsEnrolled(String courseId) {
+        return CourseCatalogueDaoImp.getInstance().getStudentsEnrolled(courseId);
     }
 }

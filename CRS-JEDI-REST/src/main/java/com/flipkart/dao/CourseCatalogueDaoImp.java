@@ -2,6 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
+import com.flipkart.bean.Student;
 import com.flipkart.constants.SQLQueriesConstants;
 import com.flipkart.exception.CourseNotFoundException;
 import com.flipkart.utils.DBUtils;
@@ -19,7 +20,7 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
 
     private static volatile CourseCatalogueDaoImp instance = null;
 
-    private CourseCatalogueDaoImp() {
+    public CourseCatalogueDaoImp() {
     }
 
     /**
@@ -230,10 +231,6 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
         } finally {
             try {
                 resultSet.close();
-            } catch (SQLException e) {
-                logger.error(e);
-            }
-            try {
                 preparedStatement.close();
             } catch (SQLException e) {
                 logger.error(e);
@@ -241,5 +238,41 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
 
         }
         return unAssignedProfessors;
+    }
+
+    @Override
+    public ArrayList<Student> getStudentsEnrolled(String courseId) {
+        ArrayList<Student> studentsEnrolledList = new ArrayList<Student>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_STUDENTS_ENROLLED_QUERY);
+            preparedStatement.setString(1, courseId);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    String rsStudentId;
+
+                    rsStudentId = resultSet.getString("userid");
+                    Student professor = StudentDaoImp.getInstance().getStudent(rsStudentId);
+                    studentsEnrolledList.add(professor);
+                }
+                return studentsEnrolledList;
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+
+        }
+        return studentsEnrolledList;
     }
 }

@@ -1,5 +1,8 @@
 package com.flipkart.bean;
 
+import com.flipkart.dao.CourseCatalogueDaoImp;
+import com.flipkart.service.CourseOperation;
+
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Min;
 import java.util.ArrayList;
@@ -19,18 +22,16 @@ public class Course {
     @Min(value = 1, message = "Fee should be greater that 0")
     double fee;
 
+
     public Course() {
 
     }
-
-    ArrayList<Student> studentsEnrolled;
 
 
     public Course(String courseId, String courseName, double courseFee) {
         id = courseId;
         name = courseName;
         professorId = null;
-        studentsEnrolled = null;
         fee = courseFee;
     }
 
@@ -47,26 +48,6 @@ public class Course {
         this.name = courseName;
         this.professorId = professorId;
         this.fee = courseFee;
-        studentsEnrolled = null;
-    }
-
-    /**
-     * Returns a list of enrolled students for this course
-     *
-     * @return array list of students enrolled
-     */
-    public ArrayList<Student> getStudentsEnrolled() {
-
-        return studentsEnrolled;
-    }
-
-    /**
-     * Sets value of students enrolled list property of Course class
-     *
-     * @param studentsEnrolled arraylist of enrolled students
-     */
-    public void setStudentsEnrolled(ArrayList<Student> studentsEnrolled) {
-        this.studentsEnrolled = studentsEnrolled;
     }
 
     /**
@@ -138,11 +119,4 @@ public class Course {
     public void setFee(double fee) {
         this.fee = fee;
     }
-
-    /**
-     * Constructor for Course class, initialises courseID and course name
-     *
-     * @param courseId   course id
-     * @param courseName course name
-     */
 }

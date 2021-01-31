@@ -41,6 +41,7 @@ public class SQLQueriesConstants {
     public static String ADD_PROFESSOR_TO_COURSE_ID = "UPDATE `course` SET `professorid`=? WHERE `courseid` = ?";
     public static String GET_UNASSIGNED_COURSES_QUERY = "SELECT `courseid`, `coursecatalogueid`, `coursename`, `professorid`, `fee` FROM `course` WHERE `professorid` IS NULL";
     public static String GET_UNASSIGNED_PROFESSORS_QUERY = "SELECT `userid`,`department` FROM `professor` WHERE professor.userid NOT IN (SELECT `professorid` FROM `course` WHERE `professorid` IS NOT NULL)";
+    public static String GET_STUDENTS_ENROLLED_QUERY = "SELECT `studentid`, `courseid`, `grade` FROM `registeredcourse` WHERE `courseid` = ?";
 
     // Course Grade Card Queries
 

@@ -1,6 +1,8 @@
 package com.flipkart.service;
 
 import com.flipkart.bean.Student;
+import com.flipkart.dao.CourseCatalogueDaoImp;
+import com.flipkart.dao.CourseCatalogueDaoInterface;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -12,6 +14,12 @@ import java.util.ArrayList;
  */
 public class CourseOperation implements CourseInterface {
     private static final Logger logger = Logger.getLogger(CourseOperation.class);
+
+    String courseId;
+
+    public CourseOperation(String courseId) {
+        this.courseId = courseId;
+    }
 
     /**
      * Adds a course
@@ -54,8 +62,8 @@ public class CourseOperation implements CourseInterface {
      */
     @Override
     public ArrayList<Student> getStudentsEnrolled() {
-
+        CourseCatalogueDaoInterface courseCatalogueDaoImp = new CourseCatalogueDaoImp();
         logger.info("get students enrolled");
-        return null;
+        return courseCatalogueDaoImp.getStudentsEnrolled(courseId);
     }
 }
