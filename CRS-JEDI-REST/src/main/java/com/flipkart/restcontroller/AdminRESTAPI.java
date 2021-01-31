@@ -84,15 +84,16 @@ public class AdminRESTAPI {
      * Perform add course operations
      */
     @POST
-    @Path("add-course")
+    @Path("/add-course")
     @Consumes("application/json")
+    @Produces("application/json")
     public Response addCourse(@Valid Course course) throws ValidationException {
         //displayUnAssignedProfessors();
         CourseCatalogueInterface courseCatalogueInterface = new CourseCatalogueOperation();
         if (courseCatalogueInterface.addCourse(course.getId(), course.getName(), course.getProfessorId(), course.getFee())) {
             return Response.status(201).entity(course).build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -100,8 +101,9 @@ public class AdminRESTAPI {
      * Perform add professor operations
      */
     @POST
-    @Path("add-professor")
+    @Path("/add-professor")
     @Consumes("application/json")
+    @Produces("application/json")
     public Response displayAddProfessor(@Valid ProfessorRest professorRest) throws ValidationException{
         Professor professor = professorRest.getProfessor();
         AdminInterface adminInterface = new AdminOperation();
@@ -129,7 +131,7 @@ public class AdminRESTAPI {
      * Approves a student
      */
     @PUT
-    @Path("approve-student")
+    @Path("/approve-student")
     public Response approveStudent(@Size(min = 1, max = 15, message = "The length of Id should be between 1 to 15") @QueryParam("studentId") String studentId) throws ValidationException{
             AdminInterface adminInterface = new AdminOperation();
             // TODO: Exception Handling to return StudentAlready approved, Student Id invalid
