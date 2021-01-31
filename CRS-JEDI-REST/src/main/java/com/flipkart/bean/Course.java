@@ -16,37 +16,16 @@ public class Course {
     String name;
     @Size(min = 0, max = 25, message = "The length of Professor Id should be less than 25")
     String professorId;
-    @Min(value = 1,message="Fee should be greater that 0")
+    @Min(value = 1, message = "Fee should be greater that 0")
     double fee;
 
-    public Course(){
+    public Course() {
 
     }
 
     ArrayList<Student> studentsEnrolled;
 
-    /**
-     * @return the fees of a specific course
-     */
-    public double getFee() {
-        return fee;
-    }
 
-    /**
-     * Set fee for specific course
-     *
-     * @param fee
-     */
-    public void setFee(double fee) {
-        this.fee = fee;
-    }
-
-    /**
-     * Constructor for Course class, initialises courseID and course name
-     *
-     * @param courseId   course id
-     * @param courseName course name
-     */
     public Course(String courseId, String courseName, double courseFee) {
         id = courseId;
         name = courseName;
@@ -144,5 +123,26 @@ public class Course {
         this.professorId = professorId;
     }
 
+    /**
+     * @return the fees of a specific course
+     */
+    public double getFee() {
+        return fee;
+    }
 
+    /**
+     * Set fee for specific course
+     *
+     * @param fee
+     */
+    public void setFee(double fee) {
+        this.fee = fee;
+    }
+
+    /**
+     * Constructor for Course class, initialises courseID and course name
+     *
+     * @param courseId   course id
+     * @param courseName course name
+     */
 }

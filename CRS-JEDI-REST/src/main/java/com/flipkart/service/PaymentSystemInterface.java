@@ -16,7 +16,7 @@ public interface PaymentSystemInterface {
      *
      * @return the fee
      */
-    public double calculateFee();
+    double calculateFee();
 
 
 }

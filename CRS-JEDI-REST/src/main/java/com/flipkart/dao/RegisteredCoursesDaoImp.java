@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
 
     private static volatile RegisteredCoursesDaoImp instance = null;
-    private static Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
+    private static final Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
 
     Connection connection = DBUtils.getConnection();
 
@@ -92,7 +92,17 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
     @Override
     public ArrayList<String> doStudentRegistration(String studentId, ArrayList<String> courseIdSelectionList) {
         PreparedStatement preparedStatement = null;
+        ArrayList<String> courseIdRemovalList = new ArrayList<>();
         try {
+            for (String courseIdSelection : courseIdSelectionList) {
+                // TODO: Throw invalid course Id exception
+                // Check if course exists
+                CourseCatalogueDaoImp courseCatalogueDaoImp = CourseCatalogueDaoImp.getInstance();
+                if (courseCatalogueDaoImp.getCourseDetail(courseIdSelection) == null) {
+                    courseIdRemovalList.add(courseIdSelection);
+                }
+            }
+            courseIdSelectionList.removeAll(courseIdRemovalList);
             for (String courseIdSelection : courseIdSelectionList) {
                 preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_STUDENT_COURSE_REGISTRATION);
                 preparedStatement.setString(1, studentId);
@@ -100,6 +110,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
 
                 int updatedValues = preparedStatement.executeUpdate();
             }
+
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -132,7 +143,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
                 String rsEmail = resultSet.getString("email");
                 String rsRole = resultSet.getString("role");
                 String rsBranch = resultSet.getString("branch");
-                boolean rsApproved = resultSet.getString("approved") == "1" ? true : false;
+                boolean rsApproved = resultSet.getString("approved") == "1";
                 String rsCourseId = resultSet.getString("courseid");
                 String rsCourseName = resultSet.getString("coursename");
                 String rsProfessorId = resultSet.getString("professorid");

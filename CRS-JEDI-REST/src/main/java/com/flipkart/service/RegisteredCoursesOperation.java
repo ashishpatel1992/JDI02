@@ -22,7 +22,7 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
     String studentId;
 
 
-    private static Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
+    private static final Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
 
     // TODO: Create method to write gradeOfStudents into database and fetch whenever object is created
     public HashMap<String, HashMap<String, String>> studentCourseGradesMap = new HashMap<>();
@@ -123,11 +123,7 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
      */
     @Override
     public boolean isRegistered() {
-        if (getRegisteredCourses().size() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return getRegisteredCourses().size() > 0;
     }
 
     /**

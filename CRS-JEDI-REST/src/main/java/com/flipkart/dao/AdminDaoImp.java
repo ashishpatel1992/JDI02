@@ -37,7 +37,7 @@ public class AdminDaoImp implements AdminDaoInterface {
         return instance;
     }
 
-    private static Logger logger = Logger.getLogger(AdminDaoImp.class);
+    private static final Logger logger = Logger.getLogger(AdminDaoImp.class);
     Connection connection = DBUtils.getConnection();
 
     /**
@@ -57,11 +57,7 @@ public class AdminDaoImp implements AdminDaoInterface {
             preparedStatement.setString(4, "1");
             preparedStatement.setDouble(5, course.getFee());
             int updatedValues = preparedStatement.executeUpdate();
-            if (updatedValues > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return updatedValues > 0;
         } catch (SQLException e) {
             logger.error(e.getMessage());
         } finally {

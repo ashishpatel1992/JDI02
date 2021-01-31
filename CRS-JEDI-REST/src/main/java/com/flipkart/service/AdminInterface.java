@@ -19,14 +19,14 @@ public interface AdminInterface {
      *
      * @return profile of Admin
      */
-    public Admin getAdminProfile();
+    Admin getAdminProfile();
 
     /**
      * Get list of unapproved students
      *
      * @return array list of unapproved students
      */
-    public ArrayList<Student> getUnApprovedStudents();
+    ArrayList<Student> getUnApprovedStudents();
 
     /**
      * Adds professor to database
@@ -37,7 +37,7 @@ public interface AdminInterface {
      * @param professorDepartment department of professor
      * @return user ID
      */
-    public String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment, String password);
+    String addProfessor(String professorId, String professorName, String professorEmail, String professorDepartment, String password);
 
     /**
      * Approves student
@@ -45,7 +45,7 @@ public interface AdminInterface {
      * @param studentId student ID
      * @return true if student is approved
      */
-    public boolean approveStudent(String studentId);
+    boolean approveStudent(String studentId);
 
     /**
      * Generates report card for a student
@@ -53,7 +53,7 @@ public interface AdminInterface {
      * @param studentId student ID
      * @return HashMap<String, String> containing student id and grades
      */
-    public HashMap<String, String> generateReportCard(String studentId);
+    HashMap<String, String> generateReportCard(String studentId);
 
     /**
      * Assigns professor to a course
@@ -62,5 +62,5 @@ public interface AdminInterface {
      * @param courseId    course ID
      * @return true if professor assigned
      */
-    public boolean assignProfessorToCourse(String professorId, String courseId);
+    boolean assignProfessorToCourse(String professorId, String courseId);
 }

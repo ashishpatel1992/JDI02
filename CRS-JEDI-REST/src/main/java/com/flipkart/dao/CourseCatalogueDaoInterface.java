@@ -18,7 +18,7 @@ public interface CourseCatalogueDaoInterface {
      *
      * @return arraylist of courses
      */
-    public ArrayList<Course> getAllCourses();
+    ArrayList<Course> getAllCourses();
 
     /**
      * Returns course details for a course
@@ -27,7 +27,7 @@ public interface CourseCatalogueDaoInterface {
      * @return course details in Course object
      * @throws CourseNotFoundException thrown in case no course is found with provided courseid
      */
-    public Course getCourseDetail(String courseId) throws CourseNotFoundException;
+    Course getCourseDetail(String courseId) throws CourseNotFoundException;
 
     /**
      * Assigns a professor to a course
@@ -36,9 +36,9 @@ public interface CourseCatalogueDaoInterface {
      * @param courseId    id of course to which professor will be assigned
      * @return true if professor was successfully assigned to the course
      */
-    public boolean assignProfessorToCourse(String professorId, String courseId);
+    boolean assignProfessorToCourse(String professorId, String courseId);
 
-    public ArrayList<Course> getUnAssignedCourses();
+    ArrayList<Course> getUnAssignedCourses();
 
-    public ArrayList<Professor> getUnAssignedProfessors();
+    ArrayList<Professor> getUnAssignedProfessors();
 }

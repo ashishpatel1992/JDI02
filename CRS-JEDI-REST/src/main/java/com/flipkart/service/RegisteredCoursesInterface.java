@@ -18,19 +18,19 @@ public interface RegisteredCoursesInterface {
      * @return returns the courses successfully registered
      */
 
-    public ArrayList<String> registerCourses(ArrayList<String> courseIdSelectionList);
+    ArrayList<String> registerCourses(ArrayList<String> courseIdSelectionList);
 
     /**
      * Get list of all courses student is registered in.
      *
      * @return array list of courses
      */
-    public ArrayList<Course> getRegisteredCourses();
+    ArrayList<Course> getRegisteredCourses();
 
     /**
      * Drops a course in which student is already enrolled in.
      * @return true if dropped successfully
      */
 
-    public boolean isRegistered();
+    boolean isRegistered();
 }

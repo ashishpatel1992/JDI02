@@ -16,26 +16,26 @@ public interface CourseInterface {
      *
      * @return false if course not added
      */
-    public boolean addCourse();
+    boolean addCourse();
 
     /**
      * Modifies a course
      *
      * @return false if course not modified
      */
-    public boolean modifyCourse();
+    boolean modifyCourse();
 
     /**
      * Deletes a course
      *
      * @return false if course not deleted
      */
-    public boolean deleteCourse();
+    boolean deleteCourse();
 
     /**
      * Get the students enrolled in course
      *
      * @return array list of the students enrolled
      */
-    public ArrayList<Student> getStudentsEnrolled();
+    ArrayList<Student> getStudentsEnrolled();
 }

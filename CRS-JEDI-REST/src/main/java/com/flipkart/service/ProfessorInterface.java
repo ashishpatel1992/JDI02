@@ -22,21 +22,21 @@ public interface ProfessorInterface {
      *
      * @return Professor details
      */
-    public Professor getProfessor();
+    Professor getProfessor();
 
     /**
      * Returns the course details
      *
      * @return Course
      */
-    public Course getCourseDetail();
+    Course getCourseDetail();
 
     /**
      * Gets list of enrolled students
      *
      * @return Array List of Students
      */
-    public HashMap<String, String> getEnrolledStudents();
+    HashMap<String, String> getEnrolledStudents();
 
     /**
      * Grade students
@@ -44,5 +44,5 @@ public interface ProfessorInterface {
      * @param gradesOfStudents Hashmap containing Student Id and grades.
      * @return true if graded successfully
      */
-    public boolean gradeStudent(HashMap<String, String> gradesOfStudents);
+    boolean gradeStudent(HashMap<String, String> gradesOfStudents);
 }

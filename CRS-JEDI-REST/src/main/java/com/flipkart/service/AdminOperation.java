@@ -21,7 +21,7 @@ import java.util.HashMap;
  * @Author -  Team JEDI 02
  */
 public class AdminOperation implements AdminInterface {
-    private static Logger logger = Logger.getLogger(AdminOperation.class);
+    private static final Logger logger = Logger.getLogger(AdminOperation.class);
 
     String adminId;
 

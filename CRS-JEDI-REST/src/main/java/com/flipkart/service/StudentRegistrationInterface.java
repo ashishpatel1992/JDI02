@@ -15,5 +15,5 @@ public interface StudentRegistrationInterface {
      * @param newStudent Student details
      * @return password
      */
-    public String isRegistrationDataValid(Student newStudent, String password);
+    String isRegistrationDataValid(Student newStudent, String password);
 }

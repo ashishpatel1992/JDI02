@@ -24,7 +24,7 @@ import java.util.Scanner;
  */
 public class StudentCRSClient {
 
-    private static Logger logger = Logger.getLogger(StudentCRSClient.class);
+    private static final Logger logger = Logger.getLogger(StudentCRSClient.class);
 
     CourseCatalogueInterface courseCatalogueInterface = new CourseCatalogueOperation();
     StudentInterface studentInterface;
@@ -408,17 +408,4 @@ public class StudentCRSClient {
 
     }
 
-    /**
-     * Displays Professor menu
-     */
-    public void professorMenu() {
-
-    }
-
-    /**
-     * Displays Admin Menu
-     */
-    public void adminMenu() {
-
-    }
 }

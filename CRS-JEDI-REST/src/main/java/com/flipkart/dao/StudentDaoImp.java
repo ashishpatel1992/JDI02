@@ -44,7 +44,7 @@ public class StudentDaoImp implements StudentDaoInterface {
         return instance;
     }
 
-    private static Logger logger = Logger.getLogger(StudentDaoImp.class);
+    private static final Logger logger = Logger.getLogger(StudentDaoImp.class);
     Connection connection = DBUtils.getConnection();
 
     /**
@@ -77,7 +77,7 @@ public class StudentDaoImp implements StudentDaoInterface {
                     rsStudentEmail = resultSet.getString("email");
                     rsStudentRole = resultSet.getString("role");
                     rsStudentBranch = resultSet.getString("branch");
-                    rsStudentApproved = resultSet.getString("approved").equalsIgnoreCase("1") ? true : false;
+                    rsStudentApproved = resultSet.getString("approved").equalsIgnoreCase("1");
 
                     student = new Student(rsStudentId, rsStudentName, rsStudentEmail, rsStudentRole, rsStudentBranch, rsStudentApproved);
                     return student;
@@ -124,11 +124,7 @@ public class StudentDaoImp implements StudentDaoInterface {
 
             while (resultSet.next()) {
                 approvedStatus = resultSet.getString("approved");
-                if (approvedStatus.equalsIgnoreCase("1")) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return approvedStatus.equalsIgnoreCase("1");
             }
 
         } catch (SQLException e) {
@@ -162,11 +158,7 @@ public class StudentDaoImp implements StudentDaoInterface {
                 preparedStatement = connection.prepareStatement(SQLQueriesConstants.APPROVE_STUDENT_QUERY);
                 preparedStatement.setString(1, studentId);
                 int updatedValues = preparedStatement.executeUpdate();
-                if (updatedValues > 0) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return updatedValues > 0;
             } catch (SQLException e) {
                 logger.error(e.getMessage());
             } finally {

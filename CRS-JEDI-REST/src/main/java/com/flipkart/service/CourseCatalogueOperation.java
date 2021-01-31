@@ -17,7 +17,7 @@ import java.util.List;
 public class CourseCatalogueOperation implements CourseCatalogueInterface {
 
 
-    private static Logger logger = Logger.getLogger(CourseCatalogueOperation.class);
+    private static final Logger logger = Logger.getLogger(CourseCatalogueOperation.class);
 
     public CourseCatalogueOperation() {
     }

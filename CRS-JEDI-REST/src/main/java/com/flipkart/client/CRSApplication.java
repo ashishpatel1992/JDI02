@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @Author -  Team JEDI 02
  */
 public class CRSApplication {
-    private static Logger logger = Logger.getLogger(CRSApplication.class);
+    private static final Logger logger = Logger.getLogger(CRSApplication.class);
     public static boolean loginStatus = false;
 
     /**

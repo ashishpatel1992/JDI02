@@ -37,7 +37,7 @@ public class LoginDaoImp implements LoginDaoInterface {
         return instance;
     }
 
-    private static Logger logger = Logger.getLogger(LoginDaoImp.class);
+    private static final Logger logger = Logger.getLogger(LoginDaoImp.class);
     Connection connection = DBUtils.getConnection();
 
     /**
@@ -170,11 +170,7 @@ public class LoginDaoImp implements LoginDaoInterface {
                 String rsUserId;
 
                 rsUserId = resultSet.getString("userid");
-                if (rsUserId.equalsIgnoreCase(userId)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return rsUserId.equalsIgnoreCase(userId);
             }
         } catch (SQLException e) {
             logger.info(e.getMessage());

@@ -16,5 +16,5 @@ public interface ReportCardInterface {
      *
      * @return array list containing grades
      */
-    public ArrayList<CourseGradeCard> getGrades();
+    ArrayList<CourseGradeCard> getGrades();
 }

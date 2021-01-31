@@ -13,6 +13,6 @@ public interface UserInterface {
      * @param password password of user
      * @return user ID
      */
-    public String verifyCredentials(String id, String password);
+    String verifyCredentials(String id, String password);
 
 }

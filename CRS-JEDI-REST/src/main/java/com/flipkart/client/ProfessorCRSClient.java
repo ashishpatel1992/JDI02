@@ -22,7 +22,7 @@ import java.util.Scanner;
  */
 public class ProfessorCRSClient {
 
-    private static Logger logger = Logger.getLogger(ProfessorCRSClient.class);
+    private static final Logger logger = Logger.getLogger(ProfessorCRSClient.class);
 
     String professorId;
     ProfessorInterface professorInterface;

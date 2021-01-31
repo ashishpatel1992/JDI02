@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class ProfessorDaoImp implements ProfessorDaoInterface {
 
-    private static Logger logger = Logger.getLogger(LoginDaoImp.class);
+    private static final Logger logger = Logger.getLogger(LoginDaoImp.class);
     private static volatile ProfessorDaoImp instance = null;
     Connection connection = DBUtils.getConnection();
 

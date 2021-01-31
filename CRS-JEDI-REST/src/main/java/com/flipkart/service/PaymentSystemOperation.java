@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
  * @Author -  Team JEDI 02
  */
 public class PaymentSystemOperation implements PaymentSystemInterface {
-    private static Logger logger = Logger.getLogger(PaymentSystemOperation.class);
+    private static final Logger logger = Logger.getLogger(PaymentSystemOperation.class);
 
     /**
      * Calculates the fee

@@ -21,7 +21,7 @@ public class StudentOperation implements StudentInterface {
 
     String studentId;
 
-    private static Logger logger = Logger.getLogger(StudentOperation.class);
+    private static final Logger logger = Logger.getLogger(StudentOperation.class);
     ArrayList<String> courseIdSelectionList = new ArrayList<String>();
 
     CourseCatalogueInterface courseCatalogueOperation = new CourseCatalogueOperation();

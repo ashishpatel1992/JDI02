@@ -12,8 +12,8 @@ import java.util.ArrayList;
  * @Author -  Team JEDI 02
  */
 public class ReportCardOperation implements ReportCardInterface {
-    private static Logger logger = Logger.getLogger(ReportCardOperation.class);
-    private String studentId;
+    private static final Logger logger = Logger.getLogger(ReportCardOperation.class);
+    private final String studentId;
 
     /**
      * Constructor for the class which sets the student ID

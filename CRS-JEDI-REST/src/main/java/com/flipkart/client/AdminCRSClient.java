@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class AdminCRSClient {
 
-    private static Logger logger = Logger.getLogger(AdminCRSClient.class);
+    private static final Logger logger = Logger.getLogger(AdminCRSClient.class);
     AdminInterface adminInterface;
     CourseCatalogueInterface courseCatalogueInterface = new CourseCatalogueOperation();
     Scanner scanner;

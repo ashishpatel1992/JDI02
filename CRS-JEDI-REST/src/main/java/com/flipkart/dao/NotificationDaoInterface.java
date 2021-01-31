@@ -13,13 +13,13 @@ public interface NotificationDaoInterface {
      * @param studentId if of student for which notification has to added
      * @param message message to enter for notification
      */
-    public void addNotification(String studentId,String message);
+    void addNotification(String studentId, String message);
 
     /**
      * Get notifications for a student
      * @param studentId if of student for which notifications have to be return
      * @return arraylist of notifications
      */
-    public ArrayList<String> getNotificationsForStudent(String studentId);
+    ArrayList<String> getNotificationsForStudent(String studentId);
 
 }

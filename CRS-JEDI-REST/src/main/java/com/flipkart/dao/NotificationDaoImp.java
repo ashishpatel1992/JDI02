@@ -23,7 +23,7 @@ import java.util.Date;
 public class NotificationDaoImp implements NotificationDaoInterface {
 
     private static volatile NotificationDaoImp instance = null;
-    private static Logger logger = Logger.getLogger(AdminDaoImp.class);
+    private static final Logger logger = Logger.getLogger(AdminDaoImp.class);
     Connection connection = DBUtils.getConnection();
 
     private NotificationDaoImp() {

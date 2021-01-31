@@ -20,7 +20,7 @@ import java.util.Map;
  * @Author -  Team JEDI 02
  */
 public class ProfessorOperation implements ProfessorInterface {
-    private static Logger logger = Logger.getLogger(ProfessorOperation.class);
+    private static final Logger logger = Logger.getLogger(ProfessorOperation.class);
     String professorId;
 
     /**

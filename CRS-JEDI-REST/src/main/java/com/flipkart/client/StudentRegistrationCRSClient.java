@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @Author -  Team JEDI 02
  */
 public class StudentRegistrationCRSClient {
-    private static Logger logger = Logger.getLogger(StudentRegistrationCRSClient.class);
+    private static final Logger logger = Logger.getLogger(StudentRegistrationCRSClient.class);
     String studentId;
     String studentName;
     String studentEmail;

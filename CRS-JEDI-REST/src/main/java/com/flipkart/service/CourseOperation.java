@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @Author -  Team JEDI 02
  */
 public class CourseOperation implements CourseInterface {
-    private static Logger logger = Logger.getLogger(CourseOperation.class);
+    private static final Logger logger = Logger.getLogger(CourseOperation.class);
 
     /**
      * Adds a course

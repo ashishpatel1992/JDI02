@@ -16,7 +16,7 @@ public interface CourseCatalogueInterface {
      *
      * @return array list containing courses
      */
-    public ArrayList<Course> getCourseList();
+    ArrayList<Course> getCourseList();
 
     /**
      * creates a new course and add to course list and further add to database
@@ -25,7 +25,7 @@ public interface CourseCatalogueInterface {
      * @param courseName name of the course
      * @return true if course added
      */
-    public boolean addCourse(String courseId, String courseName, String professorId, double fee);
+    boolean addCourse(String courseId, String courseName, String professorId, double fee);
 
     /**
      * Returns the course along with its details
@@ -33,7 +33,7 @@ public interface CourseCatalogueInterface {
      * @param courseId course ID
      * @return Course
      */
-    public Course getCourse(String courseId);
+    Course getCourse(String courseId);
 
     /**
      * Delete a specific course
@@ -41,19 +41,19 @@ public interface CourseCatalogueInterface {
      * @param courseId course ID
      * @return true if course deleted
      */
-    public boolean deleteCourse(String courseId);
+    boolean deleteCourse(String courseId);
 
     /**
      * Get list of unassigned Courses
      *
      * @return array list of unassigned courses
      */
-    public ArrayList<Course> getUnAssignedCourses();
+    ArrayList<Course> getUnAssignedCourses();
 
     /**
      * Get list of unassigned Professors
      *
      * @return array list of unassigned professors
      */
-    public ArrayList<Professor> getUnAssignedProfessors();
+    ArrayList<Professor> getUnAssignedProfessors();
 }

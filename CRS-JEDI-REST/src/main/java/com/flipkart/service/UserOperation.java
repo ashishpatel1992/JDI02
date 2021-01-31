@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
  * @Author -  Team JEDI 02
  */
 public class UserOperation implements UserInterface {
-    private static Logger logger = Logger.getLogger(UserOperation.class);
+    private static final Logger logger = Logger.getLogger(UserOperation.class);
 
     /**
      * Verifies credentials of the student

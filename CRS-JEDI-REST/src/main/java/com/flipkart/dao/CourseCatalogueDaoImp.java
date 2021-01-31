@@ -37,7 +37,7 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
         return instance;
     }
 
-    private static Logger logger = Logger.getLogger(CourseCatalogueDaoImp.class);
+    private static final Logger logger = Logger.getLogger(CourseCatalogueDaoImp.class);
     Connection connection = DBUtils.getConnection();
 
     /**
@@ -156,11 +156,7 @@ public class CourseCatalogueDaoImp implements CourseCatalogueDaoInterface {
             preparedStatement.setString(1, professorId);
             preparedStatement.setString(2, courseId);
             int updatedValues = preparedStatement.executeUpdate();
-            if (updatedValues > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return updatedValues > 0;
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
