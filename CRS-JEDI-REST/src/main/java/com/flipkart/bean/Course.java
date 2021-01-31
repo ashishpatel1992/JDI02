@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @Author -  Team JEDI 02
  */
 public class Course {
-    @Size(min = 1, max = 10, message = "The length of Course Id should be between 1 to 10")
+    @Size(min = 2, max = 10, message = "The length of Course Id should be between 1 to 10")
     String id;
     @Size(min = 1, max = 30, message = "The length of Course Name should be between 1 to 30")
     String name;
