@@ -1,13 +1,13 @@
 package com.flipkart.restcontroller;
 
 import com.flipkart.bean.*;
-import com.flipkart.restcontroller.beans.ProfessorCourseRest;
 import com.flipkart.restcontroller.beans.ProfessorRest;
-import com.flipkart.restcontroller.beans.StudentIdRest;
 import com.flipkart.service.*;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -52,13 +52,13 @@ public class AdminRESTAPI {
      */
     @PUT
     @Path("assign-professor")
-    @Consumes("application/json")
-    public Response assignProfessorToCourse(@Valid ProfessorCourseRest professorCourse) {
+    public Response assignProfessorToCourse(@Size(min = 1, max = 15, message = "The length of Id should be between 1 to 15") @QueryParam("professorId") String professorId,
+                                            @Size(min = 1, max = 10, message = "The length of Course Id should be between 1 to 10") @QueryParam("courseId") String courseId ) throws ValidationException{
         AdminInterface adminInterface = new AdminOperation();
-        if (adminInterface.assignProfessorToCourse(professorCourse.getProfessorId(), professorCourse.getCourseId())) {
-            return Response.status(200).entity(professorCourse).build();
+        if (adminInterface.assignProfessorToCourse(professorId, courseId)) {
+            return Response.status(200).entity("Professor - "+professorId +" assigned to course - "+courseId).build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -102,7 +102,7 @@ public class AdminRESTAPI {
     @POST
     @Path("add-professor")
     @Consumes("application/json")
-    public Response displayAddProfessor(@Valid ProfessorRest professorRest) {
+    public Response displayAddProfessor(@Valid ProfessorRest professorRest) throws ValidationException{
         Professor professor = professorRest.getProfessor();
         AdminInterface adminInterface = new AdminOperation();
         String userId = adminInterface.addProfessor(professor.getId(), professor.getName(), professor.getEmail(), professor.getDepartment(), professorRest.getPassword());
@@ -130,12 +130,11 @@ public class AdminRESTAPI {
      */
     @PUT
     @Path("approve-student")
-    @Consumes("application/json")
-    public Response approveStudent(@Valid StudentIdRest studentIdRest) {
+    public Response approveStudent(@Size(min = 1, max = 15, message = "The length of Id should be between 1 to 15") @QueryParam("studentId") String studentId) throws ValidationException{
             AdminInterface adminInterface = new AdminOperation();
             // TODO: Exception Handling to return StudentAlready approved, Student Id invalid
-            if (adminInterface.approveStudent(studentIdRest.getStudentId())) {
-                return Response.status(200).entity("Student ID - "+studentIdRest.getStudentId()+" successfully approved").build();
+            if (adminInterface.approveStudent(studentId)) {
+                return Response.status(200).entity("Student ID - "+studentId+" successfully approved").build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
@@ -145,9 +144,9 @@ public class AdminRESTAPI {
      * Generates the report card
      */
     @GET
-    @Path("/get-report-card/{studentId}")
+    @Path("/get-report-card")
     @Produces("application/json")
-    public ArrayList<CourseGradeCard> generateReportCard(@PathParam("studentId") String studentId) {
+    public ArrayList<CourseGradeCard> generateReportCard(@QueryParam("studentId") String studentId) throws ValidationException{
         // TODO: Check if student is enrolled before generating reportcard
         ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
         return reportCardOperation.getGrades();

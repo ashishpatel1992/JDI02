@@ -1,12 +1,10 @@
 package com.flipkart.restcontroller;
 
 import com.flipkart.bean.Course;
-import com.flipkart.service.CourseCatalogueInterface;
-import com.flipkart.service.CourseCatalogueOperation;
 import com.flipkart.service.ProfessorInterface;
 import com.flipkart.service.ProfessorOperation;
 
-import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -31,34 +29,30 @@ public class ProfessorRESTAPI {
     }
 
     @GET
-    @Path("/get-course/{professorId}")
+    @Path("/get-course")
     @Produces("application/json")
-    public Course viewCourseByProfId(@PathParam("professorId") String professorId) {
-
+    public Course viewCourseByProfId(@NotNull @QueryParam("professorId") String professorId) throws ValidationException {
         ProfessorInterface professorInterface = new ProfessorOperation(professorId);
-        Course course = professorInterface.getCourseDetail();
-
-        return course;
+        return professorInterface.getCourseDetail();
     }
 
 
     @GET
-    @Path("/get-students/{professorId}")
+    @Path("/get-students")
     @Produces("application/json")
-    public HashMap<String, String> getEnrolledStudents(@PathParam("professorId") String professorId){
+    public HashMap<String, String> getEnrolledStudents(@NotNull @QueryParam("professorId") String professorId) throws ValidationException{
         ProfessorInterface professorInterface = new ProfessorOperation(professorId);
-        HashMap<String, String> studentsEnrolled = professorInterface.getEnrolledStudents();
-        return studentsEnrolled;
+        return professorInterface.getEnrolledStudents();
     }
 
     /**
      * Grade students
      */
     @PUT
-    @Path("/update-grades/{professorId}")
+    @Path("/update-grades")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response gradeStudents(@NotNull @PathParam("professorId") String professorId, @NotNull HashMap<String,String> gradeOfStudent) {
+    public Response gradeStudents(@NotNull @QueryParam("professorId") String professorId, @NotNull HashMap<String,String> gradeOfStudent) throws ValidationException{
         ProfessorInterface professorInterface = new ProfessorOperation(professorId);
         if(professorInterface.gradeStudent(gradeOfStudent)){
             return Response.status(200).entity("{\"msg\":\"Students graded successfully\"}").build();
