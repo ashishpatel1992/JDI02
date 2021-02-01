@@ -1,6 +1,8 @@
 package com.flipkart.dropwizard;
 
 import com.flipkart.restcontroller.AdminRESTAPI;
+import com.flipkart.restcontroller.ProfessorRESTAPI;
+import com.flipkart.restcontroller.StudentRESTAPI;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.setup.Bootstrap;
@@ -18,5 +20,7 @@ public class Service extends Application<Configuration> {
     @Override
     public void run(Configuration configuration, Environment environment) throws Exception {
         environment.jersey().register(new AdminRESTAPI());
+        environment.jersey().register(new ProfessorRESTAPI());
+        environment.jersey().register(new StudentRESTAPI());
     }
 }

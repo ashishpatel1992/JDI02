@@ -146,7 +146,7 @@ public class AdminRESTAPI {
         if (adminInterface.approveStudent(studentId)) {
             return Response.status(200).entity(new ResponseMessageRest("Student ID - " + studentId + " successfully approved")).build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ResponseMessageRest("Student ID - " + studentId + " already approved")).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ResponseMessageRest("Student ID - " + studentId + " already approved or not registered!")).build();
         }
     }
 
