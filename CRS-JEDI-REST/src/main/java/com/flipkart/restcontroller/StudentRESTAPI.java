@@ -24,11 +24,16 @@ public class StudentRESTAPI {
     @GET
     @Path("/by-id/{studentid}")
     @Produces("application/json")
-    public Student getStudentById(@PathParam("studentid") String studentId) {
+    public Response getStudentById(@PathParam("studentid") String studentId) {
         System.out.println("from sout");
         logger.info("from logger");
         StudentInterface studentInterface = new StudentOperation(studentId);
-        return studentInterface.getStudentProfile();
+        Student student = studentInterface.getStudentProfile();
+        if (student == null) {
+            return Response.status(404).entity(new ResponseMessageRest("Invalid Student Id")).build();
+        } else {
+            return Response.status(200).entity(student).build();
+        }
     }
 
     @POST
@@ -40,10 +45,9 @@ public class StudentRESTAPI {
         StudentRegistrationInterface studentRegistrationInterface = new StudentRegistrationOperation();
         Student newStudent = new Student(studentRest.getId(), studentRest.getName(), studentRest.getEmail(), studentRest.getRole(), studentRest.getBranch(), false);
         String pass = studentRegistrationInterface.isRegistrationDataValid(newStudent, studentRest.password);
-        if(pass != null){
+        if (pass != null) {
             return Response.status(201).entity(newStudent).build();
-        }
-        else{
+        } else {
             return Response.status(201).entity(new ResponseMessageRest("Unable to register student")).build();
         }
     }
