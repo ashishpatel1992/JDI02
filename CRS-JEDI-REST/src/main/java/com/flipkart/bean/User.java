@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
  * @Author -  Team JEDI 02
  */
 public class User {
-    @Size(min = 1, max = 15, message = "The length of Id should be between 1 to 15")
+    @Size(min = 2, max = 15, message = "The length of Id should be between 1 to 15")
     String id;
     @Size(min = 1, max = 30, message = "The length of Name should be between 1 to 30")
     String name;
