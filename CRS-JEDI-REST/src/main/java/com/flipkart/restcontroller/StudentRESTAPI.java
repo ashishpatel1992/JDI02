@@ -17,10 +17,20 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
+/**
+ * Class to control Student REST
+ *
+ * @Author -  Team JEDI 02
+ */
 @Path("/student")
 public class StudentRESTAPI {
     private static final Logger logger = Logger.getLogger(StudentRESTAPI.class);
 
+    /**
+     * Get Student details by ID
+     * @param studentId
+     * @return response with status
+     */
     @GET
     @Path("/by-id/{studentid}")
     @Produces("application/json")
@@ -36,6 +46,11 @@ public class StudentRESTAPI {
         }
     }
 
+    /**
+     * Registers the student
+     * @param studentRest Student Details
+     * @return response with details
+     */
     @POST
     @Path("/register")
     @Consumes("application/json")
@@ -52,6 +67,12 @@ public class StudentRESTAPI {
         }
     }
 
+    /**
+     * Register courses
+     * @param studentId
+     * @param studentCourseIds
+     * @return response with status
+     */
     @POST
     @Path("/{studentid}/register-courses")
     @Produces("application/json")
@@ -73,6 +94,11 @@ public class StudentRESTAPI {
         return Response.status(200).entity(courseArraylist).build();
     }
 
+    /**
+     * View Registered Courses
+     * @param studentId
+     * @return response with status
+     */
     @GET
     @Path("/{studentid}/courses")
     @Produces("application/json")
@@ -83,6 +109,11 @@ public class StudentRESTAPI {
 
     }
 
+    /**
+     * View Report Card
+     * @param studentId
+     * @return response with status
+     */
     @GET
     @Path("/{studentid}/reportcard")
     @Produces("application/json")
@@ -94,6 +125,11 @@ public class StudentRESTAPI {
 
     }
 
+    /**
+     * View Notifications
+     * @param studentId
+     * @return response with status
+     */
     @GET
     @Path("/{studentid}/notifications")
     @Produces("application/json")
@@ -104,6 +140,11 @@ public class StudentRESTAPI {
         return Response.status(200).entity(notifications).build();
     }
 
+    /**
+     * View fees
+     * @param studentId
+     * @return response with status
+     */
     @GET
     @Path("/{studentid}/get-fee-amount")
     @Produces("application/json")

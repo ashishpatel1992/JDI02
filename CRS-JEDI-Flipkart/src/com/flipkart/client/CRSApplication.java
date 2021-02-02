@@ -115,7 +115,6 @@ public class CRSApplication {
         logger.info("Enter User Password >");
         userPassword = scanner.next();
         UserInterface userInterface = new UserOperation();
-        // TODO: try catch can be done for handling authentication error
         return userInterface.verifyCredentials(userId, userPassword);
     }
 }

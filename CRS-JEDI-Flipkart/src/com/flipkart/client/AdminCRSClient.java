@@ -79,10 +79,6 @@ public class AdminCRSClient {
                 case 7:
                     logger.info("Successfully logged out");
                     return;
-                // TODO: Remove course  and remove Professor if course is assigned to students so it cant be removed, if professor assigned to course, professor cannot be removed.
-                // TODO: Display enrolled students
-                // TODO: Display all professors
-                // TODO: Close the Registration process
                 default:
                     logger.info("Invalid Choice");
             }
@@ -145,7 +141,6 @@ public class AdminCRSClient {
      * Assigns Professor to a course
      */
     private void assignProfessorToCourse() {
-        // TODO: If any of the below is unassigned then only procced for course assignment
         if (displayUnAssignedProfessors() && displayUnAssignedCourses()) {
             logger.info("Enter course ID >");
             String courseId = scanner.next();
@@ -272,7 +267,6 @@ public class AdminCRSClient {
         if (displayUnApprovedStudent() > 0) {
             logger.info("Enter Student Id to approve >");
             String studentId = scanner.next();
-            // TODO: Exception Handling to return StudentAlready approved, Student Id invalid
             if (adminInterface.approveStudent(studentId)) {
                 logger.info("StudentId " + studentId + " approved Successfully");
             } else {
@@ -286,12 +280,10 @@ public class AdminCRSClient {
      * Generates the report card
      */
     public boolean generateReportCard() {
-        // TODO: Check if student is enrolled before generating reportcard
         logger.info("Enter student Id to generate report card >");
         String studentId = scanner.next();
         ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
         ArrayList<CourseGradeCard> courseGradeCards = reportCardOperation.getGrades();
-        // TODO: Fix with if else condition whether registration over or not
         if (courseGradeCards.size() > 0) {
 
             logger.info("+----------------------------------------------+");

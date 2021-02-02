@@ -99,7 +99,6 @@ public class ProfessorOperation implements ProfessorInterface {
 
             return ProfessorDaoImp.getInstance().enterGradesOfStudents(gradesOfStudents, courseId);
         } else {
-            // TODO: Throw GradeAssignmentException
             return false;
         }
 

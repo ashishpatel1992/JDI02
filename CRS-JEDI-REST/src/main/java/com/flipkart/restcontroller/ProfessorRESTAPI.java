@@ -23,7 +23,7 @@ public class ProfessorRESTAPI {
     private static final Logger logger = Logger.getLogger(ProfessorRESTAPI.class);
 
     /**
-     * View all the courses
+     * Get the status
      */
     @GET
     @Path("/getstatus")
@@ -32,6 +32,11 @@ public class ProfessorRESTAPI {
         return "success";
     }
 
+    /**
+     * Get Professor Details
+     * @param professorId ID of Professor
+     * @return response with status
+     */
     @GET
     @Path("/{professorid}")
     @Produces("application/json")
@@ -45,6 +50,12 @@ public class ProfessorRESTAPI {
         }
     }
 
+    /**
+     * View the course assigned to Professor
+     * @param professorId ID of Professor
+     * @return response with status
+     * @throws ValidationException
+     */
     @GET
     @Path("{professorid}/get-course")
     @Produces("application/json")
@@ -53,7 +64,6 @@ public class ProfessorRESTAPI {
         Course course = professorInterface.getCourseDetail();
         if (course == null) {
             logger.info("Course logger from Professor");
-            // TODO: Have exception to handle invalid professor ID or course not assigned
             return Response.status(404).entity(new ResponseMessageRest("Invalid Professor id")).build();
         } else {
             return Response.status(200).entity(professorInterface.getCourseDetail()).build();
@@ -61,7 +71,12 @@ public class ProfessorRESTAPI {
 
     }
 
-
+    /**
+     * Get enrolled students in the course Professor is teaching
+     * @param professorId ID of Professor
+     * @return response with status
+     * @throws ValidationException
+     */
     @GET
     @Path("{professorid}/get-students")
     @Produces("application/json")

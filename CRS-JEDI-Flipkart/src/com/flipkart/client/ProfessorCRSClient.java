@@ -121,8 +121,6 @@ public class ProfessorCRSClient {
          */
         if (studentsEnrolled != null) {
             if (studentsEnrolled.size() > 0) {
-                // TODO: As of now Grading all students at once
-                // TODO: Display list of student ID's with name for students to be graded, once the registration process is over
                 HashMap<String, String> gradeOfStudent = new HashMap<>();
                 for (Map.Entry<String, String> student : studentsEnrolled.entrySet()) {
                     logger.info("Enter grade for Student ID - " + student.getKey() + "\t" + student.getValue() + ":");

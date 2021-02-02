@@ -12,5 +12,4 @@ public class CourseDeleteException extends Exception {
         super();
         this.courseId = courseId;
     }
-    // TODO: Allot Exception
 }

@@ -93,7 +93,6 @@ public class AdminRESTAPI {
     @Consumes("application/json")
     @Produces("application/json")
     public Response addCourse(@Valid Course course) throws ValidationException {
-        //displayUnAssignedProfessors();
         CourseCatalogueInterface courseCatalogueInterface = new CourseCatalogueOperation();
         if (courseCatalogueInterface.addCourse(course.getId(), course.getName(), course.getProfessorId(), course.getFee())) {
             return Response.status(201).entity(course).build();
@@ -142,7 +141,6 @@ public class AdminRESTAPI {
     public Response approveStudent(@Size(min = 2, max = 15, message = "The length of Id should be between 1 to 15") @PathParam("studentid") String studentId) throws ValidationException {
         AdminInterface adminInterface = new AdminOperation();
         logger.info("Approve Student");
-        // TODO: Exception Handling to return StudentAlready approved, Student Id invalid
         if (adminInterface.approveStudent(studentId)) {
             return Response.status(200).entity(new ResponseMessageRest("Student ID - " + studentId + " successfully approved")).build();
         } else {
@@ -158,11 +156,8 @@ public class AdminRESTAPI {
     @Produces("application/json")
     @Consumes("application/json")
     public ArrayList<CourseGradeCard> generateReportCard(@PathParam("studentid") String studentId) throws ValidationException {
-        // TODO: Check if student is enrolled before generating reportcard
-
         ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
         return reportCardOperation.getGrades();
-        // TODO: Fix with if else condition whether registration over or not
     }
 
 }

@@ -163,8 +163,6 @@ public class StudentOperation implements StudentInterface {
     }
 
 
-    //TODO : review return type
-
     /**
      * Gets student grades
      *
@@ -184,7 +182,6 @@ public class StudentOperation implements StudentInterface {
      */
     @Override
     public boolean addCourse(String id) {
-        // TODO: Add a course at later point in time (Will see if needed)
         logger.info("Add Course");
         return false;
     }
