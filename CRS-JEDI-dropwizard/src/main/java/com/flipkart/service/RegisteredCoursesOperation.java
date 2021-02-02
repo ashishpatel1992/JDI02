@@ -24,7 +24,6 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 
     private static final Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
 
-    // TODO: Create method to write gradeOfStudents into database and fetch whenever object is created
     public HashMap<String, HashMap<String, String>> studentCourseGradesMap = new HashMap<>();
 
     public RegisteredCoursesOperation() {
@@ -35,8 +34,6 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
     }
 
     public void setStudentCourseGradesMap() {
-        // TODO: Fetch Values from Database and assign
-//        studentCourseGradesMap = DatabaseMetaData();
 
     }
 
@@ -50,8 +47,6 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
      * @param studentCourseGradesMap Map containing student's courses and grades
      */
     public void updateStudentCourseGradesMap(HashMap<String, HashMap<String, String>> studentCourseGradesMap) {
-        // TODO: Save to database studentCourseGradeMap variable
-//        RegisterCourseDOA.update(studentCourseGradesMap);
         this.studentCourseGradesMap = studentCourseGradesMap;
     }
 

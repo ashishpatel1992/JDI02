@@ -234,7 +234,7 @@ public class StudentDaoImp implements StudentDaoInterface {
                 return true;
             }
         } catch (SQLException se) {
-            // TODO: Remove fee already payed from here and move to client
+
             logger.error("Fee already payed!");
         } catch (Exception e) {
             logger.error(e.getMessage());

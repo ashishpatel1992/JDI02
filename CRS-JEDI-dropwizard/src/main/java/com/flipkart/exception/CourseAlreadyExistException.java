@@ -12,5 +12,5 @@ public class CourseAlreadyExistException extends Exception {
         super();
         this.courseId = courseId;
     }
-    // TODO: Allot Exception
+
 }

@@ -176,18 +176,6 @@ public class StudentOperation implements StudentInterface {
         return null;
     }
 
-    /**
-     * Adds course
-     *
-     * @param id course ID
-     * @return true if added successfully
-     */
-    @Override
-    public boolean addCourse(String id) {
-        // TODO: Add a course at later point in time (Will see if needed)
-        logger.info("Add Course");
-        return false;
-    }
 
     /**
      * Gets list of registered courses

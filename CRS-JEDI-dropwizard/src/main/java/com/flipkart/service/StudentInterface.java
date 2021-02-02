@@ -56,13 +56,6 @@ public interface StudentInterface {
      */
     HashMap<String, String> getGrades();
 
-    /**
-     * Adds course
-     *
-     * @param id course ID
-     * @return true if added successfully
-     */
-    boolean addCourse(String id);
 
     /**
      * Registers the courses selected

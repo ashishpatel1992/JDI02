@@ -53,7 +53,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
         ArrayList<String> studentCourseIdList = new ArrayList<String>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        // TODO: Check if courseId list is null
+
         try {
             preparedStatement = connection.prepareStatement(SQLQueriesConstants.GET_ALL_COURSE_ID_FOR_REG_STUDENT_QUERY);
             preparedStatement.setString(1, studentId);
@@ -95,7 +95,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
         ArrayList<String> courseIdRemovalList = new ArrayList<>();
         try {
             for (String courseIdSelection : courseIdSelectionList) {
-                // TODO: Throw invalid course Id exception
+
                 // Check if course exists
                 CourseCatalogueDaoImp courseCatalogueDaoImp = CourseCatalogueDaoImp.getInstance();
                 if (courseCatalogueDaoImp.getCourseDetail(courseIdSelection) == null) {

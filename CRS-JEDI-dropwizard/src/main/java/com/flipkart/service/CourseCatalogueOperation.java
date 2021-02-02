@@ -77,16 +77,8 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
      */
     @Override
     public boolean deleteCourse(String courseId) {
-        // fetch object of that course id
         boolean flag = false;
-        // TODO: Implement deleteCourse
-//        for (int i = 0; i < courseList.size(); i++) {
-//            if (courseList.get(i).getId() == courseId) {
-//                courseList.remove(i);
-//                flag = true;
-//                break;
-//            }
-//        }
+        // TODO: Optional deleteCourse
 
         logger.info("Delete Course");
         return flag;
