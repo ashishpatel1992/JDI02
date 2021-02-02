@@ -49,7 +49,6 @@ public class CourseCatalogueOperation implements CourseCatalogueInterface {
             course = new Course(courseId, courseName, courseFee);
             return AdminDaoImp.getInstance().addCourse(course);
         } else {
-            Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
             course = new Course(courseId, courseName, professorId, courseFee);
             return AdminDaoImp.getInstance().addCourse(course);
         }

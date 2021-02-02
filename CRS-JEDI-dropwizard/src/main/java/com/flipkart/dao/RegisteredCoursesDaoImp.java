@@ -143,7 +143,7 @@ public class RegisteredCoursesDaoImp implements RegisteredCoursesDaoInterface {
                 String rsEmail = resultSet.getString("email");
                 String rsRole = resultSet.getString("role");
                 String rsBranch = resultSet.getString("branch");
-                boolean rsApproved = resultSet.getString("approved") == "1";
+                boolean rsApproved = resultSet.getString("approved").equals("1");
                 String rsCourseId = resultSet.getString("courseid");
                 String rsCourseName = resultSet.getString("coursename");
                 String rsProfessorId = resultSet.getString("professorid");

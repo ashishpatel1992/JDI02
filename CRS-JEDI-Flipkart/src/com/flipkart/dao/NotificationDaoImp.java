@@ -58,7 +58,7 @@ public class NotificationDaoImp implements NotificationDaoInterface {
             preparedStatement.setString(1, studentId);
             preparedStatement.setString(2, message);
             Date date = Calendar.getInstance().getTime();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String strDate = dateFormat.format(date);
             preparedStatement.setString(3, strDate);
             preparedStatement.executeUpdate();

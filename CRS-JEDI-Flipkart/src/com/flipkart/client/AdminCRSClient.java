@@ -170,13 +170,26 @@ public class AdminCRSClient {
             logger.info(String.format("| %-8s | %-15s | %-11s | %-13s |", "CourseId", "CourseName", "ProfessorId", "ProfessorName"));
             logger.info("+----------------------------------------------------------+");
             for (Course course : courseArrayList) {
+                String professorId;
+                try {
+                    professorId = course.getProfessorId();
+                } catch (Exception e) {
+                    professorId = null;
+                }
 
-                String professorId = course.getProfessorId();
-                if (course.getProfessorId() == null) {
+                if (professorId == null) {
                     logger.info(String.format("| %-8s | %-15s | %-11s | %-13s |", course.getId(), course.getName(), "", ""));
                 } else {
-                    Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
-                    logger.info(String.format("| %-8s | %-15s | %-11s | %-13s |", course.getId(), course.getName(), professor.getId(), professor.getName()));
+                    String professorName;
+                    try {
+                        Professor professor = ProfessorDaoImp.getInstance().getProfessor(professorId);
+                        professorName = professor.getName();
+                    } catch (Exception e) {
+                        professorName = null;
+
+                    }
+                    logger.info(String.format("| %-8s | %-15s | %-11s | %-13s |", course.getId(), course.getName(), professorId, professorName));
+
                 }
             }
             logger.info("+----------------------------------------------------------+");
