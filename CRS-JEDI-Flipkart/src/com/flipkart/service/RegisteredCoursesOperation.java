@@ -24,7 +24,6 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
 
     private static Logger logger = Logger.getLogger(RegisteredCoursesOperation.class);
 
-    // TODO: Create method to write gradeOfStudents into database and fetch whenever object is created
     public HashMap<String, HashMap<String, String>> studentCourseGradesMap = new HashMap<>();
 
     public RegisteredCoursesOperation() {
@@ -35,8 +34,6 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
     }
 
     public void setStudentCourseGradesMap() {
-        // TODO: Fetch Values from Database and assign
-//        studentCourseGradesMap = DatabaseMetaData();
 
     }
 
@@ -50,8 +47,7 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
      * @param studentCourseGradesMap Map containing student's courses and grades
      */
     public void updateStudentCourseGradesMap(HashMap<String, HashMap<String, String>> studentCourseGradesMap) {
-        // TODO: Save to database studentCourseGradeMap variable
-//        RegisterCourseDOA.update(studentCourseGradesMap);
+
         this.studentCourseGradesMap = studentCourseGradesMap;
     }
 
@@ -78,21 +74,6 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
         } else {
             return RegisteredCoursesDaoImp.getInstance().getCourseIdsForStudent(studentId);
         }
-//        boolean flag = false;
-//        ArrayList<String> studentCoursesIdList = registeredCourseIdList.get(studentId);
-//
-//        // TODO: set limit for number of courses 3>= no of course <=10
-//
-//        if (studentCoursesIdList == null) {
-//            logger.info("Register Course");
-//            registeredCourseIdList.put(studentId, courseIdSelectionList);
-//            flag = true;
-//        } else {
-//
-//            flag = false;
-//        }
-//
-//        return flag;
     }
 
     /**
@@ -129,31 +110,5 @@ public class RegisteredCoursesOperation implements RegisteredCoursesInterface {
             return false;
         }
     }
-
-    /**
-     * Drops a course in which student is already enrolled in.
-     * @param courseId course ID
-     * @return true if dropped successfully
-     */
-//    @Override
-//    public boolean dropCourse(String courseId) {
-////        logger.info("DropCourse");
-//        ArrayList<String> studentCourseIdList = registeredCourseIdList.get(studentId);
-//        if (studentCourseIdList != null) {
-//            for (String cid : studentCourseIdList) {
-////            logger.info("Inside Loop: " + cid);
-//                if (cid.equalsIgnoreCase(courseId)) {
-////                logger.info("courseDropped");
-//                    ArrayList<String> studentCourseIds = registeredCourseIdList.get(studentId);
-//                    studentCourseIds.remove(courseId);
-//                    registeredCourseIdList.put(studentId, studentCourseIds);
-//                    return true;
-//                }
-//            }
-//        }
-//
-//        return false;
-//    }
-
 
 }

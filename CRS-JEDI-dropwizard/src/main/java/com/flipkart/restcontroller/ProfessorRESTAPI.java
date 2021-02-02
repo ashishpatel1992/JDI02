@@ -53,7 +53,6 @@ public class ProfessorRESTAPI {
         Course course = professorInterface.getCourseDetail();
         if (course == null) {
             logger.info("Course logger from Professor");
-            // TODO: Have exception to handle invalid professor ID or course not assigned
             return Response.status(404).entity(new ResponseMessageRest("Invalid Professor id")).build();
         } else {
             return Response.status(200).entity(professorInterface.getCourseDetail()).build();

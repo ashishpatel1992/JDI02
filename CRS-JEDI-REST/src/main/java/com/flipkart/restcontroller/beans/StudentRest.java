@@ -4,6 +4,10 @@ import com.flipkart.bean.Student;
 
 import javax.validation.constraints.Size;
 
+/**
+ * Student - bean class for student
+ * @Author -  Team JEDI 02
+ */
 public class StudentRest extends Student{
     @Size(min = 1, max = 40, message = "The length of Password should be between 1 to 40")
     public String password;

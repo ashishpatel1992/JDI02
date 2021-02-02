@@ -89,7 +89,6 @@ public class StudentCRSClient {
                     break;
                 case 5:
                     printRegisteredCourseInfo();
-                    // TODO: Inform user if payment fees is not paid
                     break;
                 case 6:
                     payFees();
@@ -102,7 +101,6 @@ public class StudentCRSClient {
                     break;
 
                 case 9:
-                    // TODO Define login/logout enums
                     studentId = null;
                     return;
                 default:
@@ -171,7 +169,6 @@ public class StudentCRSClient {
             viewAvailableCourses();
             logger.info("Enter CourseId >");
             courseId = scanner.next();
-            // TODO: Hide courses without professor
 
             if (studentInterface.getCourseSelection().contains(courseId)) {
                 logger.info("Course Already in your Selection List");
@@ -326,10 +323,10 @@ public class StudentCRSClient {
      * Displays report card information
      */
     public void printReportCardInfo() {
-        // TODO: Finish Get Grades Feature
+
         ReportCardOperation reportCardOperation = new ReportCardOperation(studentId);
         ArrayList<CourseGradeCard> courseGradeCards = reportCardOperation.getGrades();
-        // TODO: Fix with if else condition whether registration over or not
+
         if (courseGradeCards.size() > 0) {
 
             logger.info("+----------------------------------------------+");

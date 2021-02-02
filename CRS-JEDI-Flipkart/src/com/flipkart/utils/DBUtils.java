@@ -8,8 +8,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-//import org.apache.log4j.Logger;
-
 /**
  * Database utility class performs the following operations
  * 1. Get a connection to database
